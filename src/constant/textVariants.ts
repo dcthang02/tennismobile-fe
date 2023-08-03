@@ -1,0 +1,92 @@
+export const TEXT_VARIANTS = {
+  "design-note": {
+    fontFamily: "Source Code Pro",
+    fontSize: 16,
+    fontWeight: "Regular",
+    lineHeight: 24,
+  },
+  heading1: {
+    fontFamily: "SF Pro Display",
+    fontSize: 40,
+    fontWeight: "Semibold",
+    lineHeight: 56,
+  },
+  heading2: {
+    fontFamily: "SF Pro Display",
+    fontSize: 32,
+    fontWeight: "Semibold",
+    lineHeight: 44,
+  },
+  heading3: {
+    fontFamily: "SF Pro Display",
+    fontSize: 28,
+    fontWeight: "Semibold",
+    lineHeight: 40,
+  },
+  heading4: {
+    fontFamily: "SF Pro Display",
+    fontSize: 28,
+    fontWeight: "Semibold",
+    lineHeight: 32,
+  },
+  heading5: {
+    fontFamily: "SF Pro Display",
+    fontSize: 20,
+    fontWeight: "Semibold",
+    lineHeight: 28,
+  },
+  heading6: {
+    fontFamily: "SF Pro Display",
+    fontSize: 16,
+    fontWeight: "Semibold",
+    lineHeight: 24,
+  },
+  body16: {
+    fontFamily: "SF Pro Text",
+    fontSize: 16,
+    fontWeight: "Regular",
+    lineHeight: 24,
+  },
+  "body16-semibold": {
+    fontFamily: "SF Pro Text",
+    fontSize: 16,
+    fontWeight: "Semibold",
+    lineHeight: 24,
+  },
+  body14: {
+    fontFamily: "SF Pro Text",
+    fontSize: 14,
+    fontWeight: "Regular",
+    lineHeight: 24,
+  },
+  "body14-semibold": {
+    fontFamily: "SF Pro Text",
+    fontSize: 14,
+    fontWeight: "Semibold",
+    lineHeight: 24,
+  },
+  button: {
+    fontFamily: "SF Pro Text",
+    fontSize: 17,
+    fontWeight: "Semibold",
+    lineHeight: 24,
+  },
+  small: {
+    fontFamily: "SF Pro Text",
+    fontSize: 12,
+    fontWeight: "Regular",
+    lineHeight: 16,
+  },
+  "small-semibold": {
+    fontFamily: "SF Pro Text",
+    fontSize: 12,
+    fontWeight: "Semibold",
+    lineHeight: 16,
+  },
+  tiny: {
+    fontFamily: "SF Pro Text",
+    fontSize: 11,
+    fontWeight: "Regular",
+    lineHeight: 16,
+  },
+};

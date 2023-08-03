@@ -1,4 +1,4 @@
-import AppButton from "../../../components/Atom/Button";
+import AppButton from "../../../components/Atom/TPButton";
 
 import NotificationDetailScreen from "@/screens/notification/NotificationDetail";
 import NotificationScreen from "@/screens/notification/NotificationScreen";

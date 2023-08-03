@@ -50,7 +50,11 @@ const AuthStack = () => {
   return (
     <Stack.Navigator initialRouteName={1 === 1 ? "SignupGroup" : "SigninGroup"}>
       <Stack.Group navigationKey="SigninGroup">
-        <Stack.Screen name="StartSignin" component={StartSigninScreen} />
+        <Stack.Screen
+          name="StartSignin"
+          component={StartSigninScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="Signin" component={SigninScreen} />
         <Stack.Screen name="OtpSignin" component={OtpScreen} />
       </Stack.Group>

@@ -1,15 +1,11 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-
+import { registerRootComponent } from "expo";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-// import AuthStack from "@/navigation/auth/auth";
+import { AppRegistry } from "react-native";
 
 import AuthStack from "@/navigation/auth/auth";
 import MainStack from "@/navigation/main/main";
-
-import type { AuthStackParams } from "@/navigation/auth/auth";
 
 type AppStackParams = {
   AuthStack: undefined;

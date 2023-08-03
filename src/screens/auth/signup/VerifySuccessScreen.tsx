@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, Button } from "react-native";
-import AppButton from "../../../components/Atom/Button";
+import AppButton from "../../../components/Atom/TPButton";
 import useNavigation from "@/hooks/useNavigation";
 
 const VerifySuccessScreen = ({ navigation }) => {
