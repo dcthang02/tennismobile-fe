@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import AppButton from "../../components/Atom/TPButton";
+
 import useNavigation from "../../hooks/useNavigation";
 
 const NotificationScreen = ({ navigation }) => {

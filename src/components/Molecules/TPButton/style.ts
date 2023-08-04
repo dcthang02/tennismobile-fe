@@ -4,6 +4,7 @@ export const ButtonStyled = styled.Pressable<{
   backgroundColor?: string;
   size?: string;
   fullWidth?: boolean;
+  outline?: boolean;
 }>`
   background-color: ${(props: any) => props.backgroundColor};
   border-radius: 50px;
@@ -20,4 +21,6 @@ export const ButtonStyled = styled.Pressable<{
         break;
     }
   }};
+  border: ${(props: any) =>
+    props.outline ? `1px solid ${props.color}` : "none"};
 `;

@@ -36,6 +36,8 @@ export const TPButton = ({
       size={size}
       fullWidth={isFullWidth}
       onPress={onPress}
+      outline={buttonType === "outline"}
+      color={color}
     >
       <Text style={{ textAlign: "center" }}>
         <TPText variant="button" color={color}>

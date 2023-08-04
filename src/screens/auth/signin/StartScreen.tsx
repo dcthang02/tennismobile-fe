@@ -23,26 +23,28 @@ const StartSigninScreen = ({ navigation }: StartSigninProps) => {
           <TPText variant="heading4">
             Chào mừng đến với ứng dụng Tennis App
           </TPText>
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
-          >
-            <TPButton
-              title="Đăng nhập"
-              size="large"
-              onPress={() => {
-                console.log("hello");
-              }}
-              color={COLORS.charcoal.white}
-              isFullWidth={false}
-            />
-            <TPButton
-              title="Tiếp tục là khách"
-              size="large"
-              buttonType="text"
-              color={COLORS.green[600]}
-              isFullWidth={false}
-            />
-          </View>
+
+          <TPButton
+            title="Đăng nhập"
+            size="large"
+            onPress={() => {
+              console.log("hello");
+            }}
+            color={COLORS.charcoal.white}
+          />
+          <TPButton
+            title="Tiếp tục là khách"
+            size="large"
+            buttonType="text"
+            color={COLORS.green[600]}
+          />
+          <TPButton
+            title="siuuu"
+            size="large"
+            buttonType="outline"
+            backgroundColor={COLORS.error[400]}
+            color={COLORS.warning[400]}
+          />
         </View>
       </Card>
     </View>
