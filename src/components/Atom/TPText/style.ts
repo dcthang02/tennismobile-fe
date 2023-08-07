@@ -6,9 +6,9 @@ export const TextWrapper = styled.Text<{
   fontWeight: string;
   lineHeight: number;
 }>`
-  font-size: ${(props: any) => props.fontSize};
+  font-size: ${(props: any) => `${props.fontSize}px`};
   color: ${(props: any) => props.color};
   font-weight: ${(props: any) =>
     props.fontWeight === "Regular" ? "normal" : "bold"};
-  line-height: ${(props: any) => props.lineHeight};
+  line-height: ${(props: any) => `${props.lineHeight}px`};
 `;

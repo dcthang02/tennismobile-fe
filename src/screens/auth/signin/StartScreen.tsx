@@ -7,6 +7,8 @@ import TPButton from "@/components/Molecules/TPButton";
 
 import { COLORS } from "@/constant/colors";
 
+import TPIcon from "@/components/Atom/TPIcon";
+
 import { StartSigninProps } from "@/utils/createProps";
 
 const StartSigninScreen = ({ navigation }: StartSigninProps) => {
@@ -20,23 +22,22 @@ const StartSigninScreen = ({ navigation }: StartSigninProps) => {
             style={style.imageBall}
             source={require("assets/tennis-ball.png")}
           />
+
           <TPText variant="heading4">
             Chào mừng đến với ứng dụng Tennis App
           </TPText>
+
+          <View style={{ alignItems: "center" }}>
+            <TPIcon name="add" size="default" />
+          </View>
 
           <TPButton
             title="Đăng nhập"
             size="large"
             onPress={() => {
-              console.log("hello");
+              console.log("dasd");
             }}
             color={COLORS.charcoal.white}
-          />
-          <TPButton
-            title="Tiếp tục là khách"
-            size="large"
-            buttonType="text"
-            color={COLORS.green[600]}
           />
           <TPButton
             title="siuuu"
@@ -44,6 +45,12 @@ const StartSigninScreen = ({ navigation }: StartSigninProps) => {
             buttonType="outline"
             backgroundColor={COLORS.error[400]}
             color={COLORS.warning[400]}
+          />
+          <TPButton
+            title="Tiếp tục là khách"
+            size="large"
+            buttonType="text"
+            color={COLORS.green[600]}
           />
         </View>
       </Card>

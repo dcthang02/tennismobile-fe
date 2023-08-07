@@ -1,5 +1,4 @@
 import React, { ReactNode, useMemo } from "react";
-import { Text, StyleSheet } from "react-native";
 import { TEXT_VARIANTS } from "@/constant/textVariants";
 import { COLORS } from "@/constant/colors";
 
