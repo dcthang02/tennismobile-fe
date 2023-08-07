@@ -8,15 +8,6 @@ const SignupScreen = ({ navigation }) => {
   return (
     <View>
       <Text>Đăng ký</Text>
-      <Button title="Tiếp theo" onPress={() => handleNavigate("OtpSignup")} />
-      <Button
-        title="Đăng nhập"
-        onPress={() =>
-          handleNavigate("SigninStack", {
-            screen: "Signin",
-          })
-        }
-      />
     </View>
   );
 };

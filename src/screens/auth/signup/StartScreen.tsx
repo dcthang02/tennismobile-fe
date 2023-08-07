@@ -1,22 +1,36 @@
 import React from "react";
-import { View, Text, Button } from "react-native";
+import TPButton from "@/components/Molecules/TPButton";
+import TPAuthStart from "@/components/Organisms/TPAuthStart";
+
+import { COLORS } from "@/constant/colors";
+
+import { StartSignupProps } from "@/utils/createProps";
 
 import useNavigation from "@/hooks/useNavigation";
 
-const StartSignupScreen = ({ navigation }) => {
+const SignupScreen = ({ navigation }: StartSignupProps) => {
   const { handleNavigate } = useNavigation(navigation);
-
   return (
-    <View>
-      <Text>Start</Text>
-      <Button title="Đăng ký" onPress={() => handleNavigate("Signup")} />
-      <Button
-        title="Đăng nhập"
-        onPress={() => handleNavigate("SigninStack", { screen: "Signin" })}
+    <TPAuthStart>
+      <TPButton
+        title="Đăng ký"
+        size="large"
+        onPress={() => handleNavigate("Signup")}
       />
-      <Button title="tiếp tục là khách" />
-    </View>
+      <TPButton
+        title="Đăng nhập"
+        size="large"
+        backgroundColor={COLORS.charcoal.background}
+        onPress={() => handleNavigate("Signin")}
+      />
+      <TPButton
+        title="Tiếp tục là khách"
+        size="large"
+        buttonType="text"
+        color={COLORS.green[600]}
+      />
+    </TPAuthStart>
   );
 };
 
-export default StartSignupScreen;
+export default SignupScreen;

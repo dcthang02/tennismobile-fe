@@ -24,47 +24,28 @@ export type AuthStackParams = {
 
 const Stack = createNativeStackNavigator<AuthStackParams>();
 
-const SigninStack = () => {
-  return (
-    <Stack.Group>
-      <Stack.Screen name="StartSignin" component={StartSigninScreen} />
-      <Stack.Screen name="Signin" component={SigninScreen} />
-      <Stack.Screen name="OtpSignin" component={OtpScreen} />
-    </Stack.Group>
-  );
-};
-
-const SignupStack = () => {
-  return (
-    <Stack.Group>
-      <Stack.Screen name="StartSignup" component={StartSignupScreen} />
-      <Stack.Screen name="Signup" component={SignupScreen} />
-      <Stack.Screen name="OtpSignup" component={OtpSignupScreen} />
-      <Stack.Screen name="VerifyAccount" component={VerifyAccountScreen} />
-      <Stack.Screen name="VerifySuccess" component={VerifySuccessScreen} />
-    </Stack.Group>
-  );
-};
-
 const AuthStack = () => {
   return (
-    <Stack.Navigator initialRouteName={1 === 1 ? "SignupGroup" : "SigninGroup"}>
-      <Stack.Group navigationKey="SigninGroup">
+    <Stack.Navigator>
+      <Stack.Group navigationKey="SignupGroup">
         <Stack.Screen
-          name="StartSignin"
-          component={StartSigninScreen}
+          name="StartSignup"
+          component={StartSignupScreen}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="Signin" component={SigninScreen} />
-        <Stack.Screen name="OtpSignin" component={OtpScreen} />
-      </Stack.Group>
-      <Stack.Group navigationKey="SignupGroup">
-        <Stack.Screen name="StartSignup" component={StartSignupScreen} />
         <Stack.Screen name="Signup" component={SignupScreen} />
         <Stack.Screen name="OtpSignup" component={OtpSignupScreen} />
         <Stack.Screen name="VerifyAccount" component={VerifyAccountScreen} />
         <Stack.Screen name="VerifySuccess" component={VerifySuccessScreen} />
       </Stack.Group>
+
+      <Stack.Screen
+        name="StartSignin"
+        component={StartSigninScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name="Signin" component={SigninScreen} />
+      <Stack.Screen name="OtpSignin" component={OtpScreen} />
     </Stack.Navigator>
   );
 };
