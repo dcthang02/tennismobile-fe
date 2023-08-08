@@ -1,13 +1,32 @@
 import React from "react";
-import { View, Text, Button } from "react-native";
 
-const StartSigninScreen = ({ navigation }) => {
+import TPButton from "@/components/Molecules/TPButton";
+import TPAuthStart from "@/components/Organisms/TPAuthStart";
+
+import { COLORS } from "@/constant/colors";
+
+import { StartSigninProps } from "@/utils/createProps";
+
+import useNavigation from "@/hooks/useNavigation";
+
+const StartSigninScreen = ({ navigation }: StartSigninProps) => {
+  const { handleNavigate } = useNavigation(navigation);
   return (
-    <View>
-      <Text>Chào mừng đến với ứng dụng Tennis App</Text>
-      <Button title="Đăng nhập" onPress={() => navigation.navigate("Signin")} />
-      <Button title="Tiếp tục là khách" />
-    </View>
+    <TPAuthStart>
+      <TPButton
+        title="Đăng nhập"
+        size="large"
+        onPress={() => {
+          handleNavigate("Signin");
+        }}
+      />
+      <TPButton
+        title="Tiếp tục là khách"
+        size="large"
+        buttonType="text"
+        color={COLORS.green[600]}
+      />
+    </TPAuthStart>
   );
 };
 

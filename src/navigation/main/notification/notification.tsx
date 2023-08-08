@@ -1,5 +1,3 @@
-import AppButton from "../../../components/Atom/Button";
-
 import NotificationDetailScreen from "@/screens/notification/NotificationDetail";
 import NotificationScreen from "@/screens/notification/NotificationScreen";
 
@@ -7,13 +5,7 @@ import { Stack } from "../../../utils/createNavigator";
 
 const NotificationStack = ({ navigation }) => {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerLeft: () => (
-          <AppButton title={"<"} onPress={() => navigation.goBack()} />
-        ),
-      }}
-    >
+    <Stack.Navigator>
       <Stack.Screen name="Notification" component={NotificationScreen} />
       <Stack.Screen
         name="NotificationDetail"

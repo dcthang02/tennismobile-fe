@@ -6,7 +6,6 @@ import NotificationScreen from "@/screens/notification/NotificationScreen";
 import NotificationDetailScreen from "@/screens/notification/NotificationDetail";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import AppButton from "../../../components/Atom/Button";
 
 const Stack = createNativeStackNavigator();
 
