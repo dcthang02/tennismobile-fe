@@ -55,11 +55,14 @@ export const TPTextInput = ({ label, inputType }: TPTextInputProps) => {
           onChangeText={setValue}
         />
       </View>
-      <View style={{ paddingLeft: 12 }}>
-        <TPText variant="body16-semibold" color={COLORS.error[600]}>
-          {error}
-        </TPText>
-      </View>
+
+      {error && (
+        <View style={{ paddingLeft: 12 }}>
+          <TPText variant="body16-semibold" color={COLORS.error[600]}>
+            {error}
+          </TPText>
+        </View>
+      )}
     </View>
   );
 };

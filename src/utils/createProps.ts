@@ -24,3 +24,13 @@ export type OtpSignupProps = NativeStackScreenProps<
   AuthStackParams,
   "OtpSignup"
 >;
+
+export type VerifyAccountProps = NativeStackScreenProps<
+  AuthStackParams,
+  "VerifyAccount"
+>;
+
+export type VerifySuccessProps = NativeStackScreenProps<
+  AuthStackParams,
+  "VerifySuccess"
+>;

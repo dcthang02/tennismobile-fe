@@ -8,7 +8,7 @@ export const ButtonStyled = styled.Pressable<{
 }>`
   background-color: ${(props: any) => props.backgroundColor};
   border-radius: 50px;
-  align-self: ${(props: any) => (props.fullWidth ? "stretch" : "flex-start")};
+  align-self: ${(props: any) => (props.fullWidth ? "stretch" : "normal")};
   padding: ${(props: any) => {
     switch (props.size) {
       case "large":

@@ -20,6 +20,7 @@ export const TPHeader = ({ headerTitle, right }: TPHeaderProps) => {
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
+          alignItems: "center",
           marginBottom: 15,
         }}
       >
