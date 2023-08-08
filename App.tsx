@@ -1,12 +1,12 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { OtpContextProvider } from "@/context/OtpContext";
 
 import AuthStack from "@/navigation/auth/auth";
 import MainStack from "@/navigation/main/main";
-import SigninScreen from "@/screens/auth/signin/SigninScreen";
 
 import { useFonts } from "expo-font";
-import { View } from "react-native";
 
 type AppStackParams = {
   AuthStack: undefined;
@@ -26,12 +26,16 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="AuthStack" component={AuthStack} />
+    <SafeAreaProvider>
+      <OtpContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="AuthStack" component={AuthStack} />
 
-        <Stack.Screen name="MainStack" component={MainStack} />
-      </Stack.Navigator>
-    </NavigationContainer>
+            <Stack.Screen name="MainStack" component={MainStack} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </OtpContextProvider>
+    </SafeAreaProvider>
   );
 }

@@ -85,7 +85,7 @@ export const COLORS = {
   },
   charcoal: {
     white: "#FFFFFF",
-    background: "#EFF2F8",
+    background: "#F7F8FB",
     50: "#FCFCFD",
     100: "#F2F4F7",
     200: "#EAECF0",

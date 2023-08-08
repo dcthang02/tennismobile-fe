@@ -6,6 +6,8 @@ export type StartSigninProps = NativeStackScreenProps<
   "StartSignin"
 >;
 
+export type SigninProps = NativeStackScreenProps<AuthStackParams, "Signin">;
+
 export type OtpSigninProps = NativeStackScreenProps<
   AuthStackParams,
   "OtpSignin"
@@ -14,4 +16,11 @@ export type OtpSigninProps = NativeStackScreenProps<
 export type StartSignupProps = NativeStackScreenProps<
   AuthStackParams,
   "StartSignup"
+>;
+
+export type SignupProps = NativeStackScreenProps<AuthStackParams, "Signup">;
+
+export type OtpSignupProps = NativeStackScreenProps<
+  AuthStackParams,
+  "OtpSignup"
 >;

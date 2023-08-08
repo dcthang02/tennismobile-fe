@@ -89,11 +89,7 @@ const Icon = createIconSetFromIcoMoon(
   "icomoon.ttf"
 );
 
-const TPIcon = ({
-  name,
-  size = "default",
-  color = COLORS.charcoal[900],
-}: TPIconProps) => {
+const TPIcon = ({ name, size = "default", color }: TPIconProps) => {
   return <Icon name={name} size={sizes[size]} color={color} />;
 };
 

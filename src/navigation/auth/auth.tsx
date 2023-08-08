@@ -26,14 +26,20 @@ const Stack = createNativeStackNavigator<AuthStackParams>();
 
 const AuthStack = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{ headerTransparent: true, headerShown: false }}
+    >
       <Stack.Group navigationKey="SignupGroup">
         <Stack.Screen
           name="StartSignup"
           component={StartSignupScreen}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="Signup" component={SignupScreen} />
+        <Stack.Screen
+          name="Signup"
+          component={SignupScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="OtpSignup" component={OtpSignupScreen} />
         <Stack.Screen name="VerifyAccount" component={VerifyAccountScreen} />
         <Stack.Screen name="VerifySuccess" component={VerifySuccessScreen} />
@@ -44,7 +50,13 @@ const AuthStack = () => {
         component={StartSigninScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Signin" component={SigninScreen} />
+      <Stack.Screen
+        name="Signin"
+        component={SigninScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
       <Stack.Screen name="OtpSignin" component={OtpScreen} />
     </Stack.Navigator>
   );
