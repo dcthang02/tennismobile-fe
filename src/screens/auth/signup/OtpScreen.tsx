@@ -12,14 +12,25 @@ import { OtpSignupProps } from "@/utils/createProps";
 import useNavigation from "@/hooks/useNavigation";
 
 import { OtpContext } from "@/context/OtpContext";
+import { AuthContext } from "@/context/AuthContext";
 
-const OtpSignupScreen = ({ navigation }: OtpSignupProps) => {
+const OtpSignupScreen = ({ navigation, route }: OtpSignupProps) => {
   const { handleNavigate } = useNavigation(navigation);
-  const { value } = useContext(OtpContext);
+  const { signin, otp, confirm, setOtp } = useContext(AuthContext);
+
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener("focus", () => {
+  //     console.log("abc");
+  //   });
+
+  //   return unsubscribe;
+  // }, [navigation]);
 
   useEffect(() => {
-    if (value.length === 6) handleNavigate("VerifyAccount");
-  }, [value]);
+    if (otp.length === 6) {
+      signin();
+    }
+  }, [otp]);
 
   return (
     <TPBackground>
@@ -31,7 +42,7 @@ const OtpSignupScreen = ({ navigation }: OtpSignupProps) => {
           <TPText variant="body16">
             Nhập 6 chữ số được gửi qua số điện thoại
           </TPText>
-          <TPText variant="body16-semibold">0906939158</TPText>
+          <TPText variant="body16-semibold">{route.params.phoneNumber}</TPText>
           <TPWrapper marginBottom={30} />
           <TPOtpInput />
           <TPWrapper marginBottom={30} />

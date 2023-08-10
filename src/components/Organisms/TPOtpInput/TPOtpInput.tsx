@@ -11,19 +11,19 @@ import { COLORS } from "@/constant/colors";
 import TPText from "@/components/Atom/TPText";
 import TPIcon from "@/components/Atom/TPIcon";
 
-import { OtpContext } from "@/context/OtpContext";
+import { AuthContext } from "@/context/AuthContext";
 
 export const TPOtpInput = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { value, setValue } = useContext(OtpContext);
+  const { otp, setOtp } = useContext(AuthContext);
 
   const handleChangeText = useCallback((text: string) => {
-    setValue(text);
+    setOtp(text);
   }, []);
 
   useEffect(() => {
-    setCurrentIndex(value.length);
-  }, [value]);
+    setCurrentIndex(otp.length);
+  }, [otp]);
 
   const _renderDot = useCallback(() => {
     return <TPIcon name="dot" size="default" />;
@@ -54,7 +54,7 @@ export const TPOtpInput = () => {
         }}
         cursorColor={"transparent"}
         autoFocus
-        value={value}
+        value={otp}
         onChangeText={handleChangeText}
         maxLength={6}
       />

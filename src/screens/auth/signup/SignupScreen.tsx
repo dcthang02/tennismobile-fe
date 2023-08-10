@@ -1,4 +1,10 @@
-import React from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { View } from "react-native";
 
 import TPBackground from "@/components/Atom/TPBackgroud";
@@ -11,9 +17,46 @@ import TPWrapper from "@/components/Atom/TPWrapper";
 import { SignupProps } from "@/utils/createProps";
 import useNavigation from "@/hooks/useNavigation";
 import { COLORS } from "@/constant/colors";
+import { OtpContext } from "@/context/OtpContext";
+import { AuthContext } from "@/context/AuthContext";
+
+import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
+
+const convertPhoneNumber = (phoneNumber: string) => {
+  return "+84" + phoneNumber;
+};
 
 const SignupScreen = ({ navigation }: SignupProps) => {
+  const { setConfirm } = useContext(AuthContext);
   const { handleNavigate } = useNavigation(navigation);
+  const phoneRef = useRef(null);
+
+  useEffect(() => {
+    console.log(phoneRef.current?.["value"]);
+  }, [phoneRef.current?.["value"]]);
+
+  async function signInWithPhoneNumber(phoneNumber: string) {
+    const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+    setConfirm(confirmation);
+  }
+
+  const handleClickButton = useCallback(async () => {
+    if (phoneRef.current) {
+      if (phoneRef.current["isError"]) {
+        return;
+      } else {
+        if (phoneRef.current["value"]) {
+          const phone = convertPhoneNumber(phoneRef.current["value"]);
+
+          await signInWithPhoneNumber(phone);
+          handleNavigate("OtpSignup", {
+            phoneNumber: phoneRef.current?.["value"],
+          } as never);
+        }
+      }
+    }
+  }, [phoneRef.current, signInWithPhoneNumber]);
+
   return (
     <TPBackground>
       <TPWrapper paddingTop={70} paddingHorizontal={16}>
@@ -22,13 +65,23 @@ const SignupScreen = ({ navigation }: SignupProps) => {
         </TPWrapper>
 
         <TPWrapper marginBottom={30}>
-          <TPTextInput label="Số điện thoại" inputType="numeric" />
+          <TPTextInput
+            label="Số điện thoại"
+            inputType="numeric"
+            ref={phoneRef}
+            maxLength={10}
+            rules={["phone"]}
+          />
         </TPWrapper>
 
         <View style={{ alignItems: "center", gap: 15 }}>
           <TPText variant="body16">hoặc đăng ký với</TPText>
           <View
-            style={{ flexDirection: "row", justifyContent: "center", gap: 30 }}
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              gap: 30,
+            }}
           >
             <TPIcon name="facebook" size="larger" color="red" />
             <TPIcon name="google" size="larger" />
@@ -55,7 +108,7 @@ const SignupScreen = ({ navigation }: SignupProps) => {
           <TPButton
             title="Tiếp theo"
             size="large"
-            onPress={() => handleNavigate("OtpSignup")}
+            onPress={() => handleClickButton()}
           />
         </TPWrapper>
       </TPWrapper>

@@ -15,7 +15,9 @@ export type AuthStackParams = {
   Signin: undefined;
   StartSignup: undefined;
   Signup: undefined;
-  OtpSignup: undefined;
+  OtpSignup: {
+    phoneNumber: string;
+  };
   VerifyAccount: undefined;
   VerifySuccess: undefined;
   SigninGroup: undefined;
