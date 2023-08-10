@@ -18,13 +18,13 @@ const OtpSignupScreen = ({ navigation, route }: OtpSignupProps) => {
   const { handleNavigate } = useNavigation(navigation);
   const { signin, otp, confirm, setOtp } = useContext(AuthContext);
 
-  // useEffect(() => {
-  //   const unsubscribe = navigation.addListener("focus", () => {
-  //     console.log("abc");
-  //   });
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      setOtp("");
+    });
 
-  //   return unsubscribe;
-  // }, [navigation]);
+    return unsubscribe;
+  }, [navigation]);
 
   useEffect(() => {
     if (otp.length === 6) {

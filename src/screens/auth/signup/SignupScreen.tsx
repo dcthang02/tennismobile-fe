@@ -31,10 +31,6 @@ const SignupScreen = ({ navigation }: SignupProps) => {
   const { handleNavigate } = useNavigation(navigation);
   const phoneRef = useRef(null);
 
-  useEffect(() => {
-    console.log(phoneRef.current?.["value"]);
-  }, [phoneRef.current?.["value"]]);
-
   async function signInWithPhoneNumber(phoneNumber: string) {
     const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
     setConfirm(confirmation);

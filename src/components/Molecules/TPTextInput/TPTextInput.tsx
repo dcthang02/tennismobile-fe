@@ -1,9 +1,16 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { TextInput, View } from "react-native";
 import TPText from "@/components/Atom/TPText";
 
 import { COLORS } from "@/constant/colors";
 import { checkInput } from "./checkError";
+import TPRow from "@/components/Atom/TPRow";
 
 export type TPTextInputRule = "phone" | "abc";
 
@@ -11,8 +18,10 @@ type TPTextInputProps = {
   label: string;
   inputType: "text" | "numeric";
   disable?: boolean;
+  end?: ReactNode;
   maxLength?: number;
   rules?: TPTextInputRule[];
+  parentValue?: string;
 };
 
 export const TPTextInput = React.forwardRef(
@@ -21,10 +30,12 @@ export const TPTextInput = React.forwardRef(
       label,
       inputType,
       disable = false,
+      end,
       maxLength = 1000,
       rules = [],
+      parentValue,
     }: TPTextInputProps,
-    ref: any
+    ref?: any
   ) => {
     const [value, setValue] = useState("");
     const [focus, setFocus] = useState(false);
@@ -49,9 +60,17 @@ export const TPTextInput = React.forwardRef(
     );
 
     useEffect(() => {
-      if (errorMes) ref.current.isError = true;
-      else ref.current.isError = false;
-    }, [errorMes]);
+      if (parentValue) {
+        setValue(parentValue);
+      }
+    }, [parentValue]);
+
+    useEffect(() => {
+      if (ref?.current) {
+        if (errorMes) ref.current.isError = true;
+        else ref.current.isError = false;
+      }
+    }, [errorMes, ref]);
 
     const handleFocus = useCallback((focus: boolean) => {
       if (isDefault) setIsDefault(false);
@@ -60,16 +79,18 @@ export const TPTextInput = React.forwardRef(
 
     const handleChangeText = useCallback(
       (text: string) => {
-        ref.current.value = text;
+        if (ref?.current) {
+          ref.current.value = text;
+        }
         handleCheckError(text);
         setValue(text);
       },
-      [handleCheckError]
+      [handleCheckError, ref]
     );
 
     return (
       <View style={{ position: "relative" }}>
-        <View
+        <TPRow
           style={{
             backgroundColor: "#fff",
             height: 56,
@@ -78,27 +99,32 @@ export const TPTextInput = React.forwardRef(
             borderRadius: 12,
             borderColor: color,
             borderWidth: focus ? 1 : 0,
-            justifyContent: "center",
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: 10,
           }}
         >
-          {(isDefault === false || value !== "") && (
-            <TPText variant="tiny" color={color}>
-              {label}
-            </TPText>
-          )}
-          <TextInput
-            inputMode={inputType}
-            style={{ fontSize: 16 }}
-            placeholder={label}
-            onChangeText={handleChangeText}
-            value={value}
-            onFocus={() => handleFocus(true)}
-            onBlur={() => handleFocus(false)}
-            editable={!disable}
-            maxLength={maxLength}
-            ref={ref}
-          />
-        </View>
+          <View style={{ justifyContent: "center", flex: 1 }}>
+            {(isDefault === false || value !== "") && (
+              <TPText variant="tiny" color={color}>
+                {label}
+              </TPText>
+            )}
+            <TextInput
+              inputMode={inputType}
+              style={{ fontSize: 16 }}
+              placeholder={label}
+              onChangeText={handleChangeText}
+              value={value}
+              onFocus={() => handleFocus(true)}
+              onBlur={() => handleFocus(false)}
+              editable={!disable}
+              maxLength={maxLength}
+              ref={ref || null}
+            />
+          </View>
+          {end || null}
+        </TPRow>
 
         {errorMes && (
           <View style={{ paddingLeft: 12 }}>
