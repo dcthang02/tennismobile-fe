@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { View, Text, Button } from "react-native";
 
 import TPBackground from "@/components/Atom/TPBackgroud";
@@ -17,6 +17,8 @@ import TPSelection from "@/components/Molecules/TPSelection";
 import TPTextInput from "@/components/Molecules/TPTextInput";
 import TPProgress from "@/components/Molecules/TPProgress";
 import TPDatePicker from "@/components/Organisms/TPDatePicker";
+import TPChooseLevel from "@/components/Organisms/TPChooseLevel";
+import TPChooseClub from "@/components/Organisms/TPChooseClub";
 
 const genderData = [
   {
@@ -75,55 +77,14 @@ const VerifyAccountScreen = ({ navigation }: VerifyAccountProps) => {
   const _renderStep2 = useCallback(() => {
     return (
       <View>
-        <TPRow style={{ justifyContent: "space-between" }}>
-          <TPText variant="heading5">Trình độ đơn</TPText>
-          <TPRow style={{ alignItems: "center" }}>
-            <TPButton
-              title="Thêm"
-              size="small"
-              buttonType="text"
-              color={COLORS.green[600]}
-            />
-            <View
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                width: 30,
-                height: 30,
-                borderRadius: 15,
-                backgroundColor: COLORS.green[600],
-              }}
-            >
-              <TPIcon name="add" size="default" color={COLORS.charcoal.white} />
-            </View>
-          </TPRow>
-        </TPRow>
+        <TPChooseLevel title="Trình độ đơn" />
+        <TPChooseLevel title="Trình độ đôi" />
       </View>
     );
   }, []);
 
   const _renderStep3 = useCallback(() => {
-    return (
-      <TPRow style={{ justifyContent: "space-between", alignItems: "center" }}>
-        <TPButton
-          title="Thêm câu lạc bộ"
-          buttonType="text"
-          color={COLORS.green[600]}
-        />
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            width: 30,
-            height: 30,
-            borderRadius: 15,
-            backgroundColor: COLORS.green[600],
-          }}
-        >
-          <TPIcon name="add" size="default" color={COLORS.charcoal.white} />
-        </View>
-      </TPRow>
-    );
+    return <TPChooseClub />;
   }, []);
 
   return (
