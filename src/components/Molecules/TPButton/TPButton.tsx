@@ -1,5 +1,6 @@
-import React, { useMemo } from "react";
+import React, { ReactNode, useMemo } from "react";
 import TPText from "@/components/Atom/TPText";
+import TPRow from "@/components/Atom/TPRow";
 import { Button, TouchableOpacity, Text, Pressable } from "react-native";
 import { ButtonStyled } from "./style";
 import { COLORS } from "@/constant/colors";
@@ -13,6 +14,7 @@ type ButtonProps = {
   color?: string;
   backgroundColor?: string;
   onPress?: () => void;
+  endIcon?: ReactNode;
 };
 
 export const TPButton = ({
@@ -24,6 +26,7 @@ export const TPButton = ({
   color = COLORS.charcoal[900],
   backgroundColor = COLORS.green[600],
   onPress,
+  endIcon,
 }: ButtonProps) => {
   const bgColor = useMemo(() => {
     if (buttonType === "text") return "transparent";
@@ -39,11 +42,22 @@ export const TPButton = ({
       outline={buttonType === "outline"}
       color={color}
     >
-      <Text style={{ textAlign: "center" }}>
-        <TPText variant="button" color={color}>
-          {title}
-        </TPText>
-      </Text>
+      <TPRow
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 10,
+        }}
+      >
+        {title && (
+          <Text style={{ textAlign: "center" }}>
+            <TPText variant="button" color={color}>
+              {title}
+            </TPText>
+          </Text>
+        )}
+        {endIcon || null}
+      </TPRow>
     </ButtonStyled>
   );
 };

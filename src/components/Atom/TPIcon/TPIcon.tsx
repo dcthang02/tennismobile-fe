@@ -1,6 +1,7 @@
 import React from "react";
 import { createIconSetFromIcoMoon } from "@expo/vector-icons";
 import { COLORS } from "@/constant/colors";
+import { View } from "react-native";
 
 export type TypeTPIconName =
   | "account"
@@ -74,11 +75,14 @@ export type TypeTPIconName =
 
 type TPIconProps = {
   name: TypeTPIconName;
-  size?: "default" | "larger" | "symbol";
+  size?: "small" | "default" | "larger" | "symbol";
   color?: string;
+  hasBound?: boolean;
+  boundColor?: string;
 };
 
 const sizes = {
+  small: 16,
   default: 24,
   larger: 48,
   symbol: 128,
@@ -91,6 +95,28 @@ const Icon = createIconSetFromIcoMoon(
   "icomoon.ttf"
 );
 
-export const TPIcon = ({ name, size = "default", color }: TPIconProps) => {
+export const TPIcon = ({
+  name,
+  size = "default",
+  color,
+  hasBound = false,
+  boundColor = COLORS.green[600],
+}: TPIconProps) => {
+  if (hasBound) {
+    return (
+      <View
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          height: sizes[size] * 2,
+          width: sizes[size] * 2,
+          borderRadius: sizes[size],
+          backgroundColor: boundColor,
+        }}
+      >
+        <Icon name={name} size={sizes[size]} color={color} />
+      </View>
+    );
+  }
   return <Icon name={name} size={sizes[size]} color={color} />;
 };

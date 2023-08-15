@@ -15,7 +15,9 @@ export type AuthStackParams = {
   Signin: undefined;
   StartSignup: undefined;
   Signup: undefined;
-  OtpSignup: undefined;
+  OtpSignup: {
+    phoneNumber: string;
+  };
   VerifyAccount: undefined;
   VerifySuccess: undefined;
   SigninGroup: undefined;
@@ -30,6 +32,7 @@ const AuthStack = () => {
       screenOptions={{ headerTransparent: true, headerShown: false }}
     >
       <Stack.Group navigationKey="SignupGroup">
+        <Stack.Screen name="VerifyAccount" component={VerifyAccountScreen} />
         <Stack.Screen
           name="StartSignup"
           component={StartSignupScreen}
@@ -41,7 +44,6 @@ const AuthStack = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen name="OtpSignup" component={OtpSignupScreen} />
-        <Stack.Screen name="VerifyAccount" component={VerifyAccountScreen} />
         <Stack.Screen name="VerifySuccess" component={VerifySuccessScreen} />
       </Stack.Group>
 

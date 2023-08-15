@@ -5,8 +5,6 @@ import TPIcon from "@/components/Atom/TPIcon";
 import TPRow from "@/components/Atom/TPRow";
 import TPButton from "../TPButton";
 
-import { StepIconWrapper, StepWrapper } from "./style";
-
 import { COLORS } from "@/constant/colors";
 
 import { TypeTPIconName } from "@/components/Atom/TPIcon";
@@ -44,7 +42,7 @@ export const TPProgress = ({ progress }: TPProgress) => {
           key={key}
         >
           <View style={{ alignSelf: "stretch", alignItems: "center" }}>
-            <View
+            {/* <View
               style={{
                 alignItems: "center",
                 justifyContent: "center",
@@ -60,7 +58,16 @@ export const TPProgress = ({ progress }: TPProgress) => {
                 size="default"
                 color={COLORS.charcoal.white}
               />
-            </View>
+            </View> */}
+            <TPIcon
+              name={i < currentStep ? "check-small" : step.iconName}
+              size="default"
+              color={COLORS.charcoal.white}
+              hasBound
+              boundColor={
+                i < currentStep ? COLORS.green[600] : COLORS.charcoal[700]
+              }
+            />
             <View
               style={{
                 flex: i === progress.length - 1 ? 0 : 1,

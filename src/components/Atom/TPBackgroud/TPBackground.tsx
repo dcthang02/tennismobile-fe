@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { View } from "react-native";
+import { View, Keyboard } from "react-native";
 
 import { COLORS } from "@/constant/colors";
 
@@ -14,6 +14,7 @@ export const TPBackground = ({ children }: TPBackgroundProps) => {
         flex: 1,
         backgroundColor: "#e4e8ec",
       }}
+      onTouchStart={Keyboard.dismiss}
     >
       {children}
     </View>
