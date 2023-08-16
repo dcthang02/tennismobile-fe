@@ -7,7 +7,7 @@ type TPWrapperProps = {
   paddingHorizontal?: number;
   paddingBottom?: number;
   marginTop?: number;
-  marginBottom?: number;
+  marginBottom?: number | "auto";
   marginLeft?: number;
   gap?: number;
   flex?: number;

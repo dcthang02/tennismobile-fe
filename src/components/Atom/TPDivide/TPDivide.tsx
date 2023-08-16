@@ -8,7 +8,7 @@ export const TPDivide = () => {
     <View
       style={{
         height: 2,
-        backgroundColor: COLORS.charcoal[200],
+        backgroundColor: COLORS.charcoal[300],
       }}
     ></View>
   );
