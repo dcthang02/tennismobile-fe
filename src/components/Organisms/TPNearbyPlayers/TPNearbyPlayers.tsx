@@ -6,8 +6,8 @@ import TPText from "@/components/Atom/TPText";
 import TPWrapper from "@/components/Atom/TPWrapper";
 import TPButton from "@/components/Molecules/TPButton";
 import { COLORS } from "@/constant/colors";
-import React from "react";
-import { FlatList, View } from "react-native";
+import React, { ReactNode } from "react";
+import { FlatList } from "react-native";
 
 const PLAYERS = [
   {
@@ -78,20 +78,27 @@ type ItemProps = {
     name: string;
     avatar: string;
   };
+  isFirst?: boolean;
+  isLast?: boolean;
 };
 
 type TPNearbyPlayersProps = {
-  height?: number;
+  headerComponents: ReactNode;
 };
 
-const Item = ({ player }: ItemProps) => {
+const Item = ({ player, isFirst = false, isLast = false }: ItemProps) => {
   return (
-    <TPWrapper>
+    <TPWrapper paddingHorizontal={16}>
       <TPRow
         style={{
           justifyContent: "space-between",
           alignItems: "center",
           padding: 10,
+          backgroundColor: COLORS.charcoal.white,
+          borderTopLeftRadius: isFirst ? 15 : 0,
+          borderTopRightRadius: isFirst ? 15 : 0,
+          borderBottomLeftRadius: isLast ? 15 : 0,
+          borderBottomRightRadius: isLast ? 15 : 0,
         }}
       >
         <TPRow style={{ gap: 10, alignItems: "center" }}>
@@ -111,19 +118,34 @@ const Item = ({ player }: ItemProps) => {
   );
 };
 
-export const TPNearbyPlayers = ({ height = 290 }: TPNearbyPlayersProps) => {
+export const TPNearbyPlayers = ({ headerComponents }: TPNearbyPlayersProps) => {
   return (
-    <TPWrapper gap={15} flex={1} marginBottom={45}>
-      <TPText variant="heading5">Tay vợt gần bạn</TPText>
-      <TPCard paddingVertical={0} paddingHorizontal={0}>
-        <FlatList
-          data={PLAYERS}
-          renderItem={({ item, index }) => <Item player={item} />}
-          keyExtractor={(item) => `nearby-player-${item.id}`}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-        />
-      </TPCard>
+    <TPWrapper flex={1}>
+      <FlatList
+        data={PLAYERS}
+        renderItem={({ item, index }) => (
+          <Item
+            player={item}
+            isFirst={index === 0}
+            isLast={index === PLAYERS.length - 1}
+          />
+        )}
+        keyExtractor={(item) => `nearby-player-${item.id}`}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        ListHeaderComponent={() => {
+          return (
+            <>
+              <TPWrapper paddingHorizontal={0} gap={20} marginBottom={16}>
+                {headerComponents}
+                <TPWrapper paddingHorizontal={16}>
+                  <TPText variant="heading5">Tay vợt gần bạn</TPText>
+                </TPWrapper>
+              </TPWrapper>
+            </>
+          );
+        }}
+      />
     </TPWrapper>
   );
 };

@@ -1,5 +1,4 @@
 import React from "react";
-import { View, Text } from "react-native";
 import TPBackground from "@/components/Atom/TPBackgroud";
 import TPWrapper from "@/components/Atom/TPWrapper";
 import TPHomeHeader from "@/components/Organisms/TPHomeHeader";
@@ -24,12 +23,18 @@ const HomeScreen = ({ navigation }: HomeProps) => {
       <TPWrapper paddingHorizontal={16} gap={20}>
         <TPHomeHeader user={user} />
       </TPWrapper>
-      <TPCompetitorNotice />
-      <TPWrapper paddingHorizontal={16} gap={20} flex={1}>
-        <TPHomeStatistic />
-        <TPNextMatches />
-        <TPNearbyPlayers />
-      </TPWrapper>
+
+      <TPNearbyPlayers
+        headerComponents={
+          <>
+            <TPCompetitorNotice />
+            <TPWrapper paddingHorizontal={16} gap={20}>
+              <TPHomeStatistic />
+              <TPNextMatches navigation={navigation} />
+            </TPWrapper>
+          </>
+        }
+      />
     </TPBackground>
   );
 };

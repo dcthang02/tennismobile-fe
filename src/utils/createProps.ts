@@ -38,3 +38,8 @@ export type VerifySuccessProps = NativeStackScreenProps<
 >;
 
 export type HomeProps = BottomTabScreenProps<MainTabParams, "Home">;
+
+export type HomeMatchDetailProps = NativeStackScreenProps<
+  MainStackParams,
+  "HomeMatch"
+>;

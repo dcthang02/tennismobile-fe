@@ -24,7 +24,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 export type MainStackParams = {
   AppTabStack: undefined;
   HomeMatch: {
-    competitor: string;
+    matchId: string;
   };
   HomeMatchEdit: undefined;
   HomeAllMatch: undefined;

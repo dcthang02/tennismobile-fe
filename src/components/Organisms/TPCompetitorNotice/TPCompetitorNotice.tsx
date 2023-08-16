@@ -7,7 +7,6 @@ import { convertDate } from "@/utils/dateTime";
 import { COLORS } from "@/constant/colors";
 import TPButton from "@/components/Molecules/TPButton";
 import TPIcon from "@/components/Atom/TPIcon";
-import TPWrapper from "@/components/Atom/TPWrapper";
 
 export const TPCompetitorNotice = () => {
   return (
