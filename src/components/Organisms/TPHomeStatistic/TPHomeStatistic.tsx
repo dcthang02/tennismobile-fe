@@ -32,7 +32,7 @@ const Item = ({ icon, name, statistic }: ItemProps) => {
 export const TPHomeStatistic = () => {
   return (
     <TPWrapper gap={15}>
-      <TPText variant="heading4">Thống kê</TPText>
+      <TPText variant="heading5">Thống kê</TPText>
       <TPCard>
         <TPRow style={{ justifyContent: "space-between" }}>
           <Item icon={<PlayerIcon />} name="Trận" statistic={24} />

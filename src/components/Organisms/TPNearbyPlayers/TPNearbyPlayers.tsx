@@ -8,14 +8,7 @@ import TPButton from "@/components/Molecules/TPButton";
 import { COLORS } from "@/constant/colors";
 import React from "react";
 import { FlatList } from "react-native";
-import TPHomeHeader from "@/components/Organisms/TPHomeHeader";
-import TPHomeStatistic from "@/components/Organisms/TPHomeStatistic";
-import TPNextMatches from "@/components/Organisms/TPNextMatches";
-const user = {
-  name: "Khánh",
-  avatar:
-    "https://www.clipartmax.com/png/small/248-2487966_matthew-man-avatar-icon-png.png",
-};
+
 const PLAYERS = [
   {
     id: "1",
@@ -118,21 +111,13 @@ export const TPNearbyPlayers = () => {
   return (
     <TPWrapper gap={15}>
       <TPText variant="heading5">Tay vợt gần bạn</TPText>
-      <TPCard paddingVertical={0} paddingHorizontal={0}>
+      <TPCard paddingVertical={0} paddingHorizontal={0} height={240}>
         <FlatList
-          //   contentContainerStyle={{ flex: 1 }}
           data={PLAYERS}
           renderItem={({ item, index }) => <Item player={item} />}
           keyExtractor={(item) => `nearby-player-${item.id}`}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
-          ListHeaderComponent={() => (
-            <>
-              <TPHomeHeader user={user} />
-              <TPHomeStatistic />
-              <TPNextMatches />
-            </>
-          )}
         />
       </TPCard>
     </TPWrapper>

@@ -7,12 +7,14 @@ type TPCardProps = {
   paddingHorizontal?: number;
   paddingVertical?: number;
   overflow?: boolean;
+  height?: number;
 };
 
 export const TPCard = ({
   children,
   paddingHorizontal = 10,
   paddingVertical = 10,
+  height,
 }: TPCardProps) => {
   return (
     <View
@@ -21,6 +23,7 @@ export const TPCard = ({
         paddingVertical,
         backgroundColor: COLORS.charcoal.white,
         borderRadius: 15,
+        height: height || "auto",
       }}
     >
       {children}

@@ -116,7 +116,7 @@ export const TPNextMatches = () => {
   return (
     <View>
       <TPRow style={{ justifyContent: "space-between", marginBottom: 15 }}>
-        <TPText variant="heading4">Trận đấu sắp tới(5)</TPText>
+        <TPText variant="heading5">Trận đấu sắp tới(5)</TPText>
         <TPButton
           title="Xem tất cả"
           buttonType="text"
