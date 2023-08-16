@@ -8,6 +8,9 @@ import TPText from "@/components/Atom/TPText";
 import TPButton from "@/components/Molecules/TPButton";
 import { COLORS } from "@/constant/colors";
 
+import { convertDate } from "@/utils/dateTime";
+import { convertName } from "@/utils/name";
+
 const NEXT_MATCHES = [
   {
     opponent: {
@@ -66,22 +69,6 @@ type ItemProps = {
       id: string;
     };
   };
-};
-
-const convertName = (name: string) => {
-  if (name.length >= 15) return name.substring(0, 14) + "...";
-  return name;
-};
-
-const convertTime = (time: number) => {
-  if (time < 10) return `0${time}`;
-  return time;
-};
-
-const convertDate = (date: Date) => {
-  return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()} • ${convertTime(
-    date.getHours()
-  )}:${convertTime(date.getMinutes())}`;
 };
 
 const Item = ({ match }: ItemProps) => {

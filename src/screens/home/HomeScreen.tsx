@@ -6,6 +6,7 @@ import TPHomeHeader from "@/components/Organisms/TPHomeHeader";
 import TPHomeStatistic from "@/components/Organisms/TPHomeStatistic";
 import TPNextMatches from "@/components/Organisms/TPNextMatches";
 import TPNearbyPlayers from "@/components/Organisms/TPNearbyPlayers";
+import TPCompetitorNotice from "@/components/Organisms/TPCompetitorNotice";
 
 import useNavigation from "../../hooks/useNavigation";
 import { HomeProps } from "@/utils/createProps";
@@ -22,6 +23,9 @@ const HomeScreen = ({ navigation }: HomeProps) => {
     <TPBackground>
       <TPWrapper paddingHorizontal={16} gap={20}>
         <TPHomeHeader user={user} />
+      </TPWrapper>
+      <TPCompetitorNotice />
+      <TPWrapper paddingHorizontal={16} gap={20} flex={1}>
         <TPHomeStatistic />
         <TPNextMatches />
         <TPNearbyPlayers />

@@ -7,7 +7,7 @@ import TPWrapper from "@/components/Atom/TPWrapper";
 import TPButton from "@/components/Molecules/TPButton";
 import { COLORS } from "@/constant/colors";
 import React from "react";
-import { FlatList } from "react-native";
+import { FlatList, View } from "react-native";
 
 const PLAYERS = [
   {
@@ -80,6 +80,10 @@ type ItemProps = {
   };
 };
 
+type TPNearbyPlayersProps = {
+  height?: number;
+};
+
 const Item = ({ player }: ItemProps) => {
   return (
     <TPWrapper>
@@ -107,11 +111,11 @@ const Item = ({ player }: ItemProps) => {
   );
 };
 
-export const TPNearbyPlayers = () => {
+export const TPNearbyPlayers = ({ height = 290 }: TPNearbyPlayersProps) => {
   return (
-    <TPWrapper gap={15}>
+    <TPWrapper gap={15} flex={1} marginBottom={45}>
       <TPText variant="heading5">Tay vợt gần bạn</TPText>
-      <TPCard paddingVertical={0} paddingHorizontal={0} height={240}>
+      <TPCard paddingVertical={0} paddingHorizontal={0}>
         <FlatList
           data={PLAYERS}
           renderItem={({ item, index }) => <Item player={item} />}

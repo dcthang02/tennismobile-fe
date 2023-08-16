@@ -10,6 +10,7 @@ type TPWrapperProps = {
   marginBottom?: number;
   marginLeft?: number;
   gap?: number;
+  flex?: number;
 };
 
 export const TPWrapper = ({
@@ -21,6 +22,7 @@ export const TPWrapper = ({
   marginBottom = 0,
   marginLeft = 0,
   gap = 0,
+  flex = 0,
 }: TPWrapperProps) => {
   return (
     <View
@@ -32,6 +34,7 @@ export const TPWrapper = ({
         marginBottom,
         marginLeft,
         gap,
+        flex,
       }}
     >
       {children}
