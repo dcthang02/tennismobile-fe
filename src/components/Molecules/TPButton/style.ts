@@ -17,6 +17,8 @@ export const ButtonStyled = styled.Pressable<{
         return "8px 16px";
       case "small":
         return "2px 8px";
+      case "tiny":
+        return "0px";
       default:
         break;
     }

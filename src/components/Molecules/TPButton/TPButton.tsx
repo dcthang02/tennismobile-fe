@@ -8,7 +8,7 @@ import { COLORS } from "@/constant/colors";
 type ButtonProps = {
   title: string;
   isFullWidth?: boolean;
-  size?: "large" | "default" | "small";
+  size?: "large" | "default" | "small" | "tiny";
   buttonType?: "solid" | "outline" | "text";
   disable?: boolean;
   color?: string;

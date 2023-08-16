@@ -15,6 +15,7 @@ type TPTextProps = {
     | "heading6"
     | "body16"
     | "body16-semibold"
+    | "body14"
     | "body14-semibold"
     | "button"
     | "small"

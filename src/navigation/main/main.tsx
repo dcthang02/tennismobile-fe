@@ -21,7 +21,7 @@ import NotificationDetailScreen from "@/screens/notification/NotificationDetail"
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-type MainStackParams = {
+export type MainStackParams = {
   AppTabStack: undefined;
   HomeMatch: {
     competitor: string;
@@ -36,7 +36,7 @@ type MainStackParams = {
   AccountProfileEdit: undefined;
 };
 
-type MainTabParams = {
+export type MainTabParams = {
   Home: undefined;
   Member: undefined;
   Match: undefined;
@@ -49,7 +49,7 @@ const Tab = createBottomTabNavigator<MainTabParams>();
 
 const AppTabStack = () => {
   return (
-    <Tab.Navigator screenOptions={{ headerTitleAlign: "center" }}>
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Member" component={MemberScreen} />
       <Tab.Screen name="Match" component={MatchScreen} />

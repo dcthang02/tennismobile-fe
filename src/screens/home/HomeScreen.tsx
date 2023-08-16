@@ -1,18 +1,20 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import TPBackground from "@/components/Atom/TPBackgroud";
+import TPWrapper from "@/components/Atom/TPWrapper";
+
+import TPNearbyPlayers from "@/components/Organisms/TPNearbyPlayers";
 
 import useNavigation from "../../hooks/useNavigation";
+import { HomeProps } from "@/utils/createProps";
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ navigation }: HomeProps) => {
   const { handleNavigate } = useNavigation(navigation);
   return (
-    <View>
-      <Text>Chào buổi sáng</Text>
-
-      <View>
-        <Text>Tay vợt gần bạn</Text>
-      </View>
-    </View>
+    <TPBackground>
+      <TPWrapper paddingHorizontal={16} gap={20}>
+        <TPNearbyPlayers />
+      </TPWrapper>
+    </TPBackground>
   );
 };
 
