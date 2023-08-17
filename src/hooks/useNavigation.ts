@@ -2,7 +2,7 @@ import { useCallback } from "react";
 
 const useNavigation = (navigation: any) => {
   const handleNavigate = useCallback(
-    (name: string, option = undefined) => {
+    (name: string, option: any = undefined) => {
       navigation.navigate(name, option);
     },
     [navigation]

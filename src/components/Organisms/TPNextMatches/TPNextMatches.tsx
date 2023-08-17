@@ -111,6 +111,7 @@ export const TPNextMatches = ({ navigation }: TPNextMatchesProps) => {
           buttonType="text"
           color={COLORS.blue[400]}
           size="tiny"
+          onPress={() => handleNavigate("HomeAllMatch")}
         />
       </TPRow>
       <FlatList
@@ -118,9 +119,7 @@ export const TPNextMatches = ({ navigation }: TPNextMatchesProps) => {
         renderItem={({ item, index }) => (
           <Item
             match={item}
-            onPress={() =>
-              handleNavigate("HomeMatch", { matchId: item.id } as never)
-            }
+            onPress={() => handleNavigate("HomeMatch", { matchId: item.id })}
           />
         )}
         keyExtractor={(item, index) => `match-${index}`}

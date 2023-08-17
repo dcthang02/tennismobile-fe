@@ -43,3 +43,8 @@ export type HomeMatchDetailProps = NativeStackScreenProps<
   MainStackParams,
   "HomeMatch"
 >;
+
+export type HomeAllMatchProps = NativeStackScreenProps<
+  MainStackParams,
+  "HomeAllMatch"
+>;

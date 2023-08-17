@@ -1,6 +1,7 @@
 type MatchType = {
   id: string;
   players: {
+    id: string;
     name: string;
     avatar: string;
   }[];
@@ -12,4 +13,11 @@ type MatchType = {
   };
   mode?: "single" | "multiple";
   date?: Date;
+  playerCount?: number;
+  owner: {
+    id: string;
+    name: string;
+    avatar: string;
+  };
+  status: "successful" | "warning";
 };
