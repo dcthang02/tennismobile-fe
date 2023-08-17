@@ -1,5 +1,7 @@
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import type { AuthStackParams } from "@/navigation/auth/auth";
+import type { MainStackParams, MainTabParams } from "@/navigation/main/main";
 
 export type StartSigninProps = NativeStackScreenProps<
   AuthStackParams,
@@ -33,4 +35,16 @@ export type VerifyAccountProps = NativeStackScreenProps<
 export type VerifySuccessProps = NativeStackScreenProps<
   AuthStackParams,
   "VerifySuccess"
+>;
+
+export type HomeProps = BottomTabScreenProps<MainTabParams, "Home">;
+
+export type HomeMatchDetailProps = NativeStackScreenProps<
+  MainStackParams,
+  "HomeMatch"
+>;
+
+export type HomeAllMatchProps = NativeStackScreenProps<
+  MainStackParams,
+  "HomeAllMatch"
 >;

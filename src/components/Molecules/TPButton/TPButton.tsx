@@ -7,25 +7,25 @@ import { COLORS } from "@/constant/colors";
 
 type ButtonProps = {
   title: string;
-  isFullWidth?: boolean;
-  size?: "large" | "default" | "small";
+  size?: "large" | "default" | "small" | "tiny";
   buttonType?: "solid" | "outline" | "text";
   disable?: boolean;
   color?: string;
   backgroundColor?: string;
   onPress?: () => void;
+  startIcon?: ReactNode;
   endIcon?: ReactNode;
 };
 
 export const TPButton = ({
   title,
-  isFullWidth = true,
   size = "default",
   buttonType = "solid",
   disable = false,
   color = COLORS.charcoal[900],
   backgroundColor = COLORS.green[600],
   onPress,
+  startIcon,
   endIcon,
 }: ButtonProps) => {
   const bgColor = useMemo(() => {
@@ -37,7 +37,6 @@ export const TPButton = ({
     <ButtonStyled
       backgroundColor={bgColor}
       size={size}
-      fullWidth={isFullWidth}
       onPress={onPress}
       outline={buttonType === "outline"}
       color={color}
@@ -49,6 +48,7 @@ export const TPButton = ({
           gap: 10,
         }}
       >
+        {startIcon || null}
         {title && (
           <Text style={{ textAlign: "center" }}>
             <TPText variant="button" color={color}>

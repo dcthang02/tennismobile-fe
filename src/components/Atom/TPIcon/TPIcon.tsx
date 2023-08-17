@@ -79,6 +79,7 @@ type TPIconProps = {
   color?: string;
   hasBound?: boolean;
   boundColor?: string;
+  borderColor?: string;
 };
 
 const sizes = {
@@ -101,6 +102,7 @@ export const TPIcon = ({
   color,
   hasBound = false,
   boundColor = COLORS.green[600],
+  borderColor,
 }: TPIconProps) => {
   if (hasBound) {
     return (
@@ -112,6 +114,8 @@ export const TPIcon = ({
           width: sizes[size] * 2,
           borderRadius: sizes[size],
           backgroundColor: boundColor,
+          borderWidth: borderColor ? 2 : 0,
+          borderColor: borderColor || "transparent",
         }}
       >
         <Icon name={name} size={sizes[size]} color={color} />
