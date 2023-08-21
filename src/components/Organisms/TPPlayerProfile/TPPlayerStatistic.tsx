@@ -122,12 +122,15 @@ const style = StyleSheet.create({
     justifyContent: "space-between",
   },
   itemColstart: {
+    flex: 1,
     alignItems: "flex-start",
   },
   itemColcenter: {
+    flex: 1,
     alignItems: "center",
   },
   itemColend: {
+    flex: 1,
     alignItems: "flex-end",
   },
 });
