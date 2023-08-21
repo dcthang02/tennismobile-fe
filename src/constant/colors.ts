@@ -100,4 +100,5 @@ export const COLORS = {
   black: {
     fade: "#1D293999",
   },
+  background: "#e4e8ec",
 };

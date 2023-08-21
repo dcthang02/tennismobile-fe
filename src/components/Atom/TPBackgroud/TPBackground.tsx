@@ -12,7 +12,7 @@ export const TPBackground = ({ children }: TPBackgroundProps) => {
     <View
       style={{
         flex: 1,
-        backgroundColor: "#e4e8ec",
+        backgroundColor: COLORS.background,
       }}
       onTouchStart={Keyboard.dismiss}
     >
