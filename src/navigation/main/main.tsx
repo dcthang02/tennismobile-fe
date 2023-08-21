@@ -30,7 +30,10 @@ export type MainStackParams = {
   HomeAllMatch: undefined;
   Notification: undefined;
   NotificationDetail: undefined;
-  MemberInfo: undefined;
+  MemberInfo: {
+    memberId: string;
+    name: string;
+  };
   CreateMatch: undefined;
   CreateMatchSuccess: undefined;
   AccountProfileEdit: undefined;
@@ -49,7 +52,9 @@ const Tab = createBottomTabNavigator<MainTabParams>();
 
 const AppTabStack = () => {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
+    <Tab.Navigator
+      screenOptions={{ headerShown: false, tabBarHideOnKeyboard: true }}
+    >
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Member" component={MemberScreen} />
       <Tab.Screen name="Match" component={MatchScreen} />

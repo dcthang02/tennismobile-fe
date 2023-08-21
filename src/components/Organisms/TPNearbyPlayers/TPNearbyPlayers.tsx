@@ -5,6 +5,7 @@ import TPRow from "@/components/Atom/TPRow";
 import TPText from "@/components/Atom/TPText";
 import TPWrapper from "@/components/Atom/TPWrapper";
 import TPButton from "@/components/Molecules/TPButton";
+import TPMemberItem from "@/components/Molecules/TPMemberItem";
 import { COLORS } from "@/constant/colors";
 import React, { ReactNode } from "react";
 import { FlatList } from "react-native";
@@ -72,50 +73,8 @@ const PLAYERS = [
   },
 ];
 
-type ItemProps = {
-  player: {
-    id: string;
-    name: string;
-    avatar: string;
-  };
-  isFirst?: boolean;
-  isLast?: boolean;
-};
-
 type TPNearbyPlayersProps = {
   headerComponents: ReactNode;
-};
-
-const Item = ({ player, isFirst = false, isLast = false }: ItemProps) => {
-  return (
-    <TPWrapper paddingHorizontal={16}>
-      <TPRow
-        style={{
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: 10,
-          backgroundColor: COLORS.charcoal.white,
-          borderTopLeftRadius: isFirst ? 15 : 0,
-          borderTopRightRadius: isFirst ? 15 : 0,
-          borderBottomLeftRadius: isLast ? 15 : 0,
-          borderBottomRightRadius: isLast ? 15 : 0,
-        }}
-      >
-        <TPRow style={{ gap: 10, alignItems: "center" }}>
-          <TPAvatar uri={player.avatar} />
-          <TPText variant="body16-semibold">{player.name}</TPText>
-        </TPRow>
-        <TPButton
-          title="Thách đấu"
-          buttonType="outline"
-          size="large"
-          color={COLORS.green[400]}
-          backgroundColor="transparent"
-        />
-      </TPRow>
-      <TPDivide />
-    </TPWrapper>
-  );
 };
 
 export const TPNearbyPlayers = ({ headerComponents }: TPNearbyPlayersProps) => {
@@ -124,7 +83,7 @@ export const TPNearbyPlayers = ({ headerComponents }: TPNearbyPlayersProps) => {
       <FlatList
         data={PLAYERS}
         renderItem={({ item, index }) => (
-          <Item
+          <TPMemberItem
             player={item}
             isFirst={index === 0}
             isLast={index === PLAYERS.length - 1}

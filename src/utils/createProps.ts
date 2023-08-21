@@ -48,3 +48,10 @@ export type HomeAllMatchProps = NativeStackScreenProps<
   MainStackParams,
   "HomeAllMatch"
 >;
+
+export type MemberProps = BottomTabScreenProps<MainTabParams, "Member">;
+
+export type MemberInfoProps = NativeStackScreenProps<
+  MainStackParams,
+  "MemberInfo"
+>;

@@ -61,7 +61,6 @@ const VerifyAccountScreen = ({ navigation }: VerifyAccountProps) => {
           <TPButton
             title="Tải ảnh đại diện"
             size="small"
-            isFullWidth={false}
             buttonType="outline"
             color={COLORS.green[600]}
             backgroundColor="transparent"

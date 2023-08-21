@@ -11,6 +11,13 @@ type TPWrapperProps = {
   marginLeft?: number;
   gap?: number;
   flex?: number;
+  justifyContent?:
+    | "center"
+    | "flex-start"
+    | "flex-end"
+    | "space-around"
+    | "space-between"
+    | "space-evenly";
 };
 
 export const TPWrapper = ({
@@ -23,6 +30,7 @@ export const TPWrapper = ({
   marginLeft = 0,
   gap = 0,
   flex = 0,
+  justifyContent = "flex-start",
 }: TPWrapperProps) => {
   return (
     <View
@@ -35,6 +43,7 @@ export const TPWrapper = ({
         marginLeft,
         gap,
         flex,
+        justifyContent,
       }}
     >
       {children}

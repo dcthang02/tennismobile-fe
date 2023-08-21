@@ -80,6 +80,7 @@ type TPIconProps = {
   hasBound?: boolean;
   boundColor?: string;
   borderColor?: string;
+  radiusBound?: number;
 };
 
 const sizes = {
@@ -103,6 +104,7 @@ export const TPIcon = ({
   hasBound = false,
   boundColor = COLORS.green[600],
   borderColor,
+  radiusBound = sizes[size] * 2,
 }: TPIconProps) => {
   if (hasBound) {
     return (
@@ -110,11 +112,11 @@ export const TPIcon = ({
         style={{
           alignItems: "center",
           justifyContent: "center",
-          height: sizes[size] * 2,
-          width: sizes[size] * 2,
-          borderRadius: sizes[size],
+          height: radiusBound,
+          width: radiusBound,
+          borderRadius: radiusBound / 2,
           backgroundColor: boundColor,
-          borderWidth: borderColor ? 2 : 0,
+          borderWidth: borderColor ? 1.5 : 0,
           borderColor: borderColor || "transparent",
         }}
       >
