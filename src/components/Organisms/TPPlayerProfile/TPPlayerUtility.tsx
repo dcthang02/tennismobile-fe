@@ -1,5 +1,6 @@
 import TPCard from "@/components/Atom/TPCard";
 import TPIcon, { TypeTPIconName } from "@/components/Atom/TPIcon";
+import TPRow from "@/components/Atom/TPRow";
 import TPText from "@/components/Atom/TPText";
 import TPWrapper from "@/components/Atom/TPWrapper";
 import TPButton from "@/components/Molecules/TPButton";
@@ -13,9 +14,13 @@ type TPPlayerUtilityProps = {
   utility: {
     [key: string]: (TypeTPIconName | string)[];
   };
+  editable?: boolean;
 };
 
-export const TPPlayerUtility = ({ utility }: TPPlayerUtilityProps) => {
+export const TPPlayerUtility = ({
+  utility,
+  editable = false,
+}: TPPlayerUtilityProps) => {
   const { isShow, handleToggleModal } = useModal();
   const _renderUtilityCard = useCallback(
     (showAll: boolean = false) => {
@@ -64,7 +69,17 @@ export const TPPlayerUtility = ({ utility }: TPPlayerUtilityProps) => {
       >
         {_renderUtilityCard(true)}
       </TPModal>
-      <TPText variant="heading5">Trang bị</TPText>
+      <TPRow style={styles.headerRow}>
+        <TPText variant="heading5">Trang bị</TPText>
+        {editable && (
+          <TPButton
+            title="Chỉnh sửa"
+            buttonType="text"
+            color={COLORS.blue[600]}
+            size="small"
+          />
+        )}
+      </TPRow>
       {_renderUtilityCard()}
       <View style={styles.buttonBox}>
         <TPButton
@@ -91,5 +106,9 @@ const styles = StyleSheet.create({
   },
   buttonBox: {
     alignItems: "center",
+  },
+  headerRow: {
+    alignItems: "center",
+    justifyContent: "space-between",
   },
 });

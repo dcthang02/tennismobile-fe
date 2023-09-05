@@ -4,12 +4,14 @@ import TPIcon from "@/components/Atom/TPIcon";
 import TPRow from "@/components/Atom/TPRow";
 import TPText from "@/components/Atom/TPText";
 import TPWrapper from "@/components/Atom/TPWrapper";
+import TPButton from "@/components/Molecules/TPButton";
 import { COLORS } from "@/constant/colors";
 import React, { ReactNode, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 
 type TPPlayerFreeTime = {
   freeTime: boolean[][];
+  editable?: boolean;
 };
 
 type CellProps = {
@@ -41,7 +43,10 @@ const Cell = ({ children, color, isWeekDay = false }: CellProps) => {
   );
 };
 
-export const TPPlayerFreeTime = ({ freeTime }: TPPlayerFreeTime) => {
+export const TPPlayerFreeTime = ({
+  freeTime,
+  editable = false,
+}: TPPlayerFreeTime) => {
   const _renderFreeTime = useCallback(() => {
     return (
       <TPWrapper paddingTop={15} paddingBottom={10} gap={15}>
@@ -85,7 +90,17 @@ export const TPPlayerFreeTime = ({ freeTime }: TPPlayerFreeTime) => {
   }, [freeTime]);
   return (
     <TPWrapper gap={10}>
-      <TPText variant="heading5">Thời gian rảnh</TPText>
+      <TPRow style={styles.headerRow}>
+        <TPText variant="heading5">Thời gian rảnh</TPText>
+        {editable && (
+          <TPButton
+            title="Chỉnh sửa"
+            color={COLORS.blue[600]}
+            buttonType="text"
+            size="small"
+          />
+        )}
+      </TPRow>
       <TPCard>{_renderFreeTime()}</TPCard>
     </TPWrapper>
   );
@@ -110,5 +125,9 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     borderWidth: 2,
     borderColor: COLORS.green[600],
+  },
+  headerRow: {
+    alignItems: "center",
+    justifyContent: "space-between",
   },
 });

@@ -1,15 +1,23 @@
 import React, { useContext } from "react";
 import { View, Text, Button } from "react-native";
 import { AuthContext } from "@/context/AuthContext";
+import TPBackground from "@/components/Atom/TPBackgroud";
+import TPTabHeader from "@/components/Molecules/TPTabHeader";
+import TPWrapper from "@/components/Atom/TPWrapper";
+import TPPlayerProfile from "@/components/Organisms/TPPlayerProfile";
+import TPChangePassword from "@/components/Organisms/TPChangePassword";
 
 const AccountScreen = () => {
   const { signout } = useContext(AuthContext);
   return (
-    <View>
-      <Text>Tài khoản</Text>
-      <Button title="Chỉnh sửa" />
-      <Button title="Đăng xuất" onPress={signout} />
-    </View>
+    <TPBackground>
+      <TPWrapper paddingHorizontal={16} marginBottom={16}>
+        <TPTabHeader title="Tài khoản" />
+      </TPWrapper>
+      <TPWrapper paddingHorizontal={16} marginBottom={75}>
+        <TPPlayerProfile id="123" name="Gia Cát Lượng" editable />
+      </TPWrapper>
+    </TPBackground>
   );
 };
 
