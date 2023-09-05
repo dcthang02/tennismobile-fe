@@ -7,16 +7,22 @@ import { COLORS } from "@/constant/colors";
 type TPSearchBarProps = {
   placeholder?: string;
   backgroundColor?: string;
+  onChange?: (text: string) => void;
 };
 
 export const TPSearchBar = ({
   placeholder,
   backgroundColor = COLORS.charcoal.white,
+  onChange,
 }: TPSearchBarProps) => {
   return (
     <TPRow style={{ ...styles.row, backgroundColor }}>
       <TPIcon name="zoom" size="small" />
-      <TextInput style={{ fontSize: 16, flex: 1 }} placeholder={placeholder} />
+      <TextInput
+        style={{ fontSize: 16, flex: 1 }}
+        placeholder={placeholder}
+        onChangeText={onChange}
+      />
     </TPRow>
   );
 };

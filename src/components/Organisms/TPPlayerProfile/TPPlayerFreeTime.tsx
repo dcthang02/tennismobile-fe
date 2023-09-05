@@ -66,14 +66,13 @@ export const TPPlayerFreeTime = ({ freeTime }: TPPlayerFreeTime) => {
               {freeTime[i].map((time, i) => (
                 <Cell key={`freetime-day-${item}-${time}-${i}`}>
                   {time && (
-                    <TPIcon
-                      name="check-small"
-                      hasBound
-                      boundColor={COLORS.green[50]}
-                      color={COLORS.green[600]}
-                      borderColor={COLORS.green[600]}
-                      radiusBound={24}
-                    />
+                    <View style={styles.checkIconBox}>
+                      <TPIcon
+                        name="check-small"
+                        color={COLORS.green[600]}
+                        size="small"
+                      />
+                    </View>
                   )}
                 </Cell>
               ))}
@@ -103,5 +102,13 @@ const styles = StyleSheet.create({
   dayCeil: {
     flex: 1,
     justifyContent: "flex-start",
+  },
+  checkIconBox: {
+    width: 20,
+    height: 20,
+    backgroundColor: COLORS.green[50],
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: COLORS.green[600],
   },
 });

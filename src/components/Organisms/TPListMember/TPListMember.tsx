@@ -12,6 +12,7 @@ import { COLORS } from "@/constant/colors";
 import TPText from "@/components/Atom/TPText";
 import TPRadio from "@/components/Atom/TPRadio";
 import TPDivide from "@/components/Atom/TPDivide";
+import { Ionicons } from "@expo/vector-icons";
 
 const MEMBERS = [
   {
@@ -72,6 +73,7 @@ const getPlayerFirstName = (name: string) => {
 };
 
 export const TPListMember = ({ navigation }: TPListMemberProps) => {
+  const [searchStr, setSearchStr] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [filterModal, setFilterModal] = useState<TypeFilter>({
     name: "asc",
@@ -81,11 +83,20 @@ export const TPListMember = ({ navigation }: TPListMemberProps) => {
     name: "asc",
     rank: "asc",
   });
+  const [members, setMembers] = useState(
+    MEMBERS.sort(
+      (a, b) =>
+        (filter.rank === "asc" ? a.rank - b.rank : b.rank - a.rank) ||
+        (filter.name === "asc"
+          ? getPlayerFirstName(a.name).localeCompare(getPlayerFirstName(b.name))
+          : getPlayerFirstName(b.name).localeCompare(
+              getPlayerFirstName(a.name)
+            ))
+    )
+  );
+
   useEffect(() => {
-    setFilterModal(filter);
-  }, [filter]);
-  const members = useMemo(() => {
-    return MEMBERS.sort(
+    const filterMembers = MEMBERS.sort(
       (a, b) =>
         (filter.rank === "asc" ? a.rank - b.rank : b.rank - a.rank) ||
         (filter.name === "asc"
@@ -94,7 +105,15 @@ export const TPListMember = ({ navigation }: TPListMemberProps) => {
               getPlayerFirstName(a.name)
             ))
     );
-  }, [filter]);
+    setMembers(
+      searchStr
+        ? filterMembers.filter((item) =>
+            item.name.toLowerCase().includes(searchStr.toLowerCase())
+          )
+        : filterMembers
+    );
+  }, [filter, searchStr]);
+
   const { handleNavigate } = useNavigation(navigation);
   const handleNavigateMemberInfo = useCallback(
     (id: string, name: string) => {
@@ -102,6 +121,11 @@ export const TPListMember = ({ navigation }: TPListMemberProps) => {
     },
     [handleNavigate]
   );
+
+  const handleOpenFilter = useCallback(() => {
+    setFilterModal(filter);
+    setShowModal(true);
+  }, [filter]);
 
   const handleChangeFilter = useCallback(
     (key: "rank" | "name", value: "asc" | "desc") => {
@@ -154,7 +178,6 @@ export const TPListMember = ({ navigation }: TPListMemberProps) => {
         isShow={showModal}
         onCloseModal={() => {
           setShowModal(false);
-          setFilterModal(filter);
         }}
         headerTitle="Lọc"
         headerRight={
@@ -170,7 +193,7 @@ export const TPListMember = ({ navigation }: TPListMemberProps) => {
           />
         }
       >
-        <TPWrapper gap={10}>
+        <TPWrapper gap={10} paddingHorizontal={10}>
           {renderSelectGroup(
             "Hạng",
             [
@@ -187,7 +210,12 @@ export const TPListMember = ({ navigation }: TPListMemberProps) => {
             ],
             "name"
           )}
-          <TPButton title="Áp dụng" size="large" onPress={handleApplyFilter} />
+          <TPButton
+            title="Áp dụng"
+            size="large"
+            onPress={handleApplyFilter}
+            color={COLORS.charcoal[800]}
+          />
         </TPWrapper>
       </TPModal>
     );
@@ -201,15 +229,16 @@ export const TPListMember = ({ navigation }: TPListMemberProps) => {
           <TPSearchBar
             placeholder="Tìm kiếm thành viên"
             backgroundColor="transparent"
+            onChange={setSearchStr}
           />
         </View>
         <TPButton
-          title="f"
-          // startIcon={<FilterIcon />}
+          title=""
+          startIcon={<Ionicons name="ios-filter" size={24} color="black" />}
           size="tiny"
           buttonType="text"
           backgroundColor="transparent"
-          onPress={() => setShowModal(true)}
+          onPress={handleOpenFilter}
         />
       </TPRow>
       <FlatList

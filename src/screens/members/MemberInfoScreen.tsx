@@ -6,7 +6,6 @@ import TPPlayerProfile from "@/components/Organisms/TPPlayerProfile";
 import { COLORS } from "@/constant/colors";
 import { MemberInfoProps } from "@/utils/createProps";
 import React from "react";
-import { View, Text } from "react-native";
 
 const MemberInfoScreen = ({ navigation, route }: MemberInfoProps) => {
   return (
