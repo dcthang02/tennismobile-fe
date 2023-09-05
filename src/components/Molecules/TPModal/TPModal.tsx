@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect, useState } from "react";
 
-import { View, Modal } from "react-native";
+import { View, Modal, StyleSheet } from "react-native";
 import TPRow from "@/components/Atom/TPRow";
 import TPButton from "../TPButton";
 import TPIcon from "@/components/Atom/TPIcon";
@@ -15,6 +15,7 @@ type TPModalProp = {
   overlay?: Boolean;
   isShow?: boolean;
   onCloseModal?: () => void;
+  backgroundColor?: string;
 };
 
 export const TPModal = ({
@@ -25,6 +26,7 @@ export const TPModal = ({
   overlay = true,
   isShow = false,
   onCloseModal,
+  backgroundColor = COLORS.charcoal.white,
 }: TPModalProp) => {
   return (
     <Modal animationType="slide" transparent={true} visible={isShow}>
@@ -37,25 +39,29 @@ export const TPModal = ({
       >
         <View
           style={{
-            backgroundColor: COLORS.charcoal.white,
+            backgroundColor,
             padding: 10,
             borderRadius: 25,
             borderBottomRightRadius: modalPosition === "bottom" ? 0 : 25,
             borderBottomLeftRadius: modalPosition === "bottom" ? 0 : 25,
           }}
         >
-          <TPRow
-            style={{ justifyContent: "space-between", alignItems: "center" }}
-          >
-            <TPButton
-              endIcon={<TPIcon name="e-remove" />}
-              title=""
-              buttonType="text"
-              size="small"
-              onPress={onCloseModal}
-            />
-            <TPText variant="heading5">{headerTitle || null}</TPText>
-            <View>{headerRight || null}</View>
+          <TPRow style={style.headerRow}>
+            <TPRow style={style.headerItem}>
+              <TPButton
+                endIcon={<TPIcon name="e-remove" />}
+                title=""
+                buttonType="text"
+                size="small"
+                onPress={onCloseModal}
+              />
+            </TPRow>
+            <TPRow style={{ ...style.headerItem, justifyContent: "center" }}>
+              <TPText variant="heading5">{headerTitle || null}</TPText>
+            </TPRow>
+            <TPRow style={{ ...style.headerItem, justifyContent: "flex-end" }}>
+              {headerRight || null}
+            </TPRow>
           </TPRow>
           {children}
         </View>
@@ -63,3 +69,13 @@ export const TPModal = ({
     </Modal>
   );
 };
+
+const style = StyleSheet.create({
+  headerRow: {
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  headerItem: {
+    flex: 1,
+  },
+});

@@ -15,6 +15,8 @@ type TPRadioProps = {
   radioType?: "select" | "check";
 };
 
+const size = 16;
+
 export const TPRadio = ({
   active = false,
   radioType = "select",
@@ -22,10 +24,10 @@ export const TPRadio = ({
   return (
     <View
       style={{
-        width: 20,
-        height: 20,
-        borderRadius: radioType === "select" ? 10 : 1,
-        borderWidth: active ? (radioType === "select" ? 5 : 0) : 2,
+        width: size,
+        height: size,
+        borderRadius: radioType === "select" ? size / 2 : 1,
+        borderWidth: active ? (radioType === "select" ? 4 : 0) : 2,
         borderColor: active ? COLORS.green[600] : COLORS.charcoal[900],
         backgroundColor:
           active && radioType === "check" ? COLORS.green[600] : "transparent",

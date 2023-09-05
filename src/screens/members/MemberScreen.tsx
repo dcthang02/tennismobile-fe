@@ -1,18 +1,20 @@
 import React from "react";
-import { View, Text, Button } from "react-native";
-
 import useNavigation from "../../hooks/useNavigation";
+import { MemberProps } from "@/utils/createProps";
+import TPBackground from "@/components/Atom/TPBackgroud";
+import TPWrapper from "@/components/Atom/TPWrapper";
+import TPTabHeader from "@/components/Molecules/TPTabHeader";
+import TPListMember from "@/components/Organisms/TPListMember";
 
-const MemberScreen = ({ navigation }) => {
+const MemberScreen = ({ navigation }: MemberProps) => {
   const { handleNavigate } = useNavigation(navigation);
   return (
-    <View>
-      <Text>Danh sách thành viên</Text>
-      {/* <AppButton
-        title="Hoàn thành"
-        onPress={() => handleNavigate("HomeStack")}
-      /> */}
-    </View>
+    <TPBackground>
+      <TPWrapper paddingHorizontal={16} marginBottom={16}>
+        <TPTabHeader title="Danh sách thành viên" />
+      </TPWrapper>
+      <TPListMember navigation={navigation} />
+    </TPBackground>
   );
 };
 
