@@ -5,9 +5,10 @@ import TPBackground from "@/components/Atom/TPBackgroud";
 import TPTabHeader from "@/components/Molecules/TPTabHeader";
 import TPWrapper from "@/components/Atom/TPWrapper";
 import TPPlayerProfile from "@/components/Organisms/TPPlayerProfile";
-import TPChangePassword from "@/components/Organisms/TPChangePassword";
+import { AccountProps } from "@/utils/createProps";
+import useNavigation from "@/hooks/useNavigation";
 
-const AccountScreen = () => {
+const AccountScreen = ({ navigation }: AccountProps) => {
   const { signout } = useContext(AuthContext);
   return (
     <TPBackground>

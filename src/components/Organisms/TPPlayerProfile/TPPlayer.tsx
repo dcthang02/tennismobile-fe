@@ -3,7 +3,7 @@ import TPRow from "@/components/Atom/TPRow";
 import TPText from "@/components/Atom/TPText";
 import TPWrapper from "@/components/Atom/TPWrapper";
 import React, { ReactNode, useCallback } from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import LeaderBoardIcon from "assets/icon/leaderboard.svg";
 import PrizeIcon from "assets/icon/prize.svg";
@@ -11,6 +11,7 @@ import TPIcon, { TypeTPIconName } from "@/components/Atom/TPIcon";
 import { COLORS } from "@/constant/colors";
 import TPAvatar from "@/components/Atom/TPAvatar";
 import TPButton from "@/components/Molecules/TPButton";
+import { useNavigation } from "@react-navigation/native";
 
 type TPPlayer = {
   name: string;
@@ -31,6 +32,7 @@ export const TPPlayer = ({
   clubName,
   editable = false,
 }: TPPlayer) => {
+  const { navigate } = useNavigation();
   const _renderIconRowItem = useCallback(
     (icon: ReactNode, title: string, text: string) => {
       return (
@@ -79,6 +81,7 @@ export const TPPlayer = ({
             buttonType="text"
             color={COLORS.blue[600]}
             size="small"
+            onPress={() => navigate("AccountProfileEdit" as never)}
           />
         </View>
       )}
