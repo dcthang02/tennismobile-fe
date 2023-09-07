@@ -13,6 +13,7 @@ import TPRow from "@/components/Atom/TPRow";
 import { AntDesign } from "@expo/vector-icons";
 import { COLORS } from "@/constant/colors";
 import useUploadImage from "@/hooks/useUploadImage";
+import TPButton from "@/components/Molecules/TPButton";
 
 const avatar_uri =
   "https://static.wikia.nocookie.net/powerrangers/images/0/0f/COCX-41908.jpg/revision/latest?cb=20221127143637";
@@ -20,14 +21,12 @@ const avatar_uri =
 const AccountProfileEditScreen = ({ navigation }: AccountEditProfileProps) => {
   const { singleFile, selectFile } = useUploadImage();
 
-  console.log(singleFile);
-
   return (
     <TPBackground>
       <TPHeader headerTitle="Tài khoản" />
-      <TPWrapper paddingHorizontal={16} gap={10}>
-        <Pressable onPress={selectFile}>
-          <TPRow style={styles.avatarBox}>
+      <TPWrapper paddingHorizontal={16} gap={10} flex={1} marginBottom={30}>
+        <TPRow style={styles.avatarBox}>
+          <Pressable onPress={selectFile}>
             <TPAvatar
               uri={singleFile?.assets ? singleFile.assets?.[0].uri : avatar_uri}
               size="large"
@@ -35,8 +34,8 @@ const AccountProfileEditScreen = ({ navigation }: AccountEditProfileProps) => {
             <TPRow style={styles.iconCamera}>
               <AntDesign name="camerao" size={16} color="black" />
             </TPRow>
-          </TPRow>
-        </Pressable>
+          </Pressable>
+        </TPRow>
         <TPTextInput label="Họ tên" inputType="text" />
         <TPDatePicker />
         <TPSelection
@@ -45,6 +44,13 @@ const AccountProfileEditScreen = ({ navigation }: AccountEditProfileProps) => {
             { id: "2", value: "female", label: "Nữ" },
           ]}
         />
+        <View style={styles.buttonBox}>
+          <TPButton
+            title="Cập nhật"
+            size="large"
+            color={COLORS.charcoal[800]}
+          />
+        </View>
       </TPWrapper>
     </TPBackground>
   );
@@ -58,7 +64,7 @@ const styles = StyleSheet.create({
   iconCamera: {
     position: "absolute",
     bottom: 0,
-    right: 137,
+    right: 0,
     backgroundColor: COLORS.charcoal[300],
     width: 32,
     height: 32,
@@ -67,6 +73,9 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 1.5,
     borderColor: COLORS.background,
+  },
+  buttonBox: {
+    marginTop: "auto",
   },
 });
 
