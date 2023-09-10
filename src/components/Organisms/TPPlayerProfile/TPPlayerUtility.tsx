@@ -35,7 +35,7 @@ export const TPPlayerUtility = ({
     useModal();
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [keyBoardVisible, setKeyboardVisible] = useState(false);
-  console.log(currentIndex);
+
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
@@ -46,7 +46,6 @@ export const TPPlayerUtility = ({
     const keyboardDidHideListener = Keyboard.addListener(
       "keyboardDidHide",
       () => {
-        console.log("hide");
         setKeyboardVisible(false); // or some other action
       }
     );

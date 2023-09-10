@@ -19,5 +19,5 @@ type MatchType = {
     name: string;
     avatar: string;
   };
-  status: "successful" | "warning";
+  status: "successful" | "warning" | "pending";
 };
