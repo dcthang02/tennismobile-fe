@@ -22,6 +22,7 @@ type TPTextInputProps = {
   maxLength?: number;
   rules?: TPTextInputRule[];
   parentValue?: string;
+  callbackFocus?: () => void;
 };
 
 export const TPTextInput = React.forwardRef(
@@ -34,6 +35,7 @@ export const TPTextInput = React.forwardRef(
       maxLength = 1000,
       rules = [],
       parentValue,
+      callbackFocus,
     }: TPTextInputProps,
     ref?: any
   ) => {
@@ -72,10 +74,16 @@ export const TPTextInput = React.forwardRef(
       }
     }, [errorMes, ref]);
 
-    const handleFocus = useCallback((focus: boolean) => {
-      if (isDefault) setIsDefault(false);
-      setFocus(focus);
-    }, []);
+    const handleFocus = useCallback(
+      (focus: boolean) => {
+        if (callbackFocus) {
+          callbackFocus();
+        }
+        if (isDefault) setIsDefault(false);
+        setFocus(focus);
+      },
+      [callbackFocus]
+    );
 
     const handleChangeText = useCallback(
       (text: string) => {
@@ -112,7 +120,7 @@ export const TPTextInput = React.forwardRef(
             )}
             <TextInput
               inputMode={inputType}
-              style={{ fontSize: 16 }}
+              style={{ fontSize: 16, color: undefined }}
               placeholder={label}
               onChangeText={handleChangeText}
               value={value}

@@ -7,6 +7,7 @@ import TPText from "@/components/Atom/TPText";
 import { COLORS } from "@/constant/colors";
 import { TPPlayerUtility } from "./TPPlayerUtility";
 import { TPPlayerFreeTime } from "./TPPlayerFreeTime";
+import TPChangePassword from "../TPChangePassword";
 
 const MEMBER = {
   avatar:
@@ -62,9 +63,14 @@ const MEMBER = {
 type TPPlayerProfileProps = {
   id: string;
   name: string;
+  editable?: boolean;
 };
 
-export const TPPlayerProfile = ({ id, name }: TPPlayerProfileProps) => {
+export const TPPlayerProfile = ({
+  id,
+  name,
+  editable = false,
+}: TPPlayerProfileProps) => {
   return (
     <ScrollView
       contentContainerStyle={styles.container}
@@ -77,14 +83,16 @@ export const TPPlayerProfile = ({ id, name }: TPPlayerProfileProps) => {
         level={MEMBER.level}
         age={MEMBER.age}
         clubName={MEMBER.club.name}
+        editable={editable}
       />
       <TPPlayerStatistic
         matches={MEMBER.statistic.matches}
         leagues={MEMBER.statistic.leagues}
         score={MEMBER.statistic.score}
       />
-      <TPPlayerUtility utility={MEMBER.utility} />
-      <TPPlayerFreeTime freeTime={MEMBER.freeTime} />
+      <TPPlayerUtility utility={MEMBER.utility} editable={editable} />
+      <TPPlayerFreeTime freeTime={MEMBER.freeTime} editable={editable} />
+      {editable && <TPChangePassword />}
     </ScrollView>
   );
 };

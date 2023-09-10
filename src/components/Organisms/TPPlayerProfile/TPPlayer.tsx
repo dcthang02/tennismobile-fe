@@ -3,13 +3,15 @@ import TPRow from "@/components/Atom/TPRow";
 import TPText from "@/components/Atom/TPText";
 import TPWrapper from "@/components/Atom/TPWrapper";
 import React, { ReactNode, useCallback } from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import LeaderBoardIcon from "assets/icon/leaderboard.svg";
 import PrizeIcon from "assets/icon/prize.svg";
 import TPIcon, { TypeTPIconName } from "@/components/Atom/TPIcon";
 import { COLORS } from "@/constant/colors";
 import TPAvatar from "@/components/Atom/TPAvatar";
+import TPButton from "@/components/Molecules/TPButton";
+import { useNavigation } from "@react-navigation/native";
 
 type TPPlayer = {
   name: string;
@@ -18,6 +20,7 @@ type TPPlayer = {
   level: number;
   age: number;
   clubName?: string;
+  editable?: boolean;
 };
 
 export const TPPlayer = ({
@@ -27,7 +30,9 @@ export const TPPlayer = ({
   level,
   age,
   clubName,
+  editable = false,
 }: TPPlayer) => {
+  const { navigate } = useNavigation();
   const _renderIconRowItem = useCallback(
     (icon: ReactNode, title: string, text: string) => {
       return (
@@ -69,6 +74,17 @@ export const TPPlayer = ({
 
   return (
     <TPCard style={styles.card}>
+      {editable && (
+        <View style={styles.buttonEdit}>
+          <TPButton
+            title="Chỉnh sửa"
+            buttonType="text"
+            color={COLORS.blue[600]}
+            size="small"
+            onPress={() => navigate("AccountProfileEdit" as never)}
+          />
+        </View>
+      )}
       <TPWrapper paddingTop={30}>
         <View style={styles.container}>
           {_renderAvatar()}
@@ -124,4 +140,5 @@ const styles = StyleSheet.create({
   card: {
     marginTop: 50,
   },
+  buttonEdit: { position: "absolute", right: 0, top: -35 },
 });

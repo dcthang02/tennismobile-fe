@@ -55,3 +55,10 @@ export type MemberInfoProps = NativeStackScreenProps<
   MainStackParams,
   "MemberInfo"
 >;
+
+export type AccountProps = BottomTabScreenProps<MainTabParams, "Account">;
+
+export type AccountEditProfileProps = NativeStackScreenProps<
+  MainStackParams,
+  "AccountProfileEdit"
+>;

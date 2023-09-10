@@ -13,7 +13,7 @@ type TPSelectionProps = {
 };
 
 export const TPSelection = ({ data }: TPSelectionProps) => {
-  const [valueIndex, setValueIndex] = useState(-1);
+  const [valueIndex, setValueIndex] = useState(0);
 
   const handleSelect = useCallback((i: number) => {
     setValueIndex(i);
@@ -33,7 +33,7 @@ export const TPSelection = ({ data }: TPSelectionProps) => {
           >
             <TPRow style={{ alignItems: "center", gap: 10 }}>
               <TPRadio active={i === valueIndex} />
-              <TPText variant="body16-semibold">{item.label}</TPText>
+              <TPText variant="body16">{item.label}</TPText>
             </TPRow>
           </Pressable>
         );

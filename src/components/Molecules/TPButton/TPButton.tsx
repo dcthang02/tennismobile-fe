@@ -15,6 +15,7 @@ type ButtonProps = {
   onPress?: () => void;
   startIcon?: ReactNode;
   endIcon?: ReactNode;
+  textSize?: "button" | "small";
 };
 
 export const TPButton = ({
@@ -27,6 +28,7 @@ export const TPButton = ({
   onPress,
   startIcon,
   endIcon,
+  textSize = "button",
 }: ButtonProps) => {
   const bgColor = useMemo(() => {
     if (buttonType === "text") return "transparent";
@@ -51,7 +53,10 @@ export const TPButton = ({
         {startIcon || null}
         {title && (
           <Text style={{ textAlign: "center" }}>
-            <TPText variant="button" color={color}>
+            <TPText
+              variant={textSize === "button" ? "button" : "body14-semibold"}
+              color={color}
+            >
               {title}
             </TPText>
           </Text>

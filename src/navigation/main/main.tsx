@@ -64,63 +64,10 @@ const AppTabStack = () => {
   );
 };
 
-const HomeGroupStack = () => {
-  return (
-    <Stack.Group>
-      <Stack.Screen name="HomeMatch" component={HomeMatchDetailScreen} />
-      <Stack.Screen
-        name="HomeMatchEdit"
-        component={HomeMatchDetailEditScreen}
-      />
-      <Stack.Screen name="HomeAllMatch" component={HomeAllMatchsScreen} />
-      <Stack.Screen name="Notification" component={NotificationScreen} />
-      <Stack.Screen
-        name="NotificationDetail"
-        component={NotificationDetailScreen}
-      />
-    </Stack.Group>
-  );
-};
-
-const MemberGroupStack = () => {
-  return (
-    <Stack.Group>
-      <Stack.Screen name="MemberInfo" component={MemberInfoScreen} />
-    </Stack.Group>
-  );
-};
-
-const CompetitionGroupStack = () => {
-  return (
-    <Stack.Group>
-      <Stack.Screen name="CreateMatch" component={CreateMatchScreen} />
-      <Stack.Screen
-        name="CreateMatchSuccess"
-        component={CreateMatchSuccessScreen}
-      />
-    </Stack.Group>
-  );
-};
-
-const AccountGroupStack = () => {
-  return (
-    <Stack.Group>
-      <Stack.Screen
-        name="AccountProfileEdit"
-        component={AccountProfileEditScreen}
-      />
-    </Stack.Group>
-  );
-};
-
 const MainStack = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="AppTabStack" component={AppTabStack} />
-      {/* <Stack.Screen name="HomeStack" component={HomeStack} />
-      <Stack.Screen name="MemberStack" component={MemberStack} />
-      <Stack.Screen name="CompetitionStack" component={CompetitionStack} />
-      <Stack.Screen name="AccountStack" component={AccountStack} /> */}
 
       <Stack.Screen name="HomeMatch" component={HomeMatchDetailScreen} />
       <Stack.Screen

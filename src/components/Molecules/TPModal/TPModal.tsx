@@ -1,6 +1,12 @@
 import React, { ReactNode, useEffect, useState } from "react";
 
-import { View, Modal, StyleSheet } from "react-native";
+import {
+  View,
+  Modal,
+  StyleSheet,
+  KeyboardAvoidingView,
+  ScrollView,
+} from "react-native";
 import TPRow from "@/components/Atom/TPRow";
 import TPButton from "../TPButton";
 import TPIcon from "@/components/Atom/TPIcon";
@@ -56,8 +62,10 @@ export const TPModal = ({
                 onPress={onCloseModal}
               />
             </TPRow>
-            <TPRow style={{ ...style.headerItem, justifyContent: "center" }}>
-              <TPText variant="heading5">{headerTitle || null}</TPText>
+            <TPRow
+              style={{ ...style.headerTitleItem, justifyContent: "center" }}
+            >
+              <TPText variant="heading6">{headerTitle || null}</TPText>
             </TPRow>
             <TPRow style={{ ...style.headerItem, justifyContent: "flex-end" }}>
               {headerRight || null}
@@ -77,5 +85,8 @@ const style = StyleSheet.create({
   },
   headerItem: {
     flex: 1,
+  },
+  headerTitleItem: {
+    flex: 3,
   },
 });
