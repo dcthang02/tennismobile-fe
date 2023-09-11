@@ -16,7 +16,7 @@ type TPHeaderProps = {
 export const TPHeader = ({ headerTitle, right }: TPHeaderProps) => {
   const navigation = useNavigation();
   return (
-    <TPWrapper paddingHorizontal={16} paddingTop={15}>
+    <TPWrapper paddingHorizontal={10} paddingTop={15}>
       <TPRow style={styles.header}>
         <TPRow style={styles.itemStart}>
           <Pressable onPress={() => navigation.goBack()}>

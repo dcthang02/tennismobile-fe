@@ -120,7 +120,7 @@ export const TPTextInput = React.forwardRef(
             )}
             <TextInput
               inputMode={inputType}
-              style={{ fontSize: 16, color: undefined }}
+              style={{ fontSize: 16, color: COLORS.charcoal[800] }}
               placeholder={label}
               onChangeText={handleChangeText}
               value={value}

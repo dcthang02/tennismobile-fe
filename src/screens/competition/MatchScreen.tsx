@@ -581,6 +581,7 @@ const MatchScreen = ({ navigation }: MatchProps) => {
               color={COLORS.green[600]}
               size="small"
               startIcon={<TPIcon name="add" color={COLORS.green[600]} />}
+              onPress={() => handleNavigate("CreateMatch")}
             />
           }
         />
