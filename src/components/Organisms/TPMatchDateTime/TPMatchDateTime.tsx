@@ -33,5 +33,6 @@ export const TPMatchDateTime = ({
 const styles = StyleSheet.create({
   row: {
     justifyContent: "space-between",
+    alignContent: "center",
   },
 });

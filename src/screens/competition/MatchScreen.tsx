@@ -604,7 +604,7 @@ const MatchScreen = ({ navigation }: MatchProps) => {
       <TPWrapper marginBottom={10}>
         <FlatList
           ListHeaderComponent={renderHeader}
-          contentContainerStyle={{ gap: 8 }}
+          style={{ gap: 8 }}
           data={matches}
           renderItem={({ item, index }) => (
             <TPMatchItem
