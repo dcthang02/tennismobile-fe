@@ -1,6 +1,6 @@
 import TPBackground from "@/components/Atom/TPBackgroud";
 import TPHeader from "@/components/Molecules/TPHeader";
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { AccountEditProfileProps } from "@/utils/createProps";
 import TPTextInput from "@/components/Molecules/TPTextInput";
@@ -20,6 +20,12 @@ const avatar_uri =
 
 const AccountProfileEditScreen = ({ navigation }: AccountEditProfileProps) => {
   const { singleFile, selectFile } = useUploadImage();
+
+  const [gender, setGender] = useState<"male" | "female">("male");
+
+  const handleChangeGender = useCallback(() => {
+    setGender((prevGender) => (prevGender === "male" ? "female" : "male"));
+  }, [gender]);
 
   return (
     <TPBackground>
@@ -43,6 +49,8 @@ const AccountProfileEditScreen = ({ navigation }: AccountEditProfileProps) => {
             { id: "1", value: "male", label: "Nam" },
             { id: "2", value: "female", label: "Nữ" },
           ]}
+          value={gender}
+          onChange={handleChangeGender}
         />
         <View style={styles.buttonBox}>
           <TPButton

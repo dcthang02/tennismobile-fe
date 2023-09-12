@@ -1,12 +1,6 @@
 import React, { ReactNode, useEffect, useState } from "react";
 
-import {
-  View,
-  Modal,
-  StyleSheet,
-  KeyboardAvoidingView,
-  ScrollView,
-} from "react-native";
+import { View, Modal, StyleSheet } from "react-native";
 import TPRow from "@/components/Atom/TPRow";
 import TPButton from "../TPButton";
 import TPIcon from "@/components/Atom/TPIcon";
@@ -46,7 +40,7 @@ export const TPModal = ({
         <View
           style={{
             backgroundColor,
-            padding: 10,
+            padding: 16,
             borderRadius: 25,
             borderBottomRightRadius: modalPosition === "bottom" ? 0 : 25,
             borderBottomLeftRadius: modalPosition === "bottom" ? 0 : 25,
@@ -58,7 +52,7 @@ export const TPModal = ({
                 endIcon={<TPIcon name="e-remove" />}
                 title=""
                 buttonType="text"
-                size="small"
+                size="tiny"
                 onPress={onCloseModal}
               />
             </TPRow>

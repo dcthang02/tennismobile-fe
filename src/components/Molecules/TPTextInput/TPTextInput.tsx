@@ -11,6 +11,7 @@ import TPText from "@/components/Atom/TPText";
 import { COLORS } from "@/constant/colors";
 import { checkInput } from "./checkError";
 import TPRow from "@/components/Atom/TPRow";
+import { ScrollView } from "react-native";
 
 export type TPTextInputRule = "phone" | "abc";
 
@@ -118,9 +119,10 @@ export const TPTextInput = React.forwardRef(
                 {label}
               </TPText>
             )}
+
             <TextInput
               inputMode={inputType}
-              style={{ fontSize: 16, color: undefined }}
+              style={{ fontSize: 16, color: COLORS.charcoal[800] }}
               placeholder={label}
               onChangeText={handleChangeText}
               value={value}

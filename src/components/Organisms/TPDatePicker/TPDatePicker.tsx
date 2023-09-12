@@ -7,11 +7,24 @@ import RNDateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
 
+type TPDatePickerProps = {
+  label?: string;
+  mode?: "date" | "time";
+};
+
 const formatDate = (date: Date) => {
   return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
 };
 
-export const TPDatePicker = () => {
+const formatTime = (date: Date) => {
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  return `${hours < 10 ? "0" + hours : hours}:${
+    minutes < 10 ? "0" + minutes : minutes
+  }`;
+};
+
+export const TPDatePicker = ({ label, mode = "date" }: TPDatePickerProps) => {
   const [date, setDate] = useState<Date>(new Date());
   const [show, setShow] = useState(false);
 
@@ -31,18 +44,24 @@ export const TPDatePicker = () => {
   return (
     <Pressable onPress={() => setShow(true)}>
       <TPTextInput
-        label="Ngày tháng năm sinh"
+        label={label || "Ngày tháng năm sinh"}
         inputType="text"
         disable
-        end={<TPIcon name="calendar" size="default" />}
-        parentValue={formatDate(date)}
+        end={
+          mode === "date" ? (
+            <TPIcon name="calendar" size="small" />
+          ) : (
+            <TPIcon name="clock" size="small" />
+          )
+        }
+        parentValue={mode === "date" ? formatDate(date) : formatTime(date)}
         ref={textDate}
       />
       {show && (
         <RNDateTimePicker
           testID="dateTimePicker"
           value={date}
-          mode={"date"}
+          mode={mode}
           is24Hour={true}
           onChange={handleChangeDate}
         />

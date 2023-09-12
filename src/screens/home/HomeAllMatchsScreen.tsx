@@ -34,7 +34,7 @@ const HomeAllMatchsScreen = ({ navigation }: HomeAllMatchProps) => {
     return (
       <TPWrapper paddingHorizontal={16} paddingTop={20} marginBottom={70}>
         <FlatList
-          contentContainerStyle={{ gap: 8 }}
+          style={{ gap: 8 }}
           data={matches}
           renderItem={({ item, index }) => (
             <TPMatchItem

@@ -29,7 +29,7 @@ type TPTextProps = {
 export const TPText = ({
   variant,
   children,
-  color = COLORS.charcoal[900],
+  color = COLORS.charcoal[800],
   alignCenter = false,
 }: TPTextProps) => {
   const { fontSize, lineHeight, fontWeight } = useMemo(

@@ -3,7 +3,9 @@ import TPCard from "@/components/Atom/TPCard";
 import TPIcon from "@/components/Atom/TPIcon";
 import TPRow from "@/components/Atom/TPRow";
 import TPText from "@/components/Atom/TPText";
+import TPButton from "@/components/Molecules/TPButton";
 import TPStatus from "@/components/Molecules/TPStatus";
+import { COLORS } from "@/constant/colors";
 import { convertDate } from "@/utils/dateTime";
 import React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
@@ -40,7 +42,19 @@ export const TPMatchItem = ({ match, onPress }: TPMatchItemProps) => {
               <TPText variant="body14-semibold">{match.owner.name}</TPText>
             </View>
           </TPRow>
-          <TPStatus status="successful" text="Đã nhận" />
+          {match.status === "pending" ? (
+            <TPButton
+              title="Tham gia"
+              buttonType="outline"
+              backgroundColor="transparent"
+              color={COLORS.green[600]}
+            />
+          ) : (
+            <TPStatus
+              status={match.status}
+              text={match.status === "successful" ? "Đã nhận" : "Chưa nhận"}
+            />
+          )}
         </TPRow>
       </Pressable>
     </TPCard>

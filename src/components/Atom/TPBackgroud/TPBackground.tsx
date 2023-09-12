@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { View, Keyboard } from "react-native";
+import { FlatList, View } from "react-native";
 
 import { COLORS } from "@/constant/colors";
 
@@ -9,14 +9,14 @@ type TPBackgroundProps = {
 
 export const TPBackground = ({ children }: TPBackgroundProps) => {
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: COLORS.background,
-      }}
-      onTouchStart={Keyboard.dismiss}
-    >
-      {children}
+    <View style={{ flex: 1, backgroundColor: COLORS.background }}>
+      <FlatList
+        data={[1]}
+        renderItem={({ item }) => {
+          return <>{children}</>;
+        }}
+        keyExtractor={(item) => "Background-Container"}
+      />
     </View>
   );
 };

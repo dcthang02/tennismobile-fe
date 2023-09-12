@@ -21,6 +21,7 @@ type TPPlayer = {
   age: number;
   clubName?: string;
   editable?: boolean;
+  renderType?: 1 | 2;
 };
 
 export const TPPlayer = ({
@@ -31,6 +32,7 @@ export const TPPlayer = ({
   age,
   clubName,
   editable = false,
+  renderType = 1,
 }: TPPlayer) => {
   const { navigate } = useNavigation();
   const _renderIconRowItem = useCallback(
@@ -66,14 +68,14 @@ export const TPPlayer = ({
 
   const _renderAvatar = useCallback(() => {
     return (
-      <View style={styles.avatarBox}>
+      <View style={renderType === 1 ? styles.avatarBox : {}}>
         <TPAvatar uri={avatar} size="medium" />
       </View>
     );
-  }, [avatar]);
+  }, [avatar, renderType]);
 
   return (
-    <TPCard style={styles.card}>
+    <TPCard style={renderType === 1 ? styles.card : {}}>
       {editable && (
         <View style={styles.buttonEdit}>
           <TPButton
@@ -85,26 +87,30 @@ export const TPPlayer = ({
           />
         </View>
       )}
-      <TPWrapper paddingTop={30}>
-        <View style={styles.container}>
+      <TPWrapper paddingTop={renderType === 1 ? 30 : 0}>
+        <View style={renderType === 1 ? {} : styles.containerRow}>
           {_renderAvatar()}
-          <TPText variant="heading5" alignCenter>
-            {name}
-          </TPText>
-          <TPRow style={styles.row1}>
-            {_renderIconRowItem(
-              <LeaderBoardIcon width={22} height={22} />,
-              "Hạng",
-              `${rank}/120`
-            )}
-            {_renderIconRowItem(
-              <PrizeIcon width={22} height={22} />,
-              "Level",
-              level.toString()
-            )}
-          </TPRow>
-          {_renderRowSpaceBetween("repeat-cycle", "Tuổi", age)}
-          {_renderRowSpaceBetween("gym", "Câu lạc bộ", clubName || "Chưa có")}
+          <View style={styles.container}>
+            <TPText variant="heading5" alignCenter={renderType === 1}>
+              {name}
+            </TPText>
+            <TPRow style={styles.row1}>
+              {_renderIconRowItem(
+                <LeaderBoardIcon width={22} height={22} />,
+                "Hạng",
+                `${rank}/120`
+              )}
+              {_renderIconRowItem(
+                <PrizeIcon width={22} height={22} />,
+                "Level",
+                level.toString()
+              )}
+            </TPRow>
+          </View>
+          {renderType === 1 &&
+            _renderRowSpaceBetween("repeat-cycle", "Tuổi", age)}
+          {renderType === 1 &&
+            _renderRowSpaceBetween("gym", "Câu lạc bộ", clubName || "Chưa có")}
         </View>
       </TPWrapper>
     </TPCard>
@@ -113,6 +119,10 @@ export const TPPlayer = ({
 
 const styles = StyleSheet.create({
   container: {
+    gap: 12,
+  },
+  containerRow: {
+    flexDirection: "row",
     gap: 12,
   },
   row1: {

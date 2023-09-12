@@ -1,5 +1,6 @@
 import TPCard from "@/components/Atom/TPCard";
 import TPIcon, { TypeTPIconName } from "@/components/Atom/TPIcon";
+import TPKeyboardScroll from "@/components/Atom/TPKeyboardScroll";
 import TPRow from "@/components/Atom/TPRow";
 import TPText from "@/components/Atom/TPText";
 import TPWrapper from "@/components/Atom/TPWrapper";
@@ -33,29 +34,7 @@ export const TPPlayerUtility = ({
   const { isShow, handleToggleModal } = useModal();
   const { isShow: showEdit, handleToggleModal: handleToggleEditModal } =
     useModal();
-  const [currentIndex, setCurrentIndex] = useState(-1);
-  const [keyBoardVisible, setKeyboardVisible] = useState(false);
-  console.log(currentIndex);
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
-      () => {
-        setKeyboardVisible(true); // or some other action
-      }
-    );
-    const keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
-      () => {
-        console.log("hide");
-        setKeyboardVisible(false); // or some other action
-      }
-    );
 
-    return () => {
-      keyboardDidHideListener.remove();
-      keyboardDidShowListener.remove();
-    };
-  }, []);
   const _renderUtilityCard = useCallback(
     (showAll: boolean = false) => {
       const limit = showAll ? Object.entries(utility).length : 6;
@@ -94,30 +73,23 @@ export const TPPlayerUtility = ({
   );
   const _renderEditUtility = useCallback(() => {
     return (
-      <View style={{ height: 715 }}>
-        <View
-          style={{
-            position: "absolute",
-            width: "100%",
-            gap: 10,
-            top: !keyBoardVisible ? 0 : currentIndex <= 4 ? 280 : 0,
-          }}
-        >
-          {Object.entries(utility).map((item, index) => {
-            return (
-              <TPTextInput
-                key={`input-${item[0]}`}
-                label={item[0]}
-                inputType="text"
-                parentValue={item[1][0]}
-                callbackFocus={() => setCurrentIndex(index)}
-              />
-            );
-          })}
-        </View>
-      </View>
+      <TPKeyboardScroll
+        containerStyle={styles.containerStyle}
+        scrollStyle={styles.scrollViewStyle}
+      >
+        {Object.entries(utility).map((item, index) => {
+          return (
+            <TPTextInput
+              key={`input-${item[0]}`}
+              label={item[0]}
+              inputType="text"
+              parentValue={item[1][0]}
+            />
+          );
+        })}
+      </TPKeyboardScroll>
     );
-  }, [utility, currentIndex, keyBoardVisible]);
+  }, [utility]);
   return (
     <TPWrapper gap={10}>
       <TPModal
@@ -173,6 +145,12 @@ export const TPPlayerUtility = ({
 };
 
 const styles = StyleSheet.create({
+  containerStyle: {
+    height: 720,
+  },
+  scrollViewStyle: {
+    gap: 10,
+  },
   container: {
     flexDirection: "row",
     flexWrap: "wrap",
