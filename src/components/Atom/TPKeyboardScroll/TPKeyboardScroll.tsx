@@ -4,6 +4,7 @@ import {
   ScrollView,
   Platform,
   ViewStyle,
+  FlatList,
 } from "react-native";
 
 type TPKeyboardScrollProps = {
@@ -23,13 +24,14 @@ export const TPKeyboardScroll = ({
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={10}
     >
-      <ScrollView
-        contentContainerStyle={scrollStyle || {}}
+      <FlatList
         keyboardShouldPersistTaps={"always"}
         showsVerticalScrollIndicator={false}
-      >
-        {children}
-      </ScrollView>
+        data={[1]}
+        renderItem={() => {
+          return <>{children}</>;
+        }}
+      />
     </KeyboardAvoidingView>
   );
 };

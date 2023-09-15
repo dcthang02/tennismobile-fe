@@ -11,8 +11,15 @@ import TPSearchBar from "@/components/Molecules/TPSearchBar";
 import TPSelection from "@/components/Molecules/TPSelection";
 import { COLORS } from "@/constant/colors";
 import useModal from "@/hooks/useModal";
+import useModalSelection from "@/hooks/useModalSelection";
 import React, { useCallback, useMemo, useState } from "react";
-import { KeyboardAvoidingView, Platform, StyleSheet, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from "react-native";
 
 const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -20,116 +27,106 @@ const players = [
   {
     id: "1",
     name: "Hoa Thiên Cốt",
-    image:
-      "https://www.clipartmax.com/png/small/277-2772093_user-female-skin-type-1-2-icon-avatar-100-x-100-pixel.png",
+    image: "https://practicaltyping.com/wp-content/uploads/2019/04/ace.jpg",
   },
   {
     id: "2",
     name: "Âu Dương Phong",
-    image:
-      "https://www.clipartmax.com/png/small/277-2772093_user-female-skin-type-1-2-icon-avatar-100-x-100-pixel.png",
+    image: "https://practicaltyping.com/wp-content/uploads/2019/04/ace.jpg",
   },
   {
     id: "3",
     name: "Lệnh Hồ Xung",
-    image:
-      "https://www.clipartmax.com/png/small/277-2772093_user-female-skin-type-1-2-icon-avatar-100-x-100-pixel.png",
+    image: "https://practicaltyping.com/wp-content/uploads/2019/04/ace.jpg",
   },
   {
     id: "4",
     name: "Bỉ Bỉ Đông",
-    image:
-      "https://www.clipartmax.com/png/small/277-2772093_user-female-skin-type-1-2-icon-avatar-100-x-100-pixel.png",
+    image: "https://practicaltyping.com/wp-content/uploads/2019/04/ace.jpg",
   },
   {
     id: "5",
     name: "Long Hạo Thần",
-    image:
-      "https://www.clipartmax.com/png/small/277-2772093_user-female-skin-type-1-2-icon-avatar-100-x-100-pixel.png",
+    image: "https://practicaltyping.com/wp-content/uploads/2019/04/ace.jpg",
   },
   {
     id: "6",
     name: "Long Hạo Thần",
-    image:
-      "https://www.clipartmax.com/png/small/277-2772093_user-female-skin-type-1-2-icon-avatar-100-x-100-pixel.png",
+    image: "https://practicaltyping.com/wp-content/uploads/2019/04/ace.jpg",
   },
   {
     id: "7",
     name: "Long Hạo Thần",
-    image:
-      "https://www.clipartmax.com/png/small/277-2772093_user-female-skin-type-1-2-icon-avatar-100-x-100-pixel.png",
+    image: "https://practicaltyping.com/wp-content/uploads/2019/04/ace.jpg",
   },
   {
     id: "8",
     name: "Long Hạo Thần",
-    image:
-      "https://www.clipartmax.com/png/small/277-2772093_user-female-skin-type-1-2-icon-avatar-100-x-100-pixel.png",
+    image: "https://practicaltyping.com/wp-content/uploads/2019/04/ace.jpg",
   },
   {
     id: "9",
     name: "Long Hạo Thần",
-    image:
-      "https://www.clipartmax.com/png/small/277-2772093_user-female-skin-type-1-2-icon-avatar-100-x-100-pixel.png",
+    image: "https://practicaltyping.com/wp-content/uploads/2019/04/ace.jpg",
   },
   {
     id: "10",
     name: "Long Hạo Thần",
-    image:
-      "https://www.clipartmax.com/png/small/277-2772093_user-female-skin-type-1-2-icon-avatar-100-x-100-pixel.png",
+    image: "https://practicaltyping.com/wp-content/uploads/2019/04/ace.jpg",
   },
   {
     id: "11",
     name: "Long Hạo Thần",
-    image:
-      "https://www.clipartmax.com/png/small/277-2772093_user-female-skin-type-1-2-icon-avatar-100-x-100-pixel.png",
+    image: "https://practicaltyping.com/wp-content/uploads/2019/04/ace.jpg",
   },
   {
     id: "12",
     name: "Long Hạo Thần",
-    image:
-      "https://www.clipartmax.com/png/small/277-2772093_user-female-skin-type-1-2-icon-avatar-100-x-100-pixel.png",
+    image: "https://practicaltyping.com/wp-content/uploads/2019/04/ace.jpg",
   },
   {
     id: "13",
     name: "Long Hạo Thần",
-    image:
-      "https://www.clipartmax.com/png/small/277-2772093_user-female-skin-type-1-2-icon-avatar-100-x-100-pixel.png",
+    image: "https://practicaltyping.com/wp-content/uploads/2019/04/ace.jpg",
   },
   {
     id: "14",
     name: "Long Hạo Thần",
-    image:
-      "https://www.clipartmax.com/png/small/277-2772093_user-female-skin-type-1-2-icon-avatar-100-x-100-pixel.png",
+    image: "https://practicaltyping.com/wp-content/uploads/2019/04/ace.jpg",
   },
   {
     id: "15",
     name: "Long Hạo Thần",
-    image:
-      "https://www.clipartmax.com/png/small/277-2772093_user-female-skin-type-1-2-icon-avatar-100-x-100-pixel.png",
+    image: "https://practicaltyping.com/wp-content/uploads/2019/04/ace.jpg",
   },
   {
     id: "16",
     name: "Long Hạo Thần",
-    image:
-      "https://www.clipartmax.com/png/small/277-2772093_user-female-skin-type-1-2-icon-avatar-100-x-100-pixel.png",
+    image: "https://practicaltyping.com/wp-content/uploads/2019/04/ace.jpg",
   },
   {
     id: "17",
     name: "Long Hạo Thần",
-    image:
-      "https://www.clipartmax.com/png/small/277-2772093_user-female-skin-type-1-2-icon-avatar-100-x-100-pixel.png",
+    image: "https://practicaltyping.com/wp-content/uploads/2019/04/ace.jpg",
   },
   {
     id: "18",
     name: "Long Hạo Thần",
-    image:
-      "https://www.clipartmax.com/png/small/277-2772093_user-female-skin-type-1-2-icon-avatar-100-x-100-pixel.png",
+    image: "https://practicaltyping.com/wp-content/uploads/2019/04/ace.jpg",
   },
 ];
 
-const PlayerItem = ({ name, image }: { name: string; image: string }) => {
+const PlayerItem = ({
+  name,
+  image,
+  style = {},
+}: {
+  name: string;
+  image: string;
+  style?: ViewStyle;
+}) => {
   return (
-    <TPRow style={styles.playerItem}>
+    <TPRow style={style}>
       <TPAvatar uri={image} size="default" />
       <TPText variant="body14-semibold">{name}</TPText>
     </TPRow>
@@ -140,12 +137,6 @@ export const TPPlayersInvitator = () => {
   const { isShow, handleToggleModal } = useModal();
   const [searchString, setSearchString] = useState("");
   const [numberPlayers, setNumberPlayers] = useState(1);
-  const [competitorIds, setCompetitorIds] = useState<(number | string)[]>([
-    players[0].id,
-  ]);
-  const [modalCompetiorIds, setModalCompetitorIds] = useState<
-    (number | string)[]
-  >([players[0].id]);
 
   const data = useMemo(
     () =>
@@ -155,41 +146,27 @@ export const TPPlayersInvitator = () => {
     [searchString]
   );
 
-  const handleSelectPlayers = useCallback(
-    (id: number | string) => {
-      const index = modalCompetiorIds.findIndex((value) => value === id);
-      const tArr = modalCompetiorIds.slice();
-      if (index === -1) {
-        tArr.push(id);
-        setModalCompetitorIds(tArr);
-      } else {
-        tArr.splice(index, 1);
-        setModalCompetitorIds(tArr);
-      }
-    },
-    [modalCompetiorIds, numberPlayers]
-  );
-
-  const handleSelectSinglePlayer = useCallback((id: number | string) => {
-    setModalCompetitorIds([id]);
-  }, []);
-
-  const handleSubmitCompetitor = useCallback(() => {
-    setCompetitorIds(modalCompetiorIds);
-    handleToggleModal(false);
-  }, [modalCompetiorIds]);
+  const {
+    value: competitorIds,
+    setValues: setCompetitorIds,
+    modalValues: modalCompetiorIds,
+    setModalValues: setModalCompetitorIds,
+    handleSelectValue: handleSelectPlayers,
+    handleSelectSingleValue: handleSelectSinglePlayer,
+    handleSubmitModal: handleSubmitCompetitor,
+  } = useModalSelection(players[0].id, handleToggleModal);
 
   const openModalCallback = useCallback(() => {
-    setModalCompetitorIds(competitorIds);
+    if (competitorIds.length !== 0) setModalCompetitorIds(competitorIds);
+    else setModalCompetitorIds([players[0].id]);
+
     setSearchString("");
   }, [competitorIds]);
 
   const _renderFindCompetitors = useCallback(() => {
     return (
       <>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-        >
+        <TPKeyboardScroll>
           <TPSearchBar
             placeholder="Tìm kiếm tên đấu thủ..."
             onChange={setSearchString}
@@ -199,7 +176,13 @@ export const TPPlayersInvitator = () => {
               return {
                 id: item.id,
                 value: item.id,
-                label: <PlayerItem name={item.name} image={item.image} />,
+                label: (
+                  <PlayerItem
+                    style={styles.playerItem}
+                    name={item.name}
+                    image={item.image}
+                  />
+                ),
               };
             })}
             value={modalCompetiorIds}
@@ -217,7 +200,7 @@ export const TPPlayersInvitator = () => {
             size="large"
             onPress={handleSubmitCompetitor}
           />
-        </KeyboardAvoidingView>
+        </TPKeyboardScroll>
       </>
     );
   }, [
@@ -249,34 +232,50 @@ export const TPPlayersInvitator = () => {
       </TPModal>
       <TPText variant="heading6">Mời đấu thủ</TPText>
       <TPCard style={styles.card}>
-        <View>
-          <TPRow style={styles.row}>
-            <TPText variant="body14">Số người tham gia</TPText>
-            <TPText variant="body14">{numberPlayers}</TPText>
-          </TPRow>
-          {competitorIds.map((id) => {
-            const player = players.find((el) => el.id === id);
-            return (
-              <PlayerItem
-                name={player?.name || ""}
-                image={player?.image || ""}
-                key={`player-${id}`}
-              />
-            );
-          })}
-        </View>
-        <TPRow style={styles.findPlayers}>
-          <TPButton
-            title="Tìm đấu thủ"
-            textSize="small"
-            startIcon={
-              <TPIcon name="add" color={COLORS.green[600]} size="small" />
-            }
-            buttonType="text"
-            color={COLORS.green[600]}
-            onPress={() => handleToggleModal(true, openModalCallback)}
-          />
+        <TPRow style={styles.row}>
+          <TPText variant="body14">Số người tham gia</TPText>
+          <TPText variant="body14">{numberPlayers}</TPText>
         </TPRow>
+        {competitorIds.map((id) => {
+          const player = players.find((el) => el.id === id);
+          return (
+            <PlayerItem
+              style={styles.selectedPlayerItem}
+              name={player?.name || ""}
+              image={player?.image || ""}
+              key={`player-${id}`}
+            />
+          );
+        })}
+        <View style={styles.findPlayers}>
+          {Platform.OS === "ios" && (
+            <View style={{ overflow: "hidden" }}>
+              <View
+                style={{
+                  borderStyle: "dashed",
+                  borderWidth: 1,
+                  borderColor: COLORS.charcoal[400],
+                  margin: -2,
+                  marginTop: 10,
+                }}
+              >
+                <View style={{ height: 1, width: 200 }} />
+              </View>
+            </View>
+          )}
+          <TPRow style={{ justifyContent: "center" }}>
+            <TPButton
+              title="Tìm đấu thủ"
+              textSize="small"
+              startIcon={
+                <TPIcon name="add" color={COLORS.green[600]} size="small" />
+              }
+              buttonType="text"
+              color={COLORS.green[600]}
+              onPress={() => handleToggleModal(true, openModalCallback)}
+            />
+          </TPRow>
+        </View>
       </TPCard>
     </TPWrapper>
   );
@@ -289,20 +288,18 @@ const styles = StyleSheet.create({
   },
   findPlayers: {
     justifyContent: "center",
-    borderTopWidth: 1,
-    borderStyle: "dashed",
-    borderColor: COLORS.charcoal[400],
-    paddingHorizontal: 10,
-    paddingVertical: 8,
   },
   card: {
     gap: 16,
-    paddingBottom: 0,
     paddingHorizontal: 16,
   },
   playerItem: {
     gap: 8,
     alignItems: "center",
     paddingVertical: 12,
+  },
+  selectedPlayerItem: {
+    gap: 8,
+    alignItems: "center",
   },
 });

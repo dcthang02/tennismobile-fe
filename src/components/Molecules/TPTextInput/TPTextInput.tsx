@@ -24,6 +24,7 @@ type TPTextInputProps = {
   rules?: TPTextInputRule[];
   parentValue?: string;
   callbackFocus?: () => void;
+  styleColor?: string;
 };
 
 export const TPTextInput = React.forwardRef(
@@ -37,6 +38,7 @@ export const TPTextInput = React.forwardRef(
       rules = [],
       parentValue,
       callbackFocus,
+      styleColor,
     }: TPTextInputProps,
     ref?: any
   ) => {
@@ -122,7 +124,10 @@ export const TPTextInput = React.forwardRef(
 
             <TextInput
               inputMode={inputType}
-              style={{ fontSize: 16, color: COLORS.charcoal[800] }}
+              style={{
+                fontSize: 16,
+                color: styleColor || COLORS.charcoal[800],
+              }}
               placeholder={label}
               onChangeText={handleChangeText}
               value={value}

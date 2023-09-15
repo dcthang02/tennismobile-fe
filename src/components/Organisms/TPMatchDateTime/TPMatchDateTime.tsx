@@ -5,6 +5,7 @@ import TPDatePicker from "../TPDatePicker";
 import { StyleSheet, Switch } from "react-native";
 import TPSwitch from "@/components/Atom/TPSwitch";
 import TPRow from "@/components/Atom/TPRow";
+import { COLORS } from "@/constant/colors";
 
 type TPMatchDateTimeProps = {
   isPending?: boolean;
@@ -19,8 +20,8 @@ export const TPMatchDateTime = ({
     <TPWrapper gap={4}>
       <TPText variant="heading6">Thời gian</TPText>
       <TPWrapper gap={8}>
-        <TPDatePicker label="Ngày" />
-        <TPDatePicker label="Giờ" mode="time" />
+        <TPDatePicker label="Ngày" color={COLORS.blue[600]} />
+        <TPDatePicker label="Giờ" mode="time" color={COLORS.blue[600]} />
       </TPWrapper>
       <TPRow style={styles.row}>
         <TPText variant="body14">Chưa rõ thời gian</TPText>

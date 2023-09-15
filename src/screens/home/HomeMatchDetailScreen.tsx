@@ -44,7 +44,7 @@ const InfoRow = ({ title, players, text, note }: InfoRowProps) => {
       <TPText variant="heading6">{title}</TPText>
       {players || null}
       {text && (
-        <TPText variant="body16" color={COLORS.charcoal[600]}>
+        <TPText variant="body14" color={COLORS.charcoal[600]}>
           {text}
         </TPText>
       )}
@@ -88,13 +88,14 @@ const HomeMatchDetailScreen = ({ route, navigation }: HomeMatchDetailProps) => {
             />
             <TPWrapper paddingHorizontal={16} gap={15} marginBottom={30}>
               <TPText variant="heading4">{match.stadium?.name}</TPText>
-              <TPText variant="body14-semibold" color={COLORS.charcoal[400]}>
+              <TPText variant="body14" color={COLORS.charcoal[600]}>
                 {match.stadium?.address}
               </TPText>
               <TPRow>
                 <TPButton
                   title="Xem đường đi"
                   size="tiny"
+                  textSize="small"
                   buttonType="text"
                   color={COLORS.blue[600]}
                 />

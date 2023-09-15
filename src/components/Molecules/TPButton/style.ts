@@ -10,9 +10,9 @@ export const ButtonStyled = styled.Pressable<{
   padding: ${(props: any) => {
     switch (props.size) {
       case "large":
-        return "12px 16px";
-      case "default":
         return "8px 16px";
+      case "default":
+        return "8px 12px";
       case "small":
         return "2px 8px";
       case "tiny":

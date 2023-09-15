@@ -7,7 +7,9 @@ import TPMatchDateTime from "@/components/Organisms/TPMatchDateTime";
 import TPMatchLocationPicker from "@/components/Organisms/TPMatchLocationPicker";
 import TPMatchNoticeInput from "@/components/Organisms/TPMatchNoticeInput";
 import TPPlayersInvitator from "@/components/Organisms/TPPlayersInvitator";
+import { COLORS } from "@/constant/colors";
 import React, { useState } from "react";
+import { StyleSheet, View } from "react-native";
 
 const CreateMatchScreen = () => {
   const [isTimePending, setIsTimePending] = useState(false);
@@ -38,8 +40,20 @@ const CreateMatchScreen = () => {
         />
         <TPMatchNoticeInput />
       </TPWrapper>
+      <View style={styles.view}>
+        <TPButton title="Gửi lời mời" textSize="small" />
+      </View>
     </TPBackground>
   );
 };
+
+const styles = StyleSheet.create({
+  view: {
+    backgroundColor: COLORS.charcoal.white,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    marginTop: 20,
+  },
+});
 
 export default CreateMatchScreen;

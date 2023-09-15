@@ -22,7 +22,7 @@ export const TPImageCarousel = ({ images }: TPImageCarouselProps) => {
           <Image
             source={{ uri: item }}
             width={Dimensions.get("window").width}
-            height={250}
+            height={240}
           />
         )}
         keyExtractor={(item, index) => `image-${item}-${index}`}

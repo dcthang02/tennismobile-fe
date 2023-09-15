@@ -25,7 +25,9 @@ export const TPMatchItem = ({ match, onPress }: TPMatchItemProps) => {
           </TPText>
           <TPRow style={styles.playerCountRow}>
             <TPIcon name="multiple-outline" size="small" />
-            <TPText variant="small-semibold">Đấu thủ</TPText>
+            <TPText variant="small-semibold" color={COLORS.charcoal[600]}>
+              Đấu thủ
+            </TPText>
             <TPText variant="small-semibold">
               {match.players.length}/{match.playerCount}
             </TPText>

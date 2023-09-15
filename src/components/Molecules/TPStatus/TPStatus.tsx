@@ -20,19 +20,19 @@ export const TPStatus = ({ status = "successful", text }: TPStatusProps) => {
 
 const styles = StyleSheet.create({
   box: {
-    paddingVertical: 8,
-    paddingHorizontal: 4,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
     borderRadius: 12,
     borderWidth: 1,
   },
   warning: {
     backgroundColor: COLORS.warning[100],
     borderColor: COLORS.warning[300],
-    color: COLORS.warning[300],
+    color: COLORS.warning[900],
   },
   successful: {
     backgroundColor: COLORS.successfull[100],
     borderColor: COLORS.successfull[300],
-    color: COLORS.successfull[300],
+    color: COLORS.successfull[900],
   },
 });

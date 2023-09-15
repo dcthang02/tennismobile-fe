@@ -11,9 +11,12 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.tennisfe"
     },
     "android": {
       "adaptiveIcon": {
@@ -32,7 +35,9 @@
     "plugins": [
       "@react-native-firebase/app",
       "@react-native-firebase/auth",
-      ["expo-document-picker"]
+      [
+        "expo-document-picker"
+      ]
     ]
   }
 }

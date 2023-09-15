@@ -78,7 +78,7 @@ const Item = ({ match, onPress }: ItemProps) => {
       >
         <TPAvatar uri={match.opponent.avatar} />
         <View>
-          <TPText variant="body16-semibold" alignCenter>
+          <TPText variant="body14-semibold" alignCenter>
             {convertName(match.opponent.name)}
           </TPText>
           <TPText variant="body14" color={COLORS.charcoal[400]} alignCenter>

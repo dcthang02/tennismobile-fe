@@ -10,6 +10,7 @@ import RNDateTimePicker, {
 type TPDatePickerProps = {
   label?: string;
   mode?: "date" | "time";
+  color?: string;
 };
 
 const formatDate = (date: Date) => {
@@ -24,7 +25,11 @@ const formatTime = (date: Date) => {
   }`;
 };
 
-export const TPDatePicker = ({ label, mode = "date" }: TPDatePickerProps) => {
+export const TPDatePicker = ({
+  label,
+  mode = "date",
+  color,
+}: TPDatePickerProps) => {
   const [date, setDate] = useState<Date>(new Date());
   const [show, setShow] = useState(false);
 
@@ -56,6 +61,7 @@ export const TPDatePicker = ({ label, mode = "date" }: TPDatePickerProps) => {
         }
         parentValue={mode === "date" ? formatDate(date) : formatTime(date)}
         ref={textDate}
+        styleColor={color}
       />
       {show && (
         <RNDateTimePicker

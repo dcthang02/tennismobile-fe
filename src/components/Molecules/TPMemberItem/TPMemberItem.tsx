@@ -43,12 +43,13 @@ export const TPMemberItem = ({
       >
         <TPRow style={{ gap: 10, alignItems: "center" }}>
           <TPAvatar uri={player.avatar} />
-          <TPText variant="body16-semibold">{player.name}</TPText>
+          <TPText variant="body14-semibold">{player.name}</TPText>
         </TPRow>
         <TPButton
           title="Thách đấu"
           buttonType="outline"
-          size="large"
+          size="default"
+          textSize="small"
           color={COLORS.green[400]}
           backgroundColor="transparent"
           onPress={onPressButton}

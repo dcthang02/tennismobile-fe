@@ -37,7 +37,7 @@ export const TPSelection = ({
     <FlatList
       horizontal={!column}
       data={data}
-      style={{ maxHeight: 650, marginTop: 10 }}
+      style={{ maxHeight: 630, marginTop: 10 }}
       contentContainerStyle={{ gap }}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
