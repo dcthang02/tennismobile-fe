@@ -24,14 +24,13 @@ export const TPKeyboardScroll = ({
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={10}
     >
-      <FlatList
+      <ScrollView
+        contentContainerStyle={scrollStyle || {}}
         keyboardShouldPersistTaps={"always"}
         showsVerticalScrollIndicator={false}
-        data={[1]}
-        renderItem={() => {
-          return <>{children}</>;
-        }}
-      />
+      >
+        {children}
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 };

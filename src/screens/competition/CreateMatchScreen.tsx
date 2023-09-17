@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.charcoal.white,
     paddingHorizontal: 16,
     paddingVertical: 8,
-    marginTop: 20,
+    marginTop: 100,
   },
 });
 

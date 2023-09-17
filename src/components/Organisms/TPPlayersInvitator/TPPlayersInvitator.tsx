@@ -166,7 +166,9 @@ export const TPPlayersInvitator = () => {
   const _renderFindCompetitors = useCallback(() => {
     return (
       <>
-        <TPKeyboardScroll>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
           <TPSearchBar
             placeholder="Tìm kiếm tên đấu thủ..."
             onChange={setSearchString}
@@ -200,7 +202,7 @@ export const TPPlayersInvitator = () => {
             size="large"
             onPress={handleSubmitCompetitor}
           />
-        </TPKeyboardScroll>
+        </KeyboardAvoidingView>
       </>
     );
   }, [
