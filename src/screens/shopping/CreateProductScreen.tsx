@@ -123,7 +123,12 @@ const CreateProductScreen = ({ navigation }: CreateProductProps) => {
             borderColor={COLORS.charcoal[200]}
             end={<FacebookIcon width={24} height={24} />}
           />
-          <TPTextInput inputType="text" label="Email" require={false} />
+          <TPTextInput
+            inputType="text"
+            label="Email"
+            require={false}
+            borderColor={COLORS.charcoal[200]}
+          />
         </View>
       </TPWrapper>
     );

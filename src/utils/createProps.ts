@@ -78,3 +78,8 @@ export type CreateProductProps = NativeStackScreenProps<
   MainStackParams,
   "CreateProduct"
 >;
+
+export type SendCommentProps = NativeStackScreenProps<
+  MainStackParams,
+  "SendComment"
+>;

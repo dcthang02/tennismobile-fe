@@ -11,7 +11,7 @@ import useNavigation from "@/hooks/useNavigation";
 import { ShoppingDetailProps } from "@/utils/createProps";
 import { getPriceString } from "@/utils/price";
 import React, { ReactNode, useCallback } from "react";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 
 import FacebookIcon from "assets/icon/facebook.svg";
 import TPItemReviews from "@/components/Organisms/TPItemReviews";
@@ -40,7 +40,7 @@ const product = {
 const ShoppingDetailScreen = ({ route, navigation }: ShoppingDetailProps) => {
   const { images, name, price, vote, sold, status, seller, description } =
     product;
-  const { handleGoback } = useNavigation(navigation);
+  const { handleGoback, handleNavigate } = useNavigation(navigation);
 
   const _renderButtonBack = useCallback(() => {
     return (
@@ -177,7 +177,13 @@ const ShoppingDetailScreen = ({ route, navigation }: ShoppingDetailProps) => {
   const _renderContactSellerButton = useCallback(() => {
     return (
       <TPRow style={styles.buttonContactBox}>
-        <TPIcon name="comment" />
+        <Pressable
+          onPress={() =>
+            handleNavigate("SendComment", { productId: route.params.productId })
+          }
+        >
+          <TPIcon name="comment" />
+        </Pressable>
         <TPWrapper flex={1}>
           <TPButton title="Liên hệ người bán" size="large" />
         </TPWrapper>
