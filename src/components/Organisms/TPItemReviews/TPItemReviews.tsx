@@ -84,6 +84,7 @@ export const TPItemReviews = ({ rating, isFull = false }: TPItemReview) => {
         <TPRow>
           {[1, 2, 3, 4, 5].map((num) => (
             <AntDesign
+              key={`star-${num}`}
               name="star"
               size={12}
               color={num <= rating ? COLORS.golden[600] : COLORS.charcoal[300]}
@@ -112,6 +113,7 @@ export const TPItemReviews = ({ rating, isFull = false }: TPItemReview) => {
         <TPRow style={{ ...styles.itemsCenter, gap: 4 }}>
           {[1, 2, 3, 4, 5].map((num) => (
             <AntDesign
+              key={`icon-star-${num}`}
               name="star"
               size={12}
               color={num <= rating ? COLORS.golden[600] : COLORS.charcoal[300]}
