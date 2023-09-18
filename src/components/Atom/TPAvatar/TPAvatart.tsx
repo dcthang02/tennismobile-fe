@@ -4,10 +4,11 @@ import { Image } from "react-native";
 
 type TPAvatarProps = {
   uri: string;
-  size?: "small" | "default" | "medium" | "large";
+  size?: "tiny" | "small" | "default" | "medium" | "large";
 };
 
 const sizes = {
+  tiny: 24,
   small: 36,
   default: 40,
   medium: 68,

@@ -18,6 +18,8 @@ import AccountProfileEditScreen from "@/screens/account/AccountProfileEditScreen
 import NotificationScreen from "@/screens/notification/NotificationScreen";
 import NotificationDetailScreen from "@/screens/notification/NotificationDetail";
 
+import ShoppingDetailScreen from "@/screens/shopping/ShoppingDetailScreen";
+
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
@@ -37,6 +39,10 @@ export type MainStackParams = {
   CreateMatch: undefined;
   CreateMatchSuccess: undefined;
   AccountProfileEdit: undefined;
+  ShoppingDetail: {
+    productId: string;
+    name: string;
+  };
 };
 
 export type MainTabParams = {
@@ -93,6 +99,8 @@ const MainStack = () => {
         name="AccountProfileEdit"
         component={AccountProfileEditScreen}
       />
+
+      <Stack.Screen name="ShoppingDetail" component={ShoppingDetailScreen} />
     </Stack.Navigator>
   );
 };

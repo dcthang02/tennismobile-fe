@@ -5,9 +5,13 @@ import { Dimensions, FlatList, View, Image, StyleSheet } from "react-native";
 
 type TPImageCarouselProps = {
   images: string[];
+  height?: number;
 };
 
-export const TPImageCarousel = ({ images }: TPImageCarouselProps) => {
+export const TPImageCarousel = ({
+  images,
+  height = 240,
+}: TPImageCarouselProps) => {
   const [imageIndex, setImageIndex] = useState(0);
 
   const handleSwipeImage = useCallback((offset: number) => {
@@ -22,7 +26,7 @@ export const TPImageCarousel = ({ images }: TPImageCarouselProps) => {
           <Image
             source={{ uri: item }}
             width={Dimensions.get("window").width}
-            height={240}
+            height={height}
           />
         )}
         keyExtractor={(item, index) => `image-${item}-${index}`}

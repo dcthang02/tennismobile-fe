@@ -5,9 +5,14 @@ import TPWrapper from "@/components/Atom/TPWrapper";
 import TPButton from "@/components/Molecules/TPButton";
 import TPSearchBar from "@/components/Molecules/TPSearchBar";
 import { COLORS } from "@/constant/colors";
+import useNavigation from "@/hooks/useNavigation";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useCallback } from "react";
-import { FlatList, Image, StyleSheet, View } from "react-native";
+import { FlatList, Image, Pressable, StyleSheet, View } from "react-native";
+
+type TPShopProps = {
+  navigation: any;
+};
 
 type TypeItem = {
   id: number | string;
@@ -72,7 +77,8 @@ const items: TypeItem[] = [
   },
 ];
 
-export const TPShop = () => {
+export const TPShop = ({ navigation }: TPShopProps) => {
+  const { handleNavigate } = useNavigation(navigation);
   const _renderListItems = useCallback(() => {
     return (
       <FlatList
@@ -81,12 +87,18 @@ export const TPShop = () => {
         data={items}
         style={{ gap: 10 }}
         renderItem={({ item, index }) => (
-          <View
+          <Pressable
             style={{
               width: "50%",
               paddingRight: index % 2 === 0 ? 5 : 0,
               paddingLeft: index % 2 === 0 ? 0 : 5,
             }}
+            onPress={() =>
+              handleNavigate("ShoppingDetail", {
+                productId: item.id,
+                name: item.name,
+              })
+            }
           >
             <TPCard
               style={{ overflow: "hidden" }}
@@ -108,12 +120,12 @@ export const TPShop = () => {
                 </TPText>
               </TPWrapper>
             </TPCard>
-          </View>
+          </Pressable>
         )}
         numColumns={2}
       />
     );
-  }, []);
+  }, [handleNavigate]);
 
   return (
     <>

@@ -27,7 +27,7 @@ const ShoppingScreen = ({ navigation }: ShoppingProps) => {
             />
           }
         />
-        <TPShop />
+        <TPShop navigation={navigation} />
       </TPWrapper>
     </TPBackground>
   );
