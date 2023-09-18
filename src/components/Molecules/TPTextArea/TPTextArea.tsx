@@ -5,12 +5,22 @@ import { Pressable, StyleSheet, TextInput, View } from "react-native";
 type TPTextAreaProps = {
   placeholder: string;
   focus?: () => void;
+  borderColor?: string;
+  greenOnfocus?: boolean;
 };
 
 export const TPTextArea = React.forwardRef<TextInput, TPTextAreaProps>(
-  ({ placeholder, focus }: TPTextAreaProps, ref) => {
+  (
+    {
+      placeholder,
+      focus,
+      borderColor = COLORS.charcoal.white,
+      greenOnfocus = false,
+    }: TPTextAreaProps,
+    ref
+  ) => {
     return (
-      <Pressable style={styles.inputBox} onPress={focus}>
+      <Pressable style={{ ...styles.inputBox, borderColor }} onPress={focus}>
         <TextInput ref={ref} placeholder={placeholder} multiline />
       </Pressable>
     );
@@ -25,5 +35,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.charcoal.white,
     borderRadius: 16,
     minHeight: 132,
+    borderWidth: 1,
   },
 });

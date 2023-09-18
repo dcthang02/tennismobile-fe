@@ -8,6 +8,7 @@ import TPHeader from "@/components/Molecules/TPHeader";
 import TPSearchBar from "@/components/Molecules/TPSearchBar";
 import { TPProductStatus } from "@/components/Organisms/TPShop/TPItemStatus";
 import { COLORS } from "@/constant/colors";
+import useNavigation from "@/hooks/useNavigation";
 import { MyShopProps } from "@/utils/createProps";
 import { getPriceString } from "@/utils/price";
 import React, { useCallback } from "react";
@@ -81,6 +82,7 @@ const products: TypeProduct[] = [
 ];
 
 const MyShopScreen = ({ navigation }: MyShopProps) => {
+  const { handleNavigate } = useNavigation(navigation);
   const _renderProductItem = useCallback((product: TypeProduct) => {
     return (
       <TPCard paddingHorizontal={16} paddingVertical={16}>
@@ -116,10 +118,14 @@ const MyShopScreen = ({ navigation }: MyShopProps) => {
   const _renderBtnAddProduct = useCallback(() => {
     return (
       <View style={styles.btnView}>
-        <TPButton title="Thêm sản phẩm" size="large" />
+        <TPButton
+          title="Thêm sản phẩm"
+          size="large"
+          onPress={() => handleNavigate("CreateProduct")}
+        />
       </View>
     );
-  }, []);
+  }, [handleNavigate]);
 
   return (
     <TPBackground

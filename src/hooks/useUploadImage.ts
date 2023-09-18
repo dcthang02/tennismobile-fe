@@ -3,7 +3,7 @@ import { Alert, PermissionsAndroid } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
 import { DocumentPickerResult } from "expo-document-picker";
 
-const useUploadImage = () => {
+const useUploadImage = (multiple: boolean = false) => {
   const [singleFile, setSingleFile] = useState<DocumentPickerResult | null>(
     null
   );
@@ -56,6 +56,7 @@ const useUploadImage = () => {
         const result = await DocumentPicker.getDocumentAsync({
           copyToCacheDirectory: false,
           type: "image/*",
+          multiple: multiple,
         });
 
         if (result.assets) {
