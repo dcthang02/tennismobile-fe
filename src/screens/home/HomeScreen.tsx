@@ -19,11 +19,13 @@ const user = {
 const HomeScreen = ({ navigation }: HomeProps) => {
   const { handleNavigate } = useNavigation(navigation);
   return (
-    <TPBackground>
-      <TPWrapper paddingHorizontal={16} gap={20}>
-        <TPHomeHeader user={user} />
-      </TPWrapper>
-
+    <TPBackground
+      top={
+        <TPWrapper paddingHorizontal={16} gap={20}>
+          <TPHomeHeader user={user} />
+        </TPWrapper>
+      }
+    >
       <TPNearbyPlayers
         headerComponents={
           <>

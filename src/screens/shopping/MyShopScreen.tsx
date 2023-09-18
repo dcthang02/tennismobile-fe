@@ -122,21 +122,30 @@ const MyShopScreen = ({ navigation }: MyShopProps) => {
   }, []);
 
   return (
-    <TPBackground>
-      <TPHeader headerTitle="Shop của bạn" />
-      <TPWrapper paddingHorizontal={16} gap={16} marginBottom={30}>
-        <TPSearchBar
-          placeholder="Tìm kiếm sản phẩm của bạn"
-          backgroundColor="transparent"
-        />
+    <TPBackground
+      top={
+        <>
+          <TPHeader headerTitle="Shop của bạn" />
+          <TPWrapper paddingHorizontal={16}>
+            <TPSearchBar
+              placeholder="Tìm kiếm sản phẩm của bạn"
+              backgroundColor="transparent"
+            />
+          </TPWrapper>
+        </>
+      }
+      bottom={_renderBtnAddProduct()}
+    >
+      {/* <TPHeader headerTitle="Shop của bạn" /> */}
+      <TPWrapper paddingHorizontal={16} gap={16} marginTop={16} flex={1}>
         <FlatList
-          style={{ gap: 16 }}
+          contentContainerStyle={{ gap: 16, paddingBottom: 10 }}
           data={products}
           renderItem={({ item, index }) => _renderProductItem(item)}
           keyExtractor={(item, index) => `product-${item.id}-${index}`}
+          showsVerticalScrollIndicator={false}
         />
       </TPWrapper>
-      {_renderBtnAddProduct()}
     </TPBackground>
   );
 };

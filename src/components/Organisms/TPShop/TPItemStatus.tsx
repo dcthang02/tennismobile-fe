@@ -3,7 +3,7 @@ import TPText from "@/components/Atom/TPText";
 import { COLORS } from "@/constant/colors";
 import { AntDesign } from "@expo/vector-icons";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { FlexAlignType, StyleSheet, View } from "react-native";
 
 type TPProductRatingInfoProps = {
   vote: number;
@@ -11,6 +11,7 @@ type TPProductRatingInfoProps = {
   status: "Còn hàng" | "Hết hàng";
   textColor?: string;
   flexDirection?: "column" | "column-reverse" | "row" | "row-reverse";
+  alignItems?: FlexAlignType;
 };
 
 type TPProductStatus = {
@@ -46,9 +47,10 @@ export const TPProductRatingInfo = ({
   status,
   textColor = COLORS.charcoal[800],
   flexDirection = "row",
+  alignItems = "center",
 }: TPProductRatingInfoProps) => {
   return (
-    <View style={[styles.viewStyle, { flexDirection }]}>
+    <View style={[styles.viewStyle, { flexDirection, alignItems }]}>
       <TPRow style={{ gap: 4, alignItems: "center" }}>
         <AntDesign name="star" size={ICON_SIZE} color={COLORS.golden[600]} />
         <TPText variant="small" color={textColor}>
@@ -69,7 +71,6 @@ export const TPProductRatingInfo = ({
 
 const styles = StyleSheet.create({
   viewStyle: {
-    alignItems: "center",
     gap: 4,
   },
   statusView: {

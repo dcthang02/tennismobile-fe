@@ -186,7 +186,7 @@ const ShoppingDetailScreen = ({ route, navigation }: ShoppingDetailProps) => {
   }, []);
 
   return (
-    <TPBackground>
+    <TPBackground scroll>
       <View>
         <TPImageCarousel images={images} height={350} />
         {_renderButtonBack()}

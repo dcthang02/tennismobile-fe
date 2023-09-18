@@ -6,9 +6,11 @@ import TPButton from "@/components/Molecules/TPButton";
 import TPSearchBar from "@/components/Molecules/TPSearchBar";
 import { COLORS } from "@/constant/colors";
 import useNavigation from "@/hooks/useNavigation";
+import { getPriceString } from "@/utils/price";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useCallback } from "react";
 import { FlatList, Image, Pressable, StyleSheet, View } from "react-native";
+import { TPProductRatingInfo } from "./TPItemStatus";
 
 type TPShopProps = {
   navigation: any;
@@ -20,8 +22,8 @@ type TypeItem = {
   price: number;
   image: string;
   status: "Còn hàng" | "Hết hàng";
-  vote?: number;
-  sold?: number;
+  vote: number;
+  sold: number;
 };
 
 const items: TypeItem[] = [
@@ -83,9 +85,11 @@ export const TPShop = ({ navigation }: TPShopProps) => {
     return (
       <FlatList
         key={"#"}
+        showsVerticalScrollIndicator={false}
         keyExtractor={(item) => `shop-item-${item.id}`}
         data={items}
         style={{ gap: 10 }}
+        contentContainerStyle={{ gap: 10 }}
         renderItem={({ item, index }) => (
           <Pressable
             style={{
@@ -116,8 +120,16 @@ export const TPShop = ({ navigation }: TPShopProps) => {
                   {item.name}
                 </TPText>
                 <TPText variant="body16-semibold" color={COLORS.green[600]}>
-                  {item.price}đ
+                  {getPriceString(item.price)}
                 </TPText>
+                <TPProductRatingInfo
+                  sold={item.sold}
+                  status={item.status}
+                  vote={item.vote}
+                  textColor={COLORS.charcoal[400]}
+                  flexDirection="column-reverse"
+                  alignItems="flex-start"
+                />
               </TPWrapper>
             </TPCard>
           </Pressable>
