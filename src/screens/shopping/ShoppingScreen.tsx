@@ -24,6 +24,7 @@ const ShoppingScreen = ({ navigation }: ShoppingProps) => {
               color={COLORS.green[600]}
               buttonType="text"
               size="small"
+              onPress={() => handleNavigate("MyShop")}
             />
           }
         />

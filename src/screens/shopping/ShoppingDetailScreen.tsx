@@ -5,7 +5,7 @@ import TPText from "@/components/Atom/TPText";
 import TPWrapper from "@/components/Atom/TPWrapper";
 import TPButton from "@/components/Molecules/TPButton";
 import TPImageCarousel from "@/components/Molecules/TPImageCarousel";
-import { TPItemStatus } from "@/components/Organisms/TPShop/TPItemStatus";
+import { TPProductRatingInfo } from "@/components/Organisms/TPShop/TPItemStatus";
 import { COLORS } from "@/constant/colors";
 import useNavigation from "@/hooks/useNavigation";
 import { ShoppingDetailProps } from "@/utils/createProps";
@@ -95,7 +95,7 @@ const ShoppingDetailScreen = ({ route, navigation }: ShoppingDetailProps) => {
         <TPWrapper paddingHorizontal={16} paddingTop={8} paddingBottom={8}>
           <TPText variant="body16">{name}</TPText>
           <TPWrapper paddingHorizontal={8} paddingTop={8} paddingBottom={8}>
-            <TPItemStatus
+            <TPProductRatingInfo
               vote={vote}
               sold={sold}
               status={status as "Còn hàng" | "Hết hàng"}

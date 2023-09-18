@@ -5,7 +5,7 @@ import { AntDesign } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
-type TPItemStatusProps = {
+type TPProductRatingInfoProps = {
   vote: number;
   sold: number;
   status: "Còn hàng" | "Hết hàng";
@@ -13,15 +13,40 @@ type TPItemStatusProps = {
   flexDirection?: "column" | "column-reverse" | "row" | "row-reverse";
 };
 
+type TPProductStatus = {
+  status: "Còn hàng" | "Hết hàng";
+};
+
 const ICON_SIZE = 12;
 
-export const TPItemStatus = ({
+export const TPProductStatus = ({ status }: TPProductStatus) => {
+  return (
+    <View
+      style={[
+        styles.statusView,
+        {
+          backgroundColor:
+            status === "Còn hàng" ? COLORS.blue[50] : COLORS.error[50],
+        },
+      ]}
+    >
+      <TPText
+        variant="small-semibold"
+        color={status === "Còn hàng" ? COLORS.blue[600] : COLORS.error[600]}
+      >
+        {status}
+      </TPText>
+    </View>
+  );
+};
+
+export const TPProductRatingInfo = ({
   vote,
   sold,
   status,
   textColor = COLORS.charcoal[800],
   flexDirection = "row",
-}: TPItemStatusProps) => {
+}: TPProductRatingInfoProps) => {
   return (
     <View style={[styles.viewStyle, { flexDirection }]}>
       <TPRow style={{ gap: 4, alignItems: "center" }}>
@@ -37,22 +62,7 @@ export const TPItemStatus = ({
           {sold}
         </TPText>
       </TPRow>
-      <View
-        style={[
-          styles.statusView,
-          {
-            backgroundColor:
-              status === "Còn hàng" ? COLORS.blue[50] : COLORS.error[50],
-          },
-        ]}
-      >
-        <TPText
-          variant="small-semibold"
-          color={status === "Còn hàng" ? COLORS.blue[600] : COLORS.error[600]}
-        >
-          {status}
-        </TPText>
-      </View>
+      <TPProductStatus status={status} />
     </View>
   );
 };
@@ -65,6 +75,8 @@ const styles = StyleSheet.create({
   statusView: {
     paddingVertical: 4,
     paddingHorizontal: 8,
+    alignSelf: "baseline",
+    borderRadius: 4,
   },
   divide: {
     width: 1,

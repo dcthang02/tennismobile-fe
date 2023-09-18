@@ -71,3 +71,5 @@ export type ShoppingDetailProps = NativeStackScreenProps<
   MainStackParams,
   "ShoppingDetail"
 >;
+
+export type MyShopProps = NativeStackScreenProps<MainStackParams, "MyShop">;

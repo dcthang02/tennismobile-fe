@@ -19,6 +19,7 @@ import NotificationScreen from "@/screens/notification/NotificationScreen";
 import NotificationDetailScreen from "@/screens/notification/NotificationDetail";
 
 import ShoppingDetailScreen from "@/screens/shopping/ShoppingDetailScreen";
+import MyShopScreen from "@/screens/shopping/MyShopScreen";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -43,6 +44,7 @@ export type MainStackParams = {
     productId: string;
     name: string;
   };
+  MyShop: undefined;
 };
 
 export type MainTabParams = {
@@ -101,6 +103,7 @@ const MainStack = () => {
       />
 
       <Stack.Screen name="ShoppingDetail" component={ShoppingDetailScreen} />
+      <Stack.Screen name="MyShop" component={MyShopScreen} />
     </Stack.Navigator>
   );
 };
