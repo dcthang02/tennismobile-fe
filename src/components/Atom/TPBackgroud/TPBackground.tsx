@@ -13,6 +13,7 @@ export const TPBackground = ({ children }: TPBackgroundProps) => {
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1, backgroundColor: COLORS.background }}>
         <FlatList
+          key={"appbg"}
           data={[1]}
           renderItem={({ item }) => {
             return <>{children}</>;

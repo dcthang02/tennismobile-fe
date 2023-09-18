@@ -64,3 +64,5 @@ export type AccountEditProfileProps = NativeStackScreenProps<
 >;
 
 export type MatchProps = BottomTabScreenProps<MainTabParams, "Match">;
+
+export type ShoppingProps = BottomTabScreenProps<MainTabParams, "Shopping">;
