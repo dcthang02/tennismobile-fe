@@ -25,6 +25,8 @@ type TPTextInputProps = {
   parentValue?: string;
   callbackFocus?: () => void;
   styleColor?: string;
+  borderColor?: string;
+  require?: boolean;
 };
 
 export const TPTextInput = React.forwardRef(
@@ -39,6 +41,8 @@ export const TPTextInput = React.forwardRef(
       parentValue,
       callbackFocus,
       styleColor,
+      borderColor = COLORS.charcoal.white,
+      require = true,
     }: TPTextInputProps,
     ref?: any
   ) => {
@@ -51,6 +55,12 @@ export const TPTextInput = React.forwardRef(
       if (errorMes) return COLORS.error[600];
       if (focus) return COLORS.green[600];
       return COLORS.charcoal[900];
+    }, [focus, errorMes]);
+
+    const _borderColor = useMemo(() => {
+      if (errorMes) return COLORS.error[600];
+      if (focus) return COLORS.green[600];
+      return borderColor;
     }, [focus, errorMes]);
 
     const handleCheckError = useCallback(
@@ -103,13 +113,13 @@ export const TPTextInput = React.forwardRef(
       <View style={{ position: "relative" }}>
         <TPRow
           style={{
-            backgroundColor: "#fff",
+            backgroundColor: COLORS.charcoal.white,
             height: 56,
             paddingVertical: 8,
             paddingHorizontal: 12,
             borderRadius: 12,
-            borderColor: color,
-            borderWidth: focus ? 1 : 0,
+            borderColor: _borderColor,
+            borderWidth: 1,
             justifyContent: "space-between",
             alignItems: "center",
             gap: 10,
@@ -128,7 +138,7 @@ export const TPTextInput = React.forwardRef(
                 fontSize: 16,
                 color: styleColor || COLORS.charcoal[800],
               }}
-              placeholder={label}
+              placeholder={require ? label : label + " (không bắt buộc)"}
               onChangeText={handleChangeText}
               value={value}
               onFocus={() => handleFocus(true)}
