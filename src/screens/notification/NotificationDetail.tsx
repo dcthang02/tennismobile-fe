@@ -1,11 +1,18 @@
+import TPBackground from "@/components/Atom/TPBackgroud";
+import TPHeader from "@/components/Molecules/TPHeader";
+import { NotificationDetailProps } from "@/utils/createProps";
 import React from "react";
-import { View, Text } from "react-native";
 
-const NotificationDetailScreen = () => {
+import { notices } from "@/api/notices";
+
+const NotificationDetailScreen = ({
+  route,
+  navigation,
+}: NotificationDetailProps) => {
   return (
-    <View>
-      <Text>Thông báo chi tiết</Text>
-    </View>
+    <TPBackground
+      top={<TPHeader headerTitle="Chi tiết thông báo" />}
+    ></TPBackground>
   );
 };
 

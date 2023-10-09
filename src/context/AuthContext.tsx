@@ -29,6 +29,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   const onAuthStateChanged = (user: any) => {
     if (user) {
+      console.log(user);
       setUser(user);
     } else setUser(null);
   };

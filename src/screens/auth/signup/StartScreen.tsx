@@ -15,7 +15,7 @@ const SignupScreen = ({ navigation }: StartSignupProps) => {
       <TPButton
         title="Đăng ký"
         size="large"
-        onPress={() => handleNavigate("VerifyAccount")}
+        onPress={() => handleNavigate("Signup")}
       />
       <TPButton
         title="Đăng nhập"

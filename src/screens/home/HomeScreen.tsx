@@ -22,7 +22,10 @@ const HomeScreen = ({ navigation }: HomeProps) => {
     <TPBackground
       top={
         <TPWrapper paddingHorizontal={16} gap={20}>
-          <TPHomeHeader user={user} />
+          <TPHomeHeader
+            user={user}
+            navigateNotice={() => handleNavigate("Notification")}
+          />
         </TPWrapper>
       }
     >

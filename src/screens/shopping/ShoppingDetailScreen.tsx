@@ -1,5 +1,5 @@
 import TPBackground from "@/components/Atom/TPBackgroud";
-import TPIcon, { TypeTPIconName } from "@/components/Atom/TPIcon";
+import TPIcon from "@/components/Atom/TPIcon";
 import TPRow from "@/components/Atom/TPRow";
 import TPText from "@/components/Atom/TPText";
 import TPWrapper from "@/components/Atom/TPWrapper";

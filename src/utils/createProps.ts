@@ -83,3 +83,13 @@ export type SendCommentProps = NativeStackScreenProps<
   MainStackParams,
   "SendComment"
 >;
+
+export type NotificationProps = NativeStackScreenProps<
+  MainStackParams,
+  "Notification"
+>;
+
+export type NotificationDetailProps = NativeStackScreenProps<
+  MainStackParams,
+  "NotificationDetail"
+>;

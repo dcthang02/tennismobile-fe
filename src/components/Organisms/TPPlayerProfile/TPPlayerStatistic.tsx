@@ -1,6 +1,6 @@
 import TPCard from "@/components/Atom/TPCard";
 import TPDivide from "@/components/Atom/TPDivide";
-import TPIcon, { TypeTPIconName } from "@/components/Atom/TPIcon";
+import TPIcon from "@/components/Atom/TPIcon";
 import TPRow from "@/components/Atom/TPRow";
 import TPText from "@/components/Atom/TPText";
 import TPWrapper from "@/components/Atom/TPWrapper";

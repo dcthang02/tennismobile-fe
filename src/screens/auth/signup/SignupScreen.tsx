@@ -54,7 +54,7 @@ const SignupScreen = ({ navigation }: SignupProps) => {
   }, [phoneRef.current, signInWithPhoneNumber]);
 
   return (
-    <TPBackground>
+    <TPBackground scroll>
       <TPWrapper paddingTop={70} paddingHorizontal={16}>
         <TPWrapper marginBottom={10}>
           <TPText variant="heading4">Vui lòng nhập số điện thoại</TPText>

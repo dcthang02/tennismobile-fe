@@ -31,7 +31,7 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {user ? (
+        {!user ? (
           <Stack.Screen name="AuthStack" component={AuthStack} />
         ) : (
           <Stack.Screen name="MainStack" component={MainStack} />
