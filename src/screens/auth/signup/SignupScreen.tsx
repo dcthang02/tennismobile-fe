@@ -23,9 +23,7 @@ import { AuthContext } from "@/context/AuthContext";
 import auth from "@react-native-firebase/auth";
 import useAuthentication from "@/hooks/useAuthentication";
 
-const convertPhoneNumber = (phoneNumber: string) => {
-  return "+84" + phoneNumber.substring(1, phoneNumber.length);
-};
+import { convertPhoneNumber } from "@/utils/phone";
 
 const SignupScreen = ({ navigation }: SignupProps) => {
   const { setConfirm, setPreToken, preToken } = useContext(AuthContext);
