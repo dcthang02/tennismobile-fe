@@ -6,8 +6,6 @@ import OtpScreen from "@/screens/auth/signin/OtpScreen";
 import SignupScreen from "@/screens/auth/signup/SignupScreen";
 import StartSignupScreen from "@/screens/auth/signup/StartScreen";
 import OtpSignupScreen from "@/screens/auth/signup/OtpScreen";
-import VerifyAccountScreen from "@/screens/auth/signup/VerifyAccountScreen";
-import VerifySuccessScreen from "@/screens/auth/signup/VerifySuccessScreen";
 
 export type AuthStackParams = {
   StartSignin: undefined;
@@ -18,8 +16,6 @@ export type AuthStackParams = {
   OtpSignup: {
     phoneNumber: string;
   };
-  VerifyAccount: undefined;
-  VerifySuccess: undefined;
   SigninGroup: undefined;
   SignupGroup: undefined;
 };
@@ -43,8 +39,6 @@ const AuthStack = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen name="OtpSignup" component={OtpSignupScreen} />
-        <Stack.Screen name="VerifyAccount" component={VerifyAccountScreen} />
-        <Stack.Screen name="VerifySuccess" component={VerifySuccessScreen} />
       </Stack.Group>
 
       <Stack.Screen

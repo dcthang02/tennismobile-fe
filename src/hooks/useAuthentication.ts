@@ -2,7 +2,7 @@ import { gql, useLazyQuery, useMutation } from "@apollo/client";
 
 const SIGN_UP = gql`
   mutation SignupByPhone($phone: String!) {
-    signinByPhone(authPhoneInput: { phone: $phone }) {
+    signupByPhone(authPhoneInput: { phone: $phone }) {
       token
     }
   }

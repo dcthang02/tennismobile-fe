@@ -64,7 +64,7 @@ const SignupScreen = ({ navigation }: SignupProps) => {
         }
       }
     }
-  }, [phoneRef.current, signInWithPhoneNumber]);
+  }, [phoneRef.current]);
 
   return (
     <TPBackground scroll>

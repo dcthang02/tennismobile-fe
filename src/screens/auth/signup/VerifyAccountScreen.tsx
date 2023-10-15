@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from "react";
-import { View, Text, Button } from "react-native";
+import React, { useCallback, useRef, useState } from "react";
+import { View, Text, Button, Alert } from "react-native";
 
 import TPBackground from "@/components/Atom/TPBackgroud";
 import TPWrapper from "@/components/Atom/TPWrapper";
@@ -19,6 +19,7 @@ import TPProgress from "@/components/Molecules/TPProgress";
 import TPDatePicker from "@/components/Organisms/TPDatePicker";
 import TPChooseLevel from "@/components/Organisms/TPChooseLevel";
 import TPChooseClub from "@/components/Organisms/TPChooseClub";
+import useKyc from "@/hooks/useKyc";
 
 const genderData = [
   {
@@ -33,8 +34,39 @@ const genderData = [
   },
 ];
 
-const VerifyAccountScreen = ({ navigation }: VerifyAccountProps) => {
+const VerifyAccountScreen = ({ navigation, route }: VerifyAccountProps) => {
   const { handleNavigate } = useNavigation(navigation);
+
+  const { verifyAccount } = useKyc();
+
+  const nameRef = useRef(null);
+  const [genderId, setGenderId] = useState<string | number>(1);
+  const [birthday, setBirthday] = useState(new Date());
+
+  const handleSubmit = useCallback(async () => {
+    try {
+      await verifyAccount({
+        variables: {
+          authVerifyInput: {
+            id: route.params.userId,
+            name: nameRef.current?.["value"],
+            gender: genderData.find((item) => item.id === genderId)?.value,
+            birthday: birthday,
+          },
+        },
+      });
+      handleNavigate("VerifySuccess");
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Lỗi xác nhận. Hãy thử lại sau");
+    }
+  }, [
+    handleNavigate,
+    nameRef.current,
+    birthday,
+    genderId,
+    route.params.userId,
+  ]);
 
   const _renderStep1 = useCallback(() => {
     return (
@@ -66,12 +98,18 @@ const VerifyAccountScreen = ({ navigation }: VerifyAccountProps) => {
             backgroundColor="transparent"
           />
         </View>
-        <TPTextInput inputType="text" label="Họ tên" />
-        <TPDatePicker />
-        <TPSelection data={genderData} />
+        <TPTextInput inputType="text" label="Họ tên" ref={nameRef} />
+        <TPDatePicker date={birthday} onChange={setBirthday} />
+        <TPSelection
+          data={genderData}
+          value={[
+            genderData.find((item) => item.id === genderId)?.value as string,
+          ]}
+          onChange={setGenderId}
+        />
       </View>
     );
-  }, []);
+  }, [genderId, birthday]);
 
   const _renderStep2 = useCallback(() => {
     return (
@@ -96,7 +134,7 @@ const VerifyAccountScreen = ({ navigation }: VerifyAccountProps) => {
               title="Hoàn thành"
               buttonType="text"
               color={COLORS.green[600]}
-              onPress={() => handleNavigate("VerifySuccess")}
+              onPress={() => handleSubmit()}
             />
           }
         />
