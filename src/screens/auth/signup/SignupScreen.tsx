@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { View } from "react-native";
+import { Alert, Platform, View } from "react-native";
 
 import TPBackground from "@/components/Atom/TPBackgroud";
 import TPText from "@/components/Atom/TPText";
@@ -20,21 +20,31 @@ import { COLORS } from "@/constant/colors";
 import { OtpContext } from "@/context/OtpContext";
 import { AuthContext } from "@/context/AuthContext";
 
-import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
+import auth from "@react-native-firebase/auth";
+import useAuthentication from "@/hooks/useAuthentication";
 
 const convertPhoneNumber = (phoneNumber: string) => {
-  return "+84" + phoneNumber;
+  return "+84" + phoneNumber.substring(1, phoneNumber.length);
 };
 
 const SignupScreen = ({ navigation }: SignupProps) => {
-  const { setConfirm } = useContext(AuthContext);
+  const { setConfirm, setPreToken, preToken } = useContext(AuthContext);
   const { handleNavigate } = useNavigation(navigation);
   const phoneRef = useRef(null);
+
+  const { signupByPhone } = useAuthentication();
 
   async function signInWithPhoneNumber(phoneNumber: string) {
     const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
     setConfirm(confirmation);
   }
+
+  useEffect(() => {
+    if (preToken && phoneRef.current) {
+      const phone = convertPhoneNumber(phoneRef.current["value"]);
+      signInWithPhoneNumber(phone);
+    }
+  }, [preToken]);
 
   const handleClickButton = useCallback(async () => {
     if (phoneRef.current) {
@@ -43,11 +53,16 @@ const SignupScreen = ({ navigation }: SignupProps) => {
       } else {
         if (phoneRef.current["value"]) {
           const phone = convertPhoneNumber(phoneRef.current["value"]);
-
-          await signInWithPhoneNumber(phone);
-          handleNavigate("OtpSignup", {
-            phoneNumber: phoneRef.current?.["value"],
-          } as never);
+          try {
+            const signData = await signupByPhone({
+              variables: {
+                phone,
+              },
+            });
+            setPreToken(signData.data.signupByPhone.token);
+          } catch (error) {
+            Alert.alert("Lỗi đăng ký");
+          }
         }
       }
     }

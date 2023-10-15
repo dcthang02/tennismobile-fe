@@ -9,6 +9,12 @@ import MainStack from "@/navigation/main/main";
 
 import { useFonts } from "expo-font";
 import { useContext } from "react";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+
+const client = new ApolloClient({
+  uri: "https://c0c6-2405-4802-1d6e-ce0-107a-a848-6c3f-2bb1.ngrok-free.app/graphql",
+  cache: new InMemoryCache(),
+});
 
 type AppStackParams = {
   AuthStack: undefined;
@@ -43,10 +49,12 @@ function App() {
 
 export default function () {
   return (
-    <SafeAreaProvider>
-      <AuthContextProvider>
-        <App />
-      </AuthContextProvider>
-    </SafeAreaProvider>
+    <ApolloProvider client={client}>
+      <SafeAreaProvider>
+        <AuthContextProvider>
+          <App />
+        </AuthContextProvider>
+      </SafeAreaProvider>
+    </ApolloProvider>
   );
 }
