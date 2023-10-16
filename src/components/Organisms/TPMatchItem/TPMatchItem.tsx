@@ -12,10 +12,11 @@ import { Pressable, StyleSheet, View } from "react-native";
 
 type TPMatchItemProps = {
   match: MatchType;
+  status: "successful" | "warning" | "pending";
   onPress: () => void;
 };
 
-export const TPMatchItem = ({ match, onPress }: TPMatchItemProps) => {
+export const TPMatchItem = ({ match, status, onPress }: TPMatchItemProps) => {
   return (
     <TPCard>
       <Pressable style={styles.view} onPress={onPress}>
@@ -44,7 +45,7 @@ export const TPMatchItem = ({ match, onPress }: TPMatchItemProps) => {
               <TPText variant="body14-semibold">{match.owner.name}</TPText>
             </View>
           </TPRow>
-          {match.status === "pending" ? (
+          {status === "pending" ? (
             <TPButton
               title="Tham gia"
               buttonType="outline"
@@ -53,8 +54,8 @@ export const TPMatchItem = ({ match, onPress }: TPMatchItemProps) => {
             />
           ) : (
             <TPStatus
-              status={match.status}
-              text={match.status === "successful" ? "Đã nhận" : "Chưa nhận"}
+              status={status}
+              text={status === "successful" ? "Đã nhận" : "Chưa nhận"}
             />
           )}
         </TPRow>

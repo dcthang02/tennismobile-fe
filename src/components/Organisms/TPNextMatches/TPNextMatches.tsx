@@ -22,53 +22,14 @@ import { convertName } from "@/utils/name";
 import useNavigation from "@/hooks/useNavigation";
 import useGetNextMatches from "@/hooks/useGetNextMatches";
 
-const NEXT_MATCHES = [
-  {
-    id: "123456789",
-    opponent: {
-      name: "Nguyễn Minh Vũ Hiền",
-      date: new Date(),
-      avatar:
-        "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-    },
-  },
-  {
-    id: "123456781",
-    opponent: {
-      name: "Phạm Ngọc Nam",
-      date: new Date(),
-      avatar:
-        "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-    },
-  },
-  {
-    id: "123456782",
-    opponent: {
-      name: "Đường Tam",
-      date: new Date(),
-      avatar:
-        "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-    },
-  },
-  {
-    id: "123456783",
-    opponent: {
-      name: "Đới Mộc Bạch",
-      date: new Date(),
-      avatar:
-        "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-    },
-  },
-];
-
 type ItemProps = {
   match: {
     id: string;
-    opponent: {
+    owner: {
       name: string;
-      date: Date;
-      avatar: string;
+      image?: string;
     };
+    date?: Date;
   };
   onPress: () => void;
 };
@@ -78,19 +39,27 @@ type TPNextMatchesProps = {
 };
 
 const Item = ({ match, onPress }: ItemProps) => {
+  console.log("das", match);
   return (
     <TPCard>
       <Pressable
         style={{ alignItems: "center", gap: 10, width: 140 }}
         onPress={onPress}
       >
-        <TPAvatar uri={match.opponent.avatar} />
+        <TPAvatar
+          uri={
+            match.owner.image ||
+            "https://www.clipartmax.com/png/small/248-2487966_matthew-man-avatar-icon-png.png"
+          }
+        />
         <View>
           <TPText variant="body14-semibold" alignCenter>
-            {convertName(match.opponent.name)}
+            {convertName(match.owner.name)}
           </TPText>
           <TPText variant="body14" color={COLORS.charcoal[400]} alignCenter>
-            {convertDate(match.opponent.date)}
+            {match.date
+              ? convertDate(new Date(match.date))
+              : "Chưa rõ thời gian"}
           </TPText>
         </View>
         <TPRow style={{ justifyContent: "flex-end", alignSelf: "stretch" }}>
@@ -146,7 +115,11 @@ export const TPNextMatches = ({ navigation }: TPNextMatchesProps) => {
         data={nextMatchesData.nextMatches}
         renderItem={({ item, index }) => (
           <Item
-            match={item}
+            match={{
+              id: item.id,
+              owner: item.owner,
+              date: item.date,
+            }}
             onPress={() => handleNavigate("HomeMatch", { matchId: item.id })}
           />
         )}

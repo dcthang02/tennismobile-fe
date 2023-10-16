@@ -11,7 +11,6 @@ type MatchType = {
     address: string;
     images: string[];
   };
-  mode?: "single" | "multiple";
   date?: Date;
   maxPlayers?: number;
   owner: {
@@ -19,5 +18,4 @@ type MatchType = {
     name: string;
     image: string;
   };
-  status: "successful" | "warning" | "pending";
 };

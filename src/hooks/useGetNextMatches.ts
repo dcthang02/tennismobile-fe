@@ -12,16 +12,23 @@ const NEXT_MATCHES = gql`
       owner {
         id
         name
+        image
       }
       players {
         id
+        name
+        image
       }
       maxPlayers
       pendingPlayers {
         id
+        name
+        image
       }
       invitedPlayers {
         id
+        name
+        image
       }
       location {
         id

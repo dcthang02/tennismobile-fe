@@ -14,10 +14,12 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { convertDate, convertTime } from "@/utils/dateTime";
 import TPIcon from "@/components/Atom/TPIcon";
 import TPMatchDetailHeader from "@/components/Organisms/TPMatchDetailHeader";
+import useGetMatch from "@/hooks/useGetMatch";
+import useMe from "@/hooks/useMe";
 
 type PlayerRowProps = {
   name: string;
-  avatar: string;
+  image: string;
 };
 
 type InfoRowProps = {
@@ -27,13 +29,13 @@ type InfoRowProps = {
   note?: string;
 };
 
-const PlayerRows = ({ name, avatar }: PlayerRowProps) => {
+const PlayerRows = ({ name, image }: PlayerRowProps) => {
   return (
     <TPRow style={styles.playerRow}>
       <TPText variant="body14" color={COLORS.charcoal[600]}>
         {name}
       </TPText>
-      <TPAvatar uri={avatar} size="small" />
+      <TPAvatar uri={image} size="small" />
     </TPRow>
   );
 };
@@ -55,89 +57,102 @@ const InfoRow = ({ title, players, text, note }: InfoRowProps) => {
 };
 
 const HomeMatchDetailScreen = ({ route, navigation }: HomeMatchDetailProps) => {
-  const [match, setMatch] = useState<MatchType | null>(null);
   const { handleGoback } = useNavigation(navigation);
+  const { getMatch, matchData } = useGetMatch();
+  const { myData } = useMe();
 
   useEffect(() => {
-    handleGetMatch(route.params.matchId);
-  }, []);
-
-  const handleGetMatch = useCallback(async (id: string) => {
-    try {
-      const match = await fetchMatch(id);
-      if (match) setMatch(match);
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+    getMatch({
+      variables: {
+        id: route.params.matchId,
+      },
+    });
+  }, [route.params.matchId]);
 
   return (
     <TPBackground>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          minHeight: "80%",
-          justifyContent: "space-between",
-        }}
-      >
-        {match && (
-          <View>
-            <TPMatchDetailHeader
-              images={match.stadium?.images || []}
-              onPressButtonBack={handleGoback}
-            />
-            <TPWrapper paddingHorizontal={16} gap={15} marginBottom={30}>
-              <TPText variant="heading4">{match.stadium?.name}</TPText>
-              <TPText variant="body14" color={COLORS.charcoal[600]}>
-                {match.stadium?.address}
-              </TPText>
-              <TPRow>
-                <TPButton
-                  title="Xem đường đi"
-                  size="tiny"
-                  textSize="small"
-                  buttonType="text"
-                  color={COLORS.blue[600]}
-                />
-              </TPRow>
-              <TPDivide />
-              <InfoRow
-                title={match.mode === "single" ? "Đối thủ" : "Người chơi"}
-                players={match.players.map((item, i) => (
-                  <PlayerRows
-                    name={item.name}
-                    avatar={item.avatar}
-                    key={`player-${i}`}
-                  />
-                ))}
-              />
-              <InfoRow
-                title="Ngày"
-                text={match.date ? convertDate(match.date) : ""}
-              />
-              <InfoRow
-                title="Giờ"
-                text={
-                  match.date
-                    ? `${convertTime(match.date.getHours())}:${convertTime(
-                        match.date.getMinutes()
-                      )}`
-                    : ""
-                }
-              />
-            </TPWrapper>
-          </View>
-        )}
-        <TPWrapper paddingHorizontal={16}>
-          <TPButton
-            title="Hủy"
-            size="large"
-            startIcon={<TPIcon name="check-big" color={COLORS.error[600]} />}
-            color={COLORS.error[600]}
-            backgroundColor={COLORS.charcoal.white}
+      {matchData && (
+        <View>
+          <TPMatchDetailHeader
+            images={matchData.match.location?.images || []}
+            onPressButtonBack={handleGoback}
           />
-        </TPWrapper>
-      </ScrollView>
+          <TPWrapper paddingHorizontal={16} gap={15} marginBottom={30}>
+            {matchData.match.location ? (
+              <>
+                <TPText variant="heading4">
+                  {matchData.match.stadium?.name}
+                </TPText>
+                <TPText variant="body14" color={COLORS.charcoal[600]}>
+                  {matchData.match.stadium?.address}
+                </TPText>
+                <TPRow>
+                  <TPButton
+                    title="Xem đường đi"
+                    size="tiny"
+                    textSize="small"
+                    buttonType="text"
+                    color={COLORS.blue[600]}
+                  />
+                </TPRow>
+              </>
+            ) : (
+              <TPWrapper paddingTop={20}>
+                <TPText variant="heading6">Chưa có địa điểm</TPText>
+              </TPWrapper>
+            )}
+            <TPDivide />
+            <InfoRow
+              title={"Người chơi"}
+              players={matchData.match.players.map((item: any, i: number) => (
+                <PlayerRows
+                  name={item.name}
+                  image={item.image}
+                  key={`player-${i}`}
+                />
+              ))}
+            />
+            <InfoRow
+              title="Ngày"
+              text={
+                matchData.match.date
+                  ? convertDate(matchData.match.date)
+                  : "Chưa có ngày cụ thể"
+              }
+            />
+            <InfoRow
+              title="Giờ"
+              text={
+                matchData.match.date
+                  ? `${convertTime(
+                      matchData.match.date.getHours()
+                    )}:${convertTime(matchData.match.date.getMinutes())}`
+                  : "Chưa có giờ cụ thể"
+              }
+            />
+          </TPWrapper>
+          <TPWrapper paddingHorizontal={16}>
+            {matchData.match.owner.id === myData.me.id && (
+              <TPRow style={{ justifyContent: "space-between", gap: 8 }}>
+                <View style={{ flex: 1 }}>
+                  <TPButton
+                    title="Hủy"
+                    size="large"
+                    startIcon={
+                      <TPIcon name="check-big" color={COLORS.error[600]} />
+                    }
+                    color={COLORS.error[600]}
+                    backgroundColor={COLORS.charcoal.white}
+                  />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <TPButton title="Chỉnh sửa" size="large" />
+                </View>
+              </TPRow>
+            )}
+          </TPWrapper>
+        </View>
+      )}
     </TPBackground>
   );
 };

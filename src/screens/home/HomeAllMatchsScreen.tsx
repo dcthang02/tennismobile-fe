@@ -9,20 +9,12 @@ import TPMatchItem from "@/components/Organisms/TPMatchItem";
 import { fetchAllMatches } from "@/api/matches";
 import useGetNextMatches from "@/hooks/useGetNextMatches";
 import TPText from "@/components/Atom/TPText";
+import useMe from "@/hooks/useMe";
 
 const HomeAllMatchsScreen = ({ navigation }: HomeAllMatchProps) => {
+  const { myData } = useMe();
   const { nextMatchesData } = useGetNextMatches();
-  const [matches, setMatches] = useState<MatchType[]>([]);
   const { handleNavigate } = useNavigation(navigation);
-
-  useEffect(() => {
-    const getAllMatches = async function () {
-      const resMatches = await fetchAllMatches();
-      setMatches(resMatches);
-    };
-
-    getAllMatches();
-  }, []);
 
   const handleNavigateMatch = useCallback(
     (id: string) => {
@@ -43,6 +35,11 @@ const HomeAllMatchsScreen = ({ navigation }: HomeAllMatchProps) => {
             <TPMatchItem
               match={item}
               onPress={() => handleNavigateMatch(item.id)}
+              status={
+                item.players.find((p: any) => p.id === myData.me.id)
+                  ? "successful"
+                  : "warning"
+              }
             />
           )}
           keyExtractor={(item, index) => `matches-${index}-${item.id}`}
@@ -55,12 +52,12 @@ const HomeAllMatchsScreen = ({ navigation }: HomeAllMatchProps) => {
         />
       </TPWrapper>
     );
-  }, [nextMatchesData]);
+  }, [nextMatchesData, myData]);
 
   return (
     <TPBackground>
       <TPHeader headerTitle="Trận đấu sắp tới" />
-      {nextMatchesData ? renderMatches() : null}
+      {nextMatchesData && myData ? renderMatches() : null}
     </TPBackground>
   );
 };

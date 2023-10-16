@@ -15,10 +15,13 @@ export const TPMatchDetailHeader = ({
   images,
   onPressButtonBack,
 }: TPMatchDetailHeaderProps) => {
-  if (images.length === 0) return null;
   return (
     <View style={styles.container}>
-      <TPImageCarousel images={images} />
+      {images.length === 0 ? (
+        <View style={{ height: 100 }}></View>
+      ) : (
+        <TPImageCarousel images={images} />
+      )}
 
       <View style={styles.buttonView}>
         <TPButton
