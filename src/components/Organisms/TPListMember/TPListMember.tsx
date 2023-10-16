@@ -13,6 +13,7 @@ import TPText from "@/components/Atom/TPText";
 import TPRadio from "@/components/Atom/TPRadio";
 import TPDivide from "@/components/Atom/TPDivide";
 import { Ionicons } from "@expo/vector-icons";
+import useGetUsers from "@/hooks/useGetUsers";
 
 const MEMBERS = [
   {
@@ -73,6 +74,8 @@ const getPlayerFirstName = (name: string) => {
 };
 
 export const TPListMember = ({ navigation }: TPListMemberProps) => {
+  const { usersData, loadingUsers } = useGetUsers();
+
   const [searchStr, setSearchStr] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [filterModal, setFilterModal] = useState<TypeFilter>({
@@ -83,36 +86,30 @@ export const TPListMember = ({ navigation }: TPListMemberProps) => {
     name: "asc",
     rank: "asc",
   });
-  const [members, setMembers] = useState(
-    MEMBERS.sort(
-      (a, b) =>
-        (filter.rank === "asc" ? a.rank - b.rank : b.rank - a.rank) ||
-        (filter.name === "asc"
-          ? getPlayerFirstName(a.name).localeCompare(getPlayerFirstName(b.name))
-          : getPlayerFirstName(b.name).localeCompare(
-              getPlayerFirstName(a.name)
-            ))
-    )
-  );
+  const [members, setMembers] = useState<Array<any> | null>(null);
 
   useEffect(() => {
-    const filterMembers = MEMBERS.sort(
-      (a, b) =>
-        (filter.rank === "asc" ? a.rank - b.rank : b.rank - a.rank) ||
-        (filter.name === "asc"
-          ? getPlayerFirstName(a.name).localeCompare(getPlayerFirstName(b.name))
-          : getPlayerFirstName(b.name).localeCompare(
-              getPlayerFirstName(a.name)
-            ))
-    );
-    setMembers(
-      searchStr
-        ? filterMembers.filter((item) =>
-            item.name.toLowerCase().includes(searchStr.toLowerCase())
-          )
-        : filterMembers
-    );
-  }, [filter, searchStr]);
+    if (usersData) {
+      const filterMembers = usersData.users.sort(
+        (a: any, b: any) =>
+          (filter.rank === "asc" ? a.rank - b.rank : b.rank - a.rank) ||
+          (filter.name === "asc"
+            ? getPlayerFirstName(a.name).localeCompare(
+                getPlayerFirstName(b.name)
+              )
+            : getPlayerFirstName(b.name).localeCompare(
+                getPlayerFirstName(a.name)
+              ))
+      );
+      setMembers(
+        searchStr
+          ? filterMembers.filter((item: any) =>
+              item.name.toLowerCase().includes(searchStr.toLowerCase())
+            )
+          : filterMembers
+      );
+    }
+  }, [filter, searchStr, usersData]);
 
   const { handleNavigate } = useNavigation(navigation);
   const handleNavigateMemberInfo = useCallback(
@@ -221,6 +218,8 @@ export const TPListMember = ({ navigation }: TPListMemberProps) => {
     );
   }, [renderSelectGroup, showModal, handleApplyFilter]);
 
+  if (!members) return null;
+
   return (
     <TPWrapper gap={15}>
       {renderModal()}
@@ -242,16 +241,25 @@ export const TPListMember = ({ navigation }: TPListMemberProps) => {
         />
       </TPRow>
       <FlatList
-        data={members}
+        data={[...members]}
+        ListEmptyComponent={() => (
+          <TPText variant="heading6" alignCenter>
+            Không có dữ liệu
+          </TPText>
+        )}
         renderItem={({ item, index }) => (
           <TPMemberItem
-            player={item}
+            player={{
+              id: item.id,
+              name: item.name,
+              avatar: item.image,
+            }}
             isFirst={index === 0}
-            isLast={index === MEMBERS.length - 1}
+            isLast={index === members.length - 1}
             onPress={() => handleNavigateMemberInfo(item.id, item.name)}
           />
         )}
-        keyExtractor={(item) => `member-${item.id}`}
+        keyExtractor={(item: any) => `member-${item.id}`}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       />

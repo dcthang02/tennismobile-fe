@@ -9,7 +9,7 @@ import TPListMember from "@/components/Organisms/TPListMember";
 const MemberScreen = ({ navigation }: MemberProps) => {
   const { handleNavigate } = useNavigation(navigation);
   return (
-    <TPBackground>
+    <TPBackground scroll>
       <TPWrapper paddingHorizontal={16} marginBottom={16}>
         <TPTabHeader title="Danh sách thành viên" />
       </TPWrapper>

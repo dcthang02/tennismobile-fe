@@ -95,7 +95,7 @@ export const TPNearbyPlayers = ({ headerComponents }: TPNearbyPlayersProps) => {
           <TPMemberItem
             player={item}
             isFirst={index === 0}
-            isLast={index === PLAYERS.length - 1}
+            isLast={index === usersData.users.length - 1}
           />
         )}
         ListEmptyComponent={() => (
