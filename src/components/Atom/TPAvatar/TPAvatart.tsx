@@ -22,6 +22,7 @@ export const TPAvatar = ({ uri, size = "default" }: TPAvatarProps) => {
       style={{ borderRadius: sizes[size] / 2 }}
       width={sizes[size]}
       height={sizes[size]}
+      alt="img"
     />
   );
 };

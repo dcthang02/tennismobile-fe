@@ -9,21 +9,27 @@ import TPCompetitorNotice from "@/components/Organisms/TPCompetitorNotice";
 
 import useNavigation from "../../hooks/useNavigation";
 import { HomeProps } from "@/utils/createProps";
-
-const user = {
-  name: "Khánh",
-  avatar:
-    "https://www.clipartmax.com/png/small/248-2487966_matthew-man-avatar-icon-png.png",
-};
+import { getFirstName } from "@/utils/name";
+import useMe from "@/hooks/useMe";
 
 const HomeScreen = ({ navigation }: HomeProps) => {
   const { handleNavigate } = useNavigation(navigation);
+
+  const { myData, loadingMyData, called } = useMe();
+
+  if (!myData) return null;
+
   return (
     <TPBackground
       top={
         <TPWrapper paddingHorizontal={16} gap={20}>
           <TPHomeHeader
-            user={user}
+            user={{
+              name: getFirstName(myData.me.name) as string,
+              avatar:
+                myData.me.image ||
+                "https://www.clipartmax.com/png/small/248-2487966_matthew-man-avatar-icon-png.png",
+            }}
             navigateNotice={() => handleNavigate("Notification")}
           />
         </TPWrapper>
@@ -34,7 +40,11 @@ const HomeScreen = ({ navigation }: HomeProps) => {
           <>
             <TPCompetitorNotice />
             <TPWrapper paddingHorizontal={16} gap={20}>
-              <TPHomeStatistic />
+              <TPHomeStatistic
+                rank={myData.me.rank}
+                matches={myData.me.statistic.matches.all}
+                score={myData.me.statistic.score.sum}
+              />
               <TPNextMatches navigation={navigation} />
             </TPWrapper>
           </>

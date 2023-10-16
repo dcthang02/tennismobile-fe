@@ -11,8 +11,9 @@ import KYCStack from "@/navigation/main/kyc";
 import { useFonts } from "expo-font";
 import { useContext, useEffect } from "react";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import useGetUser from "@/hooks/useGetUser";
 import { View } from "react-native";
+import { UserContext, UserContextProvider } from "@/context/UserContext";
+import useMe from "@/hooks/useMe";
 
 const client = new ApolloClient({
   uri: "https://fef4-2405-4802-1d83-40e0-e8aa-923-f3bb-797f.ngrok-free.app/graphql",
@@ -21,7 +22,9 @@ const client = new ApolloClient({
 
 type AppStackParams = {
   AuthStack: undefined;
-  MainStack: undefined;
+  MainStack: {
+    userId: string;
+  };
   KYCStack: {
     userId: string;
   };
@@ -39,16 +42,13 @@ function App() {
     IcoMoon: require("./assets/icomoon/fonts/icomoon.ttf"),
   });
 
-  const { getUserByPhone, userData, loadingUser, called } = useGetUser();
+  const { setUserPhone } = useContext(UserContext);
+  const { myData, loadingMyData, called } = useMe();
   const { token, user } = useContext(AuthContext);
 
   useEffect(() => {
     if (token && user) {
-      getUserByPhone({
-        variables: {
-          phone: user["phoneNumber"],
-        },
-      });
+      setUserPhone(user["phoneNumber"]);
     }
   }, [token, user]);
 
@@ -62,18 +62,30 @@ function App() {
         {!token ? (
           <Stack.Screen name="AuthStack" component={AuthStack} />
         ) : called ? (
-          !loadingUser ? (
-            !userData.userByPhone.name ? (
+          !loadingMyData ? (
+            !myData.me.name ? (
               <>
                 <Stack.Screen
                   name="KYCStack"
                   component={KYCStack}
-                  initialParams={{ userId: userData.userByPhone.id }}
+                  initialParams={{
+                    userId: myData.me.id,
+                  }}
                 />
-                <Stack.Screen name="MainStack" component={MainStack} />
+                <Stack.Screen
+                  name="MainStack"
+                  component={MainStack}
+                  initialParams={{
+                    userId: myData.me.id,
+                  }}
+                />
               </>
             ) : (
-              <Stack.Screen name="MainStack" component={MainStack} />
+              <Stack.Screen
+                name="MainStack"
+                component={MainStack}
+                initialParams={{ userId: myData.me.id }}
+              />
             )
           ) : (
             <Stack.Screen name="BlankStack" component={BlankScreen} />
@@ -90,9 +102,11 @@ export default function () {
   return (
     <ApolloProvider client={client}>
       <SafeAreaProvider>
-        <AuthContextProvider>
-          <App />
-        </AuthContextProvider>
+        <UserContextProvider>
+          <AuthContextProvider>
+            <App />
+          </AuthContextProvider>
+        </UserContextProvider>
       </SafeAreaProvider>
     </ApolloProvider>
   );

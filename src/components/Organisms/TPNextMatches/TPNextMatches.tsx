@@ -1,5 +1,12 @@
-import React from "react";
-import { FlatList, Pressable, View } from "react-native";
+import React, { useCallback } from "react";
+import {
+  FlatList,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import TPAvatar from "@/components/Atom/TPAvatar";
 import TPCard from "@/components/Atom/TPCard";
 import TPIcon from "@/components/Atom/TPIcon";
@@ -13,6 +20,7 @@ import { HomeProps } from "@/utils/createProps";
 import { convertDate } from "@/utils/dateTime";
 import { convertName } from "@/utils/name";
 import useNavigation from "@/hooks/useNavigation";
+import useGetNextMatches from "@/hooks/useGetNextMatches";
 
 const NEXT_MATCHES = [
   {
@@ -102,10 +110,30 @@ const Item = ({ match, onPress }: ItemProps) => {
 
 export const TPNextMatches = ({ navigation }: TPNextMatchesProps) => {
   const { handleNavigate } = useNavigation(navigation);
+
+  const { nextMatchesData } = useGetNextMatches();
+  console.log(nextMatchesData);
+
+  const _renderEmptyMatches = useCallback(() => {
+    return (
+      <View style={styles.empty}>
+        <Image source={require("assets/empty-matches.png")} />
+        <TPText variant="heading6">Bạn chưa có đối thủ</TPText>
+        <TPButton title="Tìm đối thủ ngay" size="large" />
+      </View>
+    );
+  }, []);
+
+  if (!nextMatchesData) {
+    return <Text>Loading</Text>;
+  }
+
   return (
     <View>
       <TPRow style={{ justifyContent: "space-between", marginBottom: 15 }}>
-        <TPText variant="heading5">Trận đấu sắp tới(5)</TPText>
+        <TPText variant="heading5">
+          {`Trận đấu sắp tới (${nextMatchesData.nextMatches.length})`}
+        </TPText>
         <TPButton
           title="Xem tất cả"
           buttonType="text"
@@ -115,18 +143,26 @@ export const TPNextMatches = ({ navigation }: TPNextMatchesProps) => {
         />
       </TPRow>
       <FlatList
-        data={NEXT_MATCHES}
+        data={nextMatchesData.nextMatches}
         renderItem={({ item, index }) => (
           <Item
             match={item}
             onPress={() => handleNavigate("HomeMatch", { matchId: item.id })}
           />
         )}
+        ListEmptyComponent={_renderEmptyMatches}
         keyExtractor={(item, index) => `match-${index}`}
-        horizontal
+        horizontal={nextMatchesData.nextMatches.length !== 0}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{ gap: 10 }}
       />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  empty: {
+    alignItems: "center",
+    gap: 8,
+  },
+});

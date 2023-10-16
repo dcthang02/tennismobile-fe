@@ -25,7 +25,9 @@ export const AuthContext = createContext({
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState(null);
   const [preToken, setPreToken] = useState("");
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6Iis4NDM1ODM3NDMyOCIsImlhdCI6MTY5NzQzNzc3NSwiZXhwIjoxNjk3NTI0MTc1fQ.w4noYhL1tbnCuAqA1UNhKE0GytbXZYgr5zdQd1DKLZA"
+  );
   const [otp, setOtp] = useState("");
   const [confirm, setConfirm] = useState<any>(null);
 
