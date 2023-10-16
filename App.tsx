@@ -42,15 +42,8 @@ function App() {
     IcoMoon: require("./assets/icomoon/fonts/icomoon.ttf"),
   });
 
-  const { setUserPhone } = useContext(UserContext);
   const { myData, loadingMyData, called } = useMe();
-  const { token, user } = useContext(AuthContext);
-
-  useEffect(() => {
-    if (token && user) {
-      setUserPhone(user["phoneNumber"]);
-    }
-  }, [token, user]);
+  const { token } = useContext(AuthContext);
 
   if (!fontsLoaded) {
     return null;
