@@ -7,8 +7,11 @@ import TPHeader from "@/components/Molecules/TPHeader";
 import TPWrapper from "@/components/Atom/TPWrapper";
 import TPMatchItem from "@/components/Organisms/TPMatchItem";
 import { fetchAllMatches } from "@/api/matches";
+import useGetNextMatches from "@/hooks/useGetNextMatches";
+import TPText from "@/components/Atom/TPText";
 
 const HomeAllMatchsScreen = ({ navigation }: HomeAllMatchProps) => {
+  const { nextMatchesData } = useGetNextMatches();
   const [matches, setMatches] = useState<MatchType[]>([]);
   const { handleNavigate } = useNavigation(navigation);
 
@@ -34,8 +37,8 @@ const HomeAllMatchsScreen = ({ navigation }: HomeAllMatchProps) => {
     return (
       <TPWrapper paddingHorizontal={16} paddingTop={20} marginBottom={70}>
         <FlatList
-          style={{ gap: 8 }}
-          data={matches}
+          contentContainerStyle={{ gap: 8 }}
+          data={nextMatchesData.nextMatches}
           renderItem={({ item, index }) => (
             <TPMatchItem
               match={item}
@@ -44,15 +47,20 @@ const HomeAllMatchsScreen = ({ navigation }: HomeAllMatchProps) => {
           )}
           keyExtractor={(item, index) => `matches-${index}-${item.id}`}
           showsVerticalScrollIndicator={false}
+          ListEmptyComponent={() => (
+            <TPText variant="heading6" alignCenter>
+              Chưa có trận đấu
+            </TPText>
+          )}
         />
       </TPWrapper>
     );
-  }, [matches]);
+  }, [nextMatchesData]);
 
   return (
     <TPBackground>
       <TPHeader headerTitle="Trận đấu sắp tới" />
-      {matches.length !== 0 && renderMatches()}
+      {nextMatchesData ? renderMatches() : null}
     </TPBackground>
   );
 };

@@ -29,7 +29,7 @@ export const TPMatchItem = ({ match, onPress }: TPMatchItemProps) => {
               Đấu thủ
             </TPText>
             <TPText variant="small-semibold">
-              {match.players.length}/{match.playerCount}
+              {match.players.length}/{match.maxPlayers}
             </TPText>
           </TPRow>
         </TPRow>
@@ -38,7 +38,7 @@ export const TPMatchItem = ({ match, onPress }: TPMatchItemProps) => {
         </TPText>
         <TPRow style={styles.row}>
           <TPRow style={styles.row}>
-            <TPAvatar uri={match.owner.avatar} size="small" />
+            <TPAvatar uri={match.owner.image} size="small" />
             <View>
               <TPText variant="small">Chủ trận</TPText>
               <TPText variant="body14-semibold">{match.owner.name}</TPText>

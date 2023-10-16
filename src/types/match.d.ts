@@ -3,7 +3,7 @@ type MatchType = {
   players: {
     id: string;
     name: string;
-    avatar: string;
+    image: string;
   }[];
   stadium?: {
     id: string;
@@ -13,11 +13,11 @@ type MatchType = {
   };
   mode?: "single" | "multiple";
   date?: Date;
-  playerCount?: number;
+  maxPlayers?: number;
   owner: {
     id: string;
     name: string;
-    avatar: string;
+    image: string;
   };
   status: "successful" | "warning" | "pending";
 };
