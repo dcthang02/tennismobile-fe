@@ -30,3 +30,7 @@ export const gapTwoDate = (date: Date) => {
     return Math.ceil(gapMinutes / oneMonthMinutes) + " tháng trước";
   else return Math.round(gapMinutes / oneYearMinutes) + " năm trước";
 };
+
+export const getAge = (bd: Date) => {
+  return new Date().getFullYear() - bd.getFullYear() + 1;
+};

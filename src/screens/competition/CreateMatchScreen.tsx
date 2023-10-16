@@ -14,6 +14,7 @@ import { StyleSheet, View } from "react-native";
 const CreateMatchScreen = () => {
   const [isTimePending, setIsTimePending] = useState(false);
   const [isLocationPending, setIsLocationPending] = useState(false);
+  const [date, setDate] = useState(new Date());
 
   return (
     <TPBackground>
@@ -31,6 +32,8 @@ const CreateMatchScreen = () => {
       <TPWrapper paddingHorizontal={16} gap={16}>
         <TPPlayersInvitator />
         <TPMatchDateTime
+          date={date}
+          onChange={setDate}
           isPending={isTimePending}
           onChangePendingStatus={setIsTimePending}
         />

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import useNavigation from "../../hooks/useNavigation";
 import { MatchProps } from "@/utils/createProps";
 import TPBackground from "@/components/Atom/TPBackgroud";
@@ -11,6 +11,9 @@ import { TPPlayer } from "@/components/Organisms/TPPlayerProfile/TPPlayer";
 import TPText from "@/components/Atom/TPText";
 import { FlatList } from "react-native";
 import TPMatchItem from "@/components/Organisms/TPMatchItem";
+import useGetMatches from "@/hooks/useGetMatches";
+import useMe from "@/hooks/useMe";
+import { getAge } from "@/utils/dateTime";
 
 const player = {
   name: "Tư Mã Ý",
@@ -21,544 +24,17 @@ const player = {
   age: 28,
 };
 
-const matches: MatchType[] = [
-  {
-    id: "123456789",
-    players: [
-      {
-        id: "123",
-        name: "Nguyễn Minh Vũ Hiền",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-      {
-        id: "124",
-        name: "Nguyễn Superman",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-    ],
-    stadium: {
-      id: "123",
-      name: "Sân tennis ngõ 111 Cù Chính Lan",
-      address:
-        "12 Ng. 111 P. Cù Chính Lan, Khương Mai, Thanh Xuân, Hà Nội, Vietnam",
-      images: [
-        "https://www.si.com/.image/ar_4:3%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTkxMTk2ODg3MjA5MzU0NDc1/imago1011329909h.jpg",
-        "https://i.guim.co.uk/img/media/b30a59fca8428d70c1c31d1430862400e2e0c3bc/0_110_3000_1800/master/3000.jpg?width=1200&quality=85&auto=format&fit=max&s=c6d078d72c08033cdd3bcd807f5c079f",
-        "https://www.arsenal.com/sites/default/files/styles/large_16x9/public/images/VV%20Stadium%20Image.PNG?auto=webp&itok=936EQk1b",
-      ],
-    },
-    mode: "multiple",
-    date: new Date(),
-    playerCount: 5,
-    owner: {
-      id: "123",
-      name: "Nguyễn Minh Vũ Hiền",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-    },
-    status: "pending",
-  },
-  {
-    id: "123456788",
-    players: [
-      {
-        id: "123",
-        name: "Nguyễn Minh Vũ Hiền",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-      {
-        id: "124",
-        name: "Nguyễn Superman",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-    ],
-    stadium: {
-      id: "123",
-      name: "Sân tennis ngõ 111 Cù Chính Lan",
-      address:
-        "12 Ng. 111 P. Cù Chính Lan, Khương Mai, Thanh Xuân, Hà Nội, Vietnam",
-      images: [
-        "https://www.si.com/.image/ar_4:3%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTkxMTk2ODg3MjA5MzU0NDc1/imago1011329909h.jpg",
-        "https://i.guim.co.uk/img/media/b30a59fca8428d70c1c31d1430862400e2e0c3bc/0_110_3000_1800/master/3000.jpg?width=1200&quality=85&auto=format&fit=max&s=c6d078d72c08033cdd3bcd807f5c079f",
-        "https://www.arsenal.com/sites/default/files/styles/large_16x9/public/images/VV%20Stadium%20Image.PNG?auto=webp&itok=936EQk1b",
-      ],
-    },
-    mode: "multiple",
-    date: new Date(),
-    playerCount: 5,
-    owner: {
-      id: "123",
-      name: "Nguyễn Minh Vũ Hiền",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-    },
-    status: "pending",
-  },
-  {
-    id: "123456787",
-    players: [
-      {
-        id: "123",
-        name: "Nguyễn Minh Vũ Hiền",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-      {
-        id: "124",
-        name: "Nguyễn Superman",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-    ],
-    stadium: {
-      id: "123",
-      name: "Sân tennis ngõ 111 Cù Chính Lan",
-      address:
-        "12 Ng. 111 P. Cù Chính Lan, Khương Mai, Thanh Xuân, Hà Nội, Vietnam",
-      images: [
-        "https://www.si.com/.image/ar_4:3%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTkxMTk2ODg3MjA5MzU0NDc1/imago1011329909h.jpg",
-        "https://i.guim.co.uk/img/media/b30a59fca8428d70c1c31d1430862400e2e0c3bc/0_110_3000_1800/master/3000.jpg?width=1200&quality=85&auto=format&fit=max&s=c6d078d72c08033cdd3bcd807f5c079f",
-        "https://www.arsenal.com/sites/default/files/styles/large_16x9/public/images/VV%20Stadium%20Image.PNG?auto=webp&itok=936EQk1b",
-      ],
-    },
-    mode: "multiple",
-    date: new Date(),
-    playerCount: 5,
-    owner: {
-      id: "123",
-      name: "Nguyễn Minh Vũ Hiền",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-    },
-    status: "pending",
-  },
-  {
-    id: "123456786",
-    players: [
-      {
-        id: "123",
-        name: "Nguyễn Minh Vũ Hiền",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-      {
-        id: "124",
-        name: "Nguyễn Superman",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-    ],
-    stadium: {
-      id: "123",
-      name: "Sân tennis ngõ 111 Cù Chính Lan",
-      address:
-        "12 Ng. 111 P. Cù Chính Lan, Khương Mai, Thanh Xuân, Hà Nội, Vietnam",
-      images: [
-        "https://www.si.com/.image/ar_4:3%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTkxMTk2ODg3MjA5MzU0NDc1/imago1011329909h.jpg",
-        "https://i.guim.co.uk/img/media/b30a59fca8428d70c1c31d1430862400e2e0c3bc/0_110_3000_1800/master/3000.jpg?width=1200&quality=85&auto=format&fit=max&s=c6d078d72c08033cdd3bcd807f5c079f",
-        "https://www.arsenal.com/sites/default/files/styles/large_16x9/public/images/VV%20Stadium%20Image.PNG?auto=webp&itok=936EQk1b",
-      ],
-    },
-    mode: "multiple",
-    date: new Date(),
-    playerCount: 5,
-    owner: {
-      id: "123",
-      name: "Nguyễn Minh Vũ Hiền",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-    },
-    status: "pending",
-  },
-  {
-    id: "123456785",
-    players: [
-      {
-        id: "123",
-        name: "Nguyễn Minh Vũ Hiền",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-      {
-        id: "124",
-        name: "Nguyễn Superman",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-    ],
-    stadium: {
-      id: "123",
-      name: "Sân tennis ngõ 111 Cù Chính Lan",
-      address:
-        "12 Ng. 111 P. Cù Chính Lan, Khương Mai, Thanh Xuân, Hà Nội, Vietnam",
-      images: [
-        "https://www.si.com/.image/ar_4:3%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTkxMTk2ODg3MjA5MzU0NDc1/imago1011329909h.jpg",
-        "https://i.guim.co.uk/img/media/b30a59fca8428d70c1c31d1430862400e2e0c3bc/0_110_3000_1800/master/3000.jpg?width=1200&quality=85&auto=format&fit=max&s=c6d078d72c08033cdd3bcd807f5c079f",
-        "https://www.arsenal.com/sites/default/files/styles/large_16x9/public/images/VV%20Stadium%20Image.PNG?auto=webp&itok=936EQk1b",
-      ],
-    },
-    mode: "multiple",
-    date: new Date(),
-    playerCount: 5,
-    owner: {
-      id: "123",
-      name: "Nguyễn Minh Vũ Hiền",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-    },
-    status: "pending",
-  },
-  {
-    id: "123456784",
-    players: [
-      {
-        id: "123",
-        name: "Nguyễn Minh Vũ Hiền",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-      {
-        id: "124",
-        name: "Nguyễn Superman",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-    ],
-    stadium: {
-      id: "123",
-      name: "Sân tennis ngõ 111 Cù Chính Lan",
-      address:
-        "12 Ng. 111 P. Cù Chính Lan, Khương Mai, Thanh Xuân, Hà Nội, Vietnam",
-      images: [
-        "https://www.si.com/.image/ar_4:3%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTkxMTk2ODg3MjA5MzU0NDc1/imago1011329909h.jpg",
-        "https://i.guim.co.uk/img/media/b30a59fca8428d70c1c31d1430862400e2e0c3bc/0_110_3000_1800/master/3000.jpg?width=1200&quality=85&auto=format&fit=max&s=c6d078d72c08033cdd3bcd807f5c079f",
-        "https://www.arsenal.com/sites/default/files/styles/large_16x9/public/images/VV%20Stadium%20Image.PNG?auto=webp&itok=936EQk1b",
-      ],
-    },
-    mode: "multiple",
-    date: new Date(),
-    playerCount: 5,
-    owner: {
-      id: "123",
-      name: "Nguyễn Minh Vũ Hiền",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-    },
-    status: "pending",
-  },
-  {
-    id: "123456783",
-    players: [
-      {
-        id: "123",
-        name: "Nguyễn Minh Vũ Hiền",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-      {
-        id: "124",
-        name: "Nguyễn Superman",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-    ],
-    stadium: {
-      id: "123",
-      name: "Sân tennis ngõ 111 Cù Chính Lan",
-      address:
-        "12 Ng. 111 P. Cù Chính Lan, Khương Mai, Thanh Xuân, Hà Nội, Vietnam",
-      images: [
-        "https://www.si.com/.image/ar_4:3%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTkxMTk2ODg3MjA5MzU0NDc1/imago1011329909h.jpg",
-        "https://i.guim.co.uk/img/media/b30a59fca8428d70c1c31d1430862400e2e0c3bc/0_110_3000_1800/master/3000.jpg?width=1200&quality=85&auto=format&fit=max&s=c6d078d72c08033cdd3bcd807f5c079f",
-        "https://www.arsenal.com/sites/default/files/styles/large_16x9/public/images/VV%20Stadium%20Image.PNG?auto=webp&itok=936EQk1b",
-      ],
-    },
-    mode: "multiple",
-    date: new Date(),
-    playerCount: 5,
-    owner: {
-      id: "123",
-      name: "Nguyễn Minh Vũ Hiền",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-    },
-    status: "pending",
-  },
-  {
-    id: "123456782",
-    players: [
-      {
-        id: "123",
-        name: "Nguyễn Minh Vũ Hiền",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-      {
-        id: "124",
-        name: "Nguyễn Superman",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-    ],
-    stadium: {
-      id: "123",
-      name: "Sân tennis ngõ 111 Cù Chính Lan",
-      address:
-        "12 Ng. 111 P. Cù Chính Lan, Khương Mai, Thanh Xuân, Hà Nội, Vietnam",
-      images: [
-        "https://www.si.com/.image/ar_4:3%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTkxMTk2ODg3MjA5MzU0NDc1/imago1011329909h.jpg",
-        "https://i.guim.co.uk/img/media/b30a59fca8428d70c1c31d1430862400e2e0c3bc/0_110_3000_1800/master/3000.jpg?width=1200&quality=85&auto=format&fit=max&s=c6d078d72c08033cdd3bcd807f5c079f",
-        "https://www.arsenal.com/sites/default/files/styles/large_16x9/public/images/VV%20Stadium%20Image.PNG?auto=webp&itok=936EQk1b",
-      ],
-    },
-    mode: "multiple",
-    date: new Date(),
-    playerCount: 5,
-    owner: {
-      id: "123",
-      name: "Nguyễn Minh Vũ Hiền",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-    },
-    status: "pending",
-  },
-  {
-    id: "123456781",
-    players: [
-      {
-        id: "123",
-        name: "Nguyễn Minh Vũ Hiền",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-      {
-        id: "124",
-        name: "Nguyễn Superman",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-    ],
-    stadium: {
-      id: "123",
-      name: "Sân tennis ngõ 111 Cù Chính Lan",
-      address:
-        "12 Ng. 111 P. Cù Chính Lan, Khương Mai, Thanh Xuân, Hà Nội, Vietnam",
-      images: [
-        "https://www.si.com/.image/ar_4:3%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTkxMTk2ODg3MjA5MzU0NDc1/imago1011329909h.jpg",
-        "https://i.guim.co.uk/img/media/b30a59fca8428d70c1c31d1430862400e2e0c3bc/0_110_3000_1800/master/3000.jpg?width=1200&quality=85&auto=format&fit=max&s=c6d078d72c08033cdd3bcd807f5c079f",
-        "https://www.arsenal.com/sites/default/files/styles/large_16x9/public/images/VV%20Stadium%20Image.PNG?auto=webp&itok=936EQk1b",
-      ],
-    },
-    mode: "multiple",
-    date: new Date(),
-    playerCount: 5,
-    owner: {
-      id: "123",
-      name: "Nguyễn Minh Vũ Hiền",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-    },
-    status: "pending",
-  },
-  {
-    id: "123456780",
-    players: [
-      {
-        id: "123",
-        name: "Nguyễn Minh Vũ Hiền",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-      {
-        id: "124",
-        name: "Nguyễn Superman",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-    ],
-    stadium: {
-      id: "123",
-      name: "Sân tennis ngõ 111 Cù Chính Lan",
-      address:
-        "12 Ng. 111 P. Cù Chính Lan, Khương Mai, Thanh Xuân, Hà Nội, Vietnam",
-      images: [
-        "https://www.si.com/.image/ar_4:3%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTkxMTk2ODg3MjA5MzU0NDc1/imago1011329909h.jpg",
-        "https://i.guim.co.uk/img/media/b30a59fca8428d70c1c31d1430862400e2e0c3bc/0_110_3000_1800/master/3000.jpg?width=1200&quality=85&auto=format&fit=max&s=c6d078d72c08033cdd3bcd807f5c079f",
-        "https://www.arsenal.com/sites/default/files/styles/large_16x9/public/images/VV%20Stadium%20Image.PNG?auto=webp&itok=936EQk1b",
-      ],
-    },
-    mode: "multiple",
-    date: new Date(),
-    playerCount: 5,
-    owner: {
-      id: "123",
-      name: "Nguyễn Minh Vũ Hiền",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-    },
-    status: "pending",
-  },
-  {
-    id: "123456779",
-    players: [
-      {
-        id: "123",
-        name: "Nguyễn Minh Vũ Hiền",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-      {
-        id: "124",
-        name: "Nguyễn Superman",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-    ],
-    stadium: {
-      id: "123",
-      name: "Sân tennis ngõ 111 Cù Chính Lan",
-      address:
-        "12 Ng. 111 P. Cù Chính Lan, Khương Mai, Thanh Xuân, Hà Nội, Vietnam",
-      images: [
-        "https://www.si.com/.image/ar_4:3%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTkxMTk2ODg3MjA5MzU0NDc1/imago1011329909h.jpg",
-        "https://i.guim.co.uk/img/media/b30a59fca8428d70c1c31d1430862400e2e0c3bc/0_110_3000_1800/master/3000.jpg?width=1200&quality=85&auto=format&fit=max&s=c6d078d72c08033cdd3bcd807f5c079f",
-        "https://www.arsenal.com/sites/default/files/styles/large_16x9/public/images/VV%20Stadium%20Image.PNG?auto=webp&itok=936EQk1b",
-      ],
-    },
-    mode: "multiple",
-    date: new Date(),
-    playerCount: 5,
-    owner: {
-      id: "123",
-      name: "Nguyễn Minh Vũ Hiền",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-    },
-    status: "pending",
-  },
-  {
-    id: "123456778",
-    players: [
-      {
-        id: "123",
-        name: "Nguyễn Minh Vũ Hiền",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-      {
-        id: "124",
-        name: "Nguyễn Superman",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-    ],
-    stadium: {
-      id: "123",
-      name: "Sân tennis ngõ 111 Cù Chính Lan",
-      address:
-        "12 Ng. 111 P. Cù Chính Lan, Khương Mai, Thanh Xuân, Hà Nội, Vietnam",
-      images: [
-        "https://www.si.com/.image/ar_4:3%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTkxMTk2ODg3MjA5MzU0NDc1/imago1011329909h.jpg",
-        "https://i.guim.co.uk/img/media/b30a59fca8428d70c1c31d1430862400e2e0c3bc/0_110_3000_1800/master/3000.jpg?width=1200&quality=85&auto=format&fit=max&s=c6d078d72c08033cdd3bcd807f5c079f",
-        "https://www.arsenal.com/sites/default/files/styles/large_16x9/public/images/VV%20Stadium%20Image.PNG?auto=webp&itok=936EQk1b",
-      ],
-    },
-    mode: "multiple",
-    date: new Date(),
-    playerCount: 5,
-    owner: {
-      id: "123",
-      name: "Nguyễn Minh Vũ Hiền",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-    },
-    status: "pending",
-  },
-  {
-    id: "123456776",
-    players: [
-      {
-        id: "123",
-        name: "Nguyễn Minh Vũ Hiền",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-      {
-        id: "124",
-        name: "Nguyễn Superman",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-    ],
-    stadium: {
-      id: "123",
-      name: "Sân tennis ngõ 111 Cù Chính Lan",
-      address:
-        "12 Ng. 111 P. Cù Chính Lan, Khương Mai, Thanh Xuân, Hà Nội, Vietnam",
-      images: [
-        "https://www.si.com/.image/ar_4:3%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTkxMTk2ODg3MjA5MzU0NDc1/imago1011329909h.jpg",
-        "https://i.guim.co.uk/img/media/b30a59fca8428d70c1c31d1430862400e2e0c3bc/0_110_3000_1800/master/3000.jpg?width=1200&quality=85&auto=format&fit=max&s=c6d078d72c08033cdd3bcd807f5c079f",
-        "https://www.arsenal.com/sites/default/files/styles/large_16x9/public/images/VV%20Stadium%20Image.PNG?auto=webp&itok=936EQk1b",
-      ],
-    },
-    mode: "multiple",
-    date: new Date(),
-    playerCount: 5,
-    owner: {
-      id: "123",
-      name: "Nguyễn Minh Vũ Hiền",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-    },
-    status: "pending",
-  },
-  {
-    id: "123456774",
-    players: [
-      {
-        id: "123",
-        name: "Nguyễn Minh Vũ Hiền",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-      {
-        id: "124",
-        name: "Nguyễn Superman",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-      },
-    ],
-    stadium: {
-      id: "123",
-      name: "Sân tennis ngõ 111 Cù Chính Lan",
-      address:
-        "12 Ng. 111 P. Cù Chính Lan, Khương Mai, Thanh Xuân, Hà Nội, Vietnam",
-      images: [
-        "https://www.si.com/.image/ar_4:3%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTkxMTk2ODg3MjA5MzU0NDc1/imago1011329909h.jpg",
-        "https://i.guim.co.uk/img/media/b30a59fca8428d70c1c31d1430862400e2e0c3bc/0_110_3000_1800/master/3000.jpg?width=1200&quality=85&auto=format&fit=max&s=c6d078d72c08033cdd3bcd807f5c079f",
-        "https://www.arsenal.com/sites/default/files/styles/large_16x9/public/images/VV%20Stadium%20Image.PNG?auto=webp&itok=936EQk1b",
-      ],
-    },
-    mode: "multiple",
-    date: new Date(),
-    playerCount: 5,
-    owner: {
-      id: "123",
-      name: "Nguyễn Minh Vũ Hiền",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220119/ourmid/pngtree-penguin-animal-small-avatar-illustration-design-png-image_4323463.png",
-    },
-    status: "pending",
-  },
-];
-
 const MatchScreen = ({ navigation }: MatchProps) => {
   const { handleNavigate } = useNavigation(navigation);
-  const { name, avatar, rank, level, age } = player;
+
+  const { loadingMyData, myData } = useMe();
+  const { getMatches, matchesData, loadingMatches } = useGetMatches();
+
+  useEffect(() => {
+    const onFocus = navigation.addListener("focus", () => getMatches());
+
+    return onFocus;
+  }, [navigation]);
 
   const handleNavigateMatch = useCallback(
     (id: string) => {
@@ -570,6 +46,8 @@ const MatchScreen = ({ navigation }: MatchProps) => {
   );
 
   const renderHeader = useCallback(() => {
+    if (!myData) return null;
+    const { name, image: avatar, rank, birthday, level } = myData && myData.me;
     return (
       <TPWrapper gap={15} marginBottom={10}>
         <TPTabHeader
@@ -590,14 +68,14 @@ const MatchScreen = ({ navigation }: MatchProps) => {
           avatar={avatar}
           rank={rank}
           level={level}
-          age={age}
+          age={getAge(new Date(birthday))}
           renderType={2}
         />
 
         <TPText variant="heading5">Danh sách trận đấu</TPText>
       </TPWrapper>
     );
-  }, [name, avatar, rank, level, age]);
+  }, [myData, handleNavigate]);
 
   const renderMatches = useCallback(() => {
     return (
@@ -605,9 +83,17 @@ const MatchScreen = ({ navigation }: MatchProps) => {
         <FlatList
           ListHeaderComponent={renderHeader}
           contentContainerStyle={{ gap: 8 }}
-          data={matches}
+          ListEmptyComponent={() =>
+            loadingMatches ? null : (
+              <TPText variant="heading6" alignCenter>
+                Chưa có trận đấu
+              </TPText>
+            )
+          }
+          data={matchesData?.matches || []}
           renderItem={({ item, index }) => (
             <TPMatchItem
+              status="pending"
               match={item}
               onPress={() => handleNavigateMatch(item.id)}
             />
@@ -617,12 +103,10 @@ const MatchScreen = ({ navigation }: MatchProps) => {
         />
       </TPWrapper>
     );
-  }, [matches]);
+  }, [matchesData?.matches, loadingMatches, renderHeader]);
   return (
-    <TPBackground>
-      <TPWrapper paddingHorizontal={16}>
-        {matches.length !== 0 && renderMatches()}
-      </TPWrapper>
+    <TPBackground scroll>
+      <TPWrapper paddingHorizontal={16}>{renderMatches()}</TPWrapper>
     </TPBackground>
   );
 };

@@ -98,12 +98,12 @@ export const TPPlayer = ({
               {_renderIconRowItem(
                 <LeaderBoardIcon width={22} height={22} />,
                 "Hạng",
-                `${rank}/120`
+                rank ? `${rank}/120` : "Vô hạng"
               )}
               {_renderIconRowItem(
                 <PrizeIcon width={22} height={22} />,
                 "Level",
-                level.toString()
+                level ? level.toString() : "1"
               )}
             </TPRow>
           </View>
