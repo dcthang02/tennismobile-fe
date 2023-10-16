@@ -27,6 +27,7 @@ export type TypeTPIconName =
   | "cloud-sun"
   | "cockade"
   | "comment"
+  | "comments"
   | "confetti"
   | "dead-hand"
   | "dot"

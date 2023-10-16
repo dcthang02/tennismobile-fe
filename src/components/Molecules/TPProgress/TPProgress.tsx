@@ -7,8 +7,6 @@ import TPButton from "../TPButton";
 
 import { COLORS } from "@/constant/colors";
 
-import { TypeTPIconName } from "@/components/Atom/TPIcon";
-
 type StepType = {
   iconName: TypeTPIconName;
   title: string;

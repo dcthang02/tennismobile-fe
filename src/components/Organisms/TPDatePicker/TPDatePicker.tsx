@@ -11,6 +11,8 @@ type TPDatePickerProps = {
   label?: string;
   mode?: "date" | "time";
   color?: string;
+  date: Date;
+  onChange: (x: Date) => void;
 };
 
 const formatDate = (date: Date) => {
@@ -29,8 +31,9 @@ export const TPDatePicker = ({
   label,
   mode = "date",
   color,
+  date,
+  onChange,
 }: TPDatePickerProps) => {
-  const [date, setDate] = useState<Date>(new Date());
   const [show, setShow] = useState(false);
 
   const textDate = useRef(null);
@@ -39,11 +42,11 @@ export const TPDatePicker = ({
     (event: DateTimePickerEvent, selectedDate?: Date) => {
       if (selectedDate) {
         const currentDate = selectedDate;
-        setDate(currentDate);
+        onChange(currentDate);
       }
       setShow(false);
     },
-    []
+    [onChange]
   );
 
   return (

@@ -34,7 +34,9 @@ export type MainStackParams = {
   HomeMatchEdit: undefined;
   HomeAllMatch: undefined;
   Notification: undefined;
-  NotificationDetail: undefined;
+  NotificationDetail: {
+    id: string;
+  };
   MemberInfo: {
     memberId: string;
     name: string;

@@ -7,7 +7,7 @@ import { StyleSheet, View } from "react-native";
 
 import LeaderBoardIcon from "assets/icon/leaderboard.svg";
 import PrizeIcon from "assets/icon/prize.svg";
-import TPIcon, { TypeTPIconName } from "@/components/Atom/TPIcon";
+import TPIcon from "@/components/Atom/TPIcon";
 import { COLORS } from "@/constant/colors";
 import TPAvatar from "@/components/Atom/TPAvatar";
 import TPButton from "@/components/Molecules/TPButton";

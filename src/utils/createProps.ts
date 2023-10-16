@@ -2,6 +2,7 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import type { AuthStackParams } from "@/navigation/auth/auth";
 import type { MainStackParams, MainTabParams } from "@/navigation/main/main";
+import type { KYCStackParams } from "@/navigation/main/kyc";
 
 export type StartSigninProps = NativeStackScreenProps<
   AuthStackParams,
@@ -28,12 +29,12 @@ export type OtpSignupProps = NativeStackScreenProps<
 >;
 
 export type VerifyAccountProps = NativeStackScreenProps<
-  AuthStackParams,
+  KYCStackParams,
   "VerifyAccount"
 >;
 
 export type VerifySuccessProps = NativeStackScreenProps<
-  AuthStackParams,
+  KYCStackParams,
   "VerifySuccess"
 >;
 
@@ -82,4 +83,14 @@ export type CreateProductProps = NativeStackScreenProps<
 export type SendCommentProps = NativeStackScreenProps<
   MainStackParams,
   "SendComment"
+>;
+
+export type NotificationProps = NativeStackScreenProps<
+  MainStackParams,
+  "Notification"
+>;
+
+export type NotificationDetailProps = NativeStackScreenProps<
+  MainStackParams,
+  "NotificationDetail"
 >;

@@ -1,5 +1,5 @@
 import TPCard from "@/components/Atom/TPCard";
-import TPIcon, { TypeTPIconName } from "@/components/Atom/TPIcon";
+import TPIcon from "@/components/Atom/TPIcon";
 import TPKeyboardScroll from "@/components/Atom/TPKeyboardScroll";
 import TPRow from "@/components/Atom/TPRow";
 import TPText from "@/components/Atom/TPText";

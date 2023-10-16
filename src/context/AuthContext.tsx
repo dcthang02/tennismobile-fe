@@ -4,13 +4,13 @@ import {
   useEffect,
   useCallback,
   ReactNode,
-  useContext,
 } from "react";
 
 import auth from "@react-native-firebase/auth";
 
 export const AuthContext = createContext({
   token: "",
+  preToken: "",
   user: null,
   otp: "",
   setOtp: (text: string) => {},
@@ -19,24 +19,29 @@ export const AuthContext = createContext({
   signin: () => {},
   signup: () => {},
   signout: () => {},
+  setPreToken: (x: string) => {},
 });
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState("");
+  const [preToken, setPreToken] = useState("");
+  const [token, setToken] = useState(
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6Iis4NDM1ODM3NDMyOCIsImlhdCI6MTY5NzQzNzc3NSwiZXhwIjoxNjk3NTI0MTc1fQ.w4noYhL1tbnCuAqA1UNhKE0GytbXZYgr5zdQd1DKLZA"
+  );
   const [otp, setOtp] = useState("");
-  const [confirm, setConfirm] = useState(null);
+  const [confirm, setConfirm] = useState<any>(null);
 
-  const onAuthStateChanged = (user: any) => {
+  const onAuthStateChanged = async (user: any) => {
     if (user) {
       setUser(user);
-    } else setUser(null);
+      if (preToken) setToken(preToken);
+    }
   };
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
-  }, []);
+  }, [onAuthStateChanged]);
 
   const confirmCode = useCallback(
     async (code: string) => {
@@ -67,6 +72,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     <AuthContext.Provider
       value={{
         token,
+        preToken,
         user,
         otp,
         setOtp,
@@ -75,6 +81,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         signin: handleSignIn,
         signout: handleSignout,
         signup: handleSignup,
+        setPreToken,
       }}
     >
       {children}

@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
 
 import TPText from "@/components/Atom/TPText";
 import TPAvatar from "@/components/Atom/TPAvatar";
@@ -13,9 +13,10 @@ type TPHomeHeaderProps = {
     name: string;
     avatar: string;
   };
+  navigateNotice?: () => void;
 };
 
-export const TPHomeHeader = ({ user }: TPHomeHeaderProps) => {
+export const TPHomeHeader = ({ user, navigateNotice }: TPHomeHeaderProps) => {
   return (
     <TPRow
       style={{
@@ -34,7 +35,9 @@ export const TPHomeHeader = ({ user }: TPHomeHeaderProps) => {
         <TPWeather />
       </TPRow>
       <TPRow style={{ gap: 10, alignItems: "center" }}>
-        <TPIcon name="alarm" />
+        <Pressable onPress={navigateNotice}>
+          <TPIcon name="alarm" />
+        </Pressable>
         <TPAvatar uri={user.avatar} />
       </TPRow>
     </TPRow>

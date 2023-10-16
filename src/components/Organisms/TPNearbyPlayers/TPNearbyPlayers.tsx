@@ -7,6 +7,7 @@ import TPWrapper from "@/components/Atom/TPWrapper";
 import TPButton from "@/components/Molecules/TPButton";
 import TPMemberItem from "@/components/Molecules/TPMemberItem";
 import { COLORS } from "@/constant/colors";
+import useGetUsers from "@/hooks/useGetUsers";
 import React, { ReactNode } from "react";
 import { FlatList } from "react-native";
 
@@ -78,16 +79,29 @@ type TPNearbyPlayersProps = {
 };
 
 export const TPNearbyPlayers = ({ headerComponents }: TPNearbyPlayersProps) => {
+  const { loadingUsers, usersData } = useGetUsers();
+
+  if (!usersData) return null;
+
   return (
     <TPWrapper flex={1}>
       <FlatList
-        data={PLAYERS}
+        data={usersData.users.map((item: any) => ({
+          id: item.id,
+          name: item.name,
+          avatar: item.image,
+        }))}
         renderItem={({ item, index }) => (
           <TPMemberItem
             player={item}
             isFirst={index === 0}
             isLast={index === PLAYERS.length - 1}
           />
+        )}
+        ListEmptyComponent={() => (
+          <TPText variant="heading6" alignCenter>
+            Không có dữ liệu
+          </TPText>
         )}
         keyExtractor={(item) => `nearby-player-${item.id}`}
         showsHorizontalScrollIndicator={false}
