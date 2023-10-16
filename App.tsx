@@ -15,7 +15,7 @@ import useGetUser from "@/hooks/useGetUser";
 import { View } from "react-native";
 
 const client = new ApolloClient({
-  uri: "https://721d-2402-800-9b9a-c3b-703e-204f-76a6-917a.ngrok-free.app/graphql",
+  uri: "https://fef4-2405-4802-1d83-40e0-e8aa-923-f3bb-797f.ngrok-free.app/graphql",
   cache: new InMemoryCache(),
 });
 

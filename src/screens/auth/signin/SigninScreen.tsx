@@ -43,6 +43,7 @@ const SigninScreen = ({ navigation }: SigninProps) => {
       } else {
         if (phoneRef.current["value"]) {
           const phone = convertPhoneNumber(phoneRef.current["value"]);
+          console.log(phone);
           try {
             const signData = await signinByPhone({
               variables: {
@@ -51,6 +52,7 @@ const SigninScreen = ({ navigation }: SigninProps) => {
             });
             setPreToken(signData.data.signinByPhone.token);
           } catch (error) {
+            console.log(error);
             Alert.alert("Lỗi đăng nhập");
           }
         }
