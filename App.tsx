@@ -16,7 +16,7 @@ import { UserContext, UserContextProvider } from "@/context/UserContext";
 import useMe from "@/hooks/useMe";
 
 const client = new ApolloClient({
-  uri: "https://fef4-2405-4802-1d83-40e0-e8aa-923-f3bb-797f.ngrok-free.app/graphql",
+  uri: "https://f067-2405-4802-1d83-40e0-5824-50b1-69d3-417a.ngrok-free.app/graphql",
   cache: new InMemoryCache(),
 });
 

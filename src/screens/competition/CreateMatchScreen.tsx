@@ -8,16 +8,26 @@ import TPMatchLocationPicker from "@/components/Organisms/TPMatchLocationPicker"
 import TPMatchNoticeInput from "@/components/Organisms/TPMatchNoticeInput";
 import TPPlayersInvitator from "@/components/Organisms/TPPlayersInvitator";
 import { COLORS } from "@/constant/colors";
-import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import React, { createRef, useCallback, useEffect, useState } from "react";
+import { StyleSheet, TextInput, View } from "react-native";
 
 const CreateMatchScreen = () => {
   const [isTimePending, setIsTimePending] = useState(false);
   const [isLocationPending, setIsLocationPending] = useState(false);
+  const [invitedPlayerIds, setInvitedPlayerIds] = useState<string[]>([]);
   const [date, setDate] = useState(new Date());
+  const [stadiumId, setStadiumId] = useState("");
+  const [notice, setNotice] = useState("");
+
+  const handleSubmitCreate = useCallback(() => {
+    console.log("players", invitedPlayerIds);
+    console.log("date", date);
+    console.log("stadium", stadiumId);
+    console.log("notice", notice);
+  }, [invitedPlayerIds, date, stadiumId]);
 
   return (
-    <TPBackground>
+    <TPBackground scroll>
       <TPHeader
         headerTitle="Tạo trận đấu"
         right={
@@ -30,7 +40,7 @@ const CreateMatchScreen = () => {
         }
       />
       <TPWrapper paddingHorizontal={16} gap={16}>
-        <TPPlayersInvitator />
+        <TPPlayersInvitator onChangePlayers={setInvitedPlayerIds} />
         <TPMatchDateTime
           date={date}
           onChange={setDate}
@@ -40,11 +50,16 @@ const CreateMatchScreen = () => {
         <TPMatchLocationPicker
           isPending={isLocationPending}
           onChangePendingStatus={setIsLocationPending}
+          onChangeStadium={setStadiumId}
         />
-        <TPMatchNoticeInput />
+        <TPMatchNoticeInput value={notice} onChange={setNotice} />
       </TPWrapper>
       <View style={styles.view}>
-        <TPButton title="Gửi lời mời" textSize="small" />
+        <TPButton
+          title="Gửi lời mời"
+          textSize="small"
+          onPress={handleSubmitCreate}
+        />
       </View>
     </TPBackground>
   );

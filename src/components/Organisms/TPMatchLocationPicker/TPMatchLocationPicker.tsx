@@ -9,9 +9,10 @@ import TPModal from "@/components/Molecules/TPModal";
 import TPSearchBar from "@/components/Molecules/TPSearchBar";
 import TPSelection from "@/components/Molecules/TPSelection";
 import { COLORS } from "@/constant/colors";
+import useGetStadiums from "@/hooks/useGetStadiums";
 import useModal from "@/hooks/useModal";
 import useModalSelection from "@/hooks/useModalSelection";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   FlatList,
   KeyboardAvoidingView,
@@ -22,6 +23,8 @@ import {
 } from "react-native";
 
 type TPMatchLocationPickerProps = {
+  value?: string;
+  onChangeStadium?: (x: string) => void;
   isPending?: boolean;
   onChangePendingStatus?: (status: boolean) => void;
 };
@@ -29,48 +32,6 @@ type TPMatchLocationPickerProps = {
 type LocationItemProps = {
   name: string;
   address: string;
-};
-
-const locations = [
-  {
-    id: "1",
-    name: "Cau lac bo tennis cau long",
-    address: "123 P. Hoàng Ngân, Trung Hoà, Cầu Giấy, Hà Nội, Vietnam",
-  },
-  {
-    id: "2",
-    name: "Cau lac bo tennis cau long",
-    address: "123 P. Hoàng Ngân, Trung Hoà, Cầu Giấy, Hà Nội, Vietnam",
-  },
-  {
-    id: "3",
-    name: "Cau lac bo tennis cau long",
-    address: "123 P. Hoàng Ngân, Trung Hoà, Cầu Giấy, Hà Nội, Vietnam",
-  },
-  {
-    id: "4",
-    name: "Cau lac bo tennis cau long",
-    address: "123 P. Hoàng Ngân, Trung Hoà, Cầu Giấy, Hà Nội, Vietnam",
-  },
-  {
-    id: "5",
-    name: "Cau lac bo tennis cau long",
-    address: "123 P. Hoàng Ngân, Trung Hoà, Cầu Giấy, Hà Nội, Vietnam",
-  },
-  {
-    id: "6",
-    name: "Cau lac bo tennis cau long",
-    address: "123 P. Hoàng Ngân, Trung Hoà, Cầu Giấy, Hà Nội, Vietnam",
-  },
-  {
-    id: "7",
-    name: "Cau lac bo tennis cau long",
-    address: "123 P. Hoàng Ngân, Trung Hoà, Cầu Giấy, Hà Nội, Vietnam",
-  },
-];
-
-const getClubName = (id: string | number) => {
-  return locations.find((item) => item.id === id)?.name;
 };
 
 const LocationItem = ({ name, address }: LocationItemProps) => {
@@ -87,23 +48,52 @@ const LocationItem = ({ name, address }: LocationItemProps) => {
 export const TPMatchLocationPicker = ({
   isPending = false,
   onChangePendingStatus,
+  value = "",
+  onChangeStadium,
 }: TPMatchLocationPickerProps) => {
+  const { getStadiums, stadiumsData } = useGetStadiums();
+
   const { isShow, handleToggleModal } = useModal();
+
   const [searchString, setSearchString] = useState("");
+
   const {
     value: selectedLocations,
     modalValues: modalLocations,
     setModalValues: setModalLocations,
     handleSelectSingleValue: handleSelectLocation,
     handleSubmitModal,
-  } = useModalSelection(locations[0].id, handleToggleModal);
-  const data = useMemo(() => locations, []);
+  } = useModalSelection("", handleToggleModal);
+
+  const data = useMemo(
+    () =>
+      stadiumsData
+        ? stadiumsData.stadiums.filter(
+            (item: any) =>
+              item.name.includes(searchString) ||
+              item.address.includes(searchString)
+          )
+        : null,
+    [stadiumsData, searchString]
+  );
+
+  useEffect(() => {
+    getStadiums();
+  }, []);
+
+  const handleOnChangeStadium = useCallback(
+    (id: string) => {
+      handleSubmitModal();
+      onChangeStadium && onChangeStadium(id);
+    },
+    [onChangeStadium, handleSubmitModal]
+  );
 
   const openModalCallback = useCallback(() => {
     if (selectedLocations.length !== 0) setModalLocations(selectedLocations);
-    else setModalLocations([locations[0].id]);
+    else setModalLocations([]);
     setSearchString("");
-  }, [selectedLocations]);
+  }, [selectedLocations, setModalLocations]);
 
   const _renderFindLocation = useCallback(() => {
     return (
@@ -115,27 +105,35 @@ export const TPMatchLocationPicker = ({
           showsVerticalScrollIndicator={false}
           data={[1]}
           renderItem={() => {
-            return (
-              <>
-                <TPSearchBar placeholder="Tìm kiếm tên sân, địa điểm,..." />
-                <TPSelection
-                  data={data.map((item) => {
-                    return {
-                      id: item.id,
-                      value: item.id,
-                      label: (
-                        <LocationItem name={item.name} address={item.address} />
-                      ),
-                    };
-                  })}
-                  value={modalLocations}
-                  column
-                  gap={8}
-                  multiple={false}
-                  onChange={handleSelectLocation}
-                />
-              </>
-            );
+            if (data)
+              return (
+                <>
+                  <TPSearchBar
+                    placeholder="Tìm kiếm tên sân, địa điểm,..."
+                    onChange={setSearchString}
+                  />
+                  <TPSelection
+                    data={data.map((item: any) => {
+                      return {
+                        id: item.id,
+                        value: item.id,
+                        label: (
+                          <LocationItem
+                            name={item.name}
+                            address={item.address}
+                          />
+                        ),
+                      };
+                    })}
+                    value={modalLocations}
+                    column
+                    gap={8}
+                    multiple={false}
+                    onChange={handleSelectLocation}
+                  />
+                </>
+              );
+            return null;
           }}
         />
       </KeyboardAvoidingView>
@@ -155,7 +153,7 @@ export const TPMatchLocationPicker = ({
             color={COLORS.green[600]}
             textSize="small"
             size="tiny"
-            onPress={handleSubmitModal}
+            onPress={() => handleOnChangeStadium(modalLocations[0] as string)}
           />
         }
       >
@@ -173,7 +171,11 @@ export const TPMatchLocationPicker = ({
               <TPText variant="body14">Điạ điểm</TPText>
               {selectedLocations.length !== 0 && (
                 <TPText variant="body14-semibold" color={COLORS.blue[600]}>
-                  {getClubName(selectedLocations[0])}
+                  {
+                    stadiumsData?.stadiums.find(
+                      (item: any) => item.id === selectedLocations[0]
+                    )?.name
+                  }
                 </TPText>
               )}
             </View>

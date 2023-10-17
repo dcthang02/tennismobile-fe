@@ -21,8 +21,6 @@ import {
   ViewStyle,
 } from "react-native";
 
-const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
 const players = [
   {
     id: "1",
@@ -116,6 +114,10 @@ const players = [
   },
 ];
 
+type TPPLayersInvitatorProps = {
+  onChangePlayers?: (ids: string[]) => void;
+};
+
 const PlayerItem = ({
   name,
   image,
@@ -133,10 +135,12 @@ const PlayerItem = ({
   );
 };
 
-export const TPPlayersInvitator = () => {
+export const TPPlayersInvitator = ({
+  onChangePlayers,
+}: TPPLayersInvitatorProps) => {
   const { isShow, handleToggleModal } = useModal();
   const [searchString, setSearchString] = useState("");
-  const [numberPlayers, setNumberPlayers] = useState(1);
+  const [numberPlayers, setNumberPlayers] = useState(4);
 
   const data = useMemo(
     () =>
@@ -154,14 +158,23 @@ export const TPPlayersInvitator = () => {
     handleSelectValue: handleSelectPlayers,
     handleSelectSingleValue: handleSelectSinglePlayer,
     handleSubmitModal: handleSubmitCompetitor,
-  } = useModalSelection(players[0].id, handleToggleModal);
+  } = useModalSelection("", handleToggleModal);
 
   const openModalCallback = useCallback(() => {
     if (competitorIds.length !== 0) setModalCompetitorIds(competitorIds);
-    else setModalCompetitorIds([players[0].id]);
+    else setModalCompetitorIds([]);
 
     setSearchString("");
-  }, [competitorIds]);
+  }, [competitorIds, setModalCompetitorIds, setSearchString]);
+
+  const handleChangePlayerIds = useCallback(
+    (ids: string[]) => {
+      handleSubmitCompetitor();
+
+      onChangePlayers && onChangePlayers(ids);
+    },
+    [onChangePlayers, handleSubmitCompetitor]
+  );
 
   const _renderFindCompetitors = useCallback(() => {
     return (
@@ -200,7 +213,7 @@ export const TPPlayersInvitator = () => {
           <TPButton
             title="Thêm"
             size="large"
-            onPress={handleSubmitCompetitor}
+            onPress={() => handleChangePlayerIds(modalCompetiorIds as string[])}
           />
         </KeyboardAvoidingView>
       </>
@@ -210,7 +223,7 @@ export const TPPlayersInvitator = () => {
     modalCompetiorIds,
     handleSelectPlayers,
     handleSelectSinglePlayer,
-    handleSubmitCompetitor,
+    handleChangePlayerIds,
     data,
   ]);
 

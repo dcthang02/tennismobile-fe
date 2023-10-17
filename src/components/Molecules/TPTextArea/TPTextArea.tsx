@@ -7,6 +7,8 @@ type TPTextAreaProps = {
   focus?: () => void;
   borderColor?: string;
   greenOnfocus?: boolean;
+  value: string;
+  onChange: (x: string) => void;
 };
 
 export const TPTextArea = React.forwardRef<TextInput, TPTextAreaProps>(
@@ -16,12 +18,20 @@ export const TPTextArea = React.forwardRef<TextInput, TPTextAreaProps>(
       focus,
       borderColor = COLORS.charcoal.white,
       greenOnfocus = false,
+      value,
+      onChange,
     }: TPTextAreaProps,
     ref
   ) => {
     return (
       <Pressable style={{ ...styles.inputBox, borderColor }} onPress={focus}>
-        <TextInput ref={ref} placeholder={placeholder} multiline />
+        <TextInput
+          ref={ref}
+          placeholder={placeholder}
+          multiline
+          onChangeText={onChange}
+          value={value}
+        />
       </Pressable>
     );
   }
