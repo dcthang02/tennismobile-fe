@@ -10,9 +10,10 @@ import TPModal from "@/components/Molecules/TPModal";
 import TPSearchBar from "@/components/Molecules/TPSearchBar";
 import TPSelection from "@/components/Molecules/TPSelection";
 import { COLORS } from "@/constant/colors";
+import useGetUsers from "@/hooks/useGetUsers";
 import useModal from "@/hooks/useModal";
 import useModalSelection from "@/hooks/useModalSelection";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -138,16 +139,19 @@ const PlayerItem = ({
 export const TPPlayersInvitator = ({
   onChangePlayers,
 }: TPPLayersInvitatorProps) => {
+  const { getUsers, usersData } = useGetUsers();
   const { isShow, handleToggleModal } = useModal();
   const [searchString, setSearchString] = useState("");
   const [numberPlayers, setNumberPlayers] = useState(4);
 
   const data = useMemo(
     () =>
-      players.filter((item) =>
-        item.name.toLowerCase().includes(searchString.toLowerCase())
-      ),
-    [searchString]
+      usersData
+        ? usersData.users.filter((item: any) =>
+            item.name.toLowerCase().includes(searchString.toLowerCase())
+          )
+        : null,
+    [searchString, usersData]
   );
 
   const {
@@ -159,6 +163,10 @@ export const TPPlayersInvitator = ({
     handleSelectSingleValue: handleSelectSinglePlayer,
     handleSubmitModal: handleSubmitCompetitor,
   } = useModalSelection("", handleToggleModal);
+
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   const openModalCallback = useCallback(() => {
     if (competitorIds.length !== 0) setModalCompetitorIds(competitorIds);
@@ -186,35 +194,42 @@ export const TPPlayersInvitator = ({
             placeholder="Tìm kiếm tên đấu thủ..."
             onChange={setSearchString}
           />
-          <TPSelection
-            data={data.map((item) => {
-              return {
-                id: item.id,
-                value: item.id,
-                label: (
-                  <PlayerItem
-                    style={styles.playerItem}
-                    name={item.name}
-                    image={item.image}
-                  />
-                ),
-              };
-            })}
-            value={modalCompetiorIds}
-            column
-            gap={8}
-            multiple={numberPlayers !== 1}
-            onChange={
-              numberPlayers !== 1
-                ? handleSelectPlayers
-                : handleSelectSinglePlayer
-            }
-          />
-          <TPButton
-            title="Thêm"
-            size="large"
-            onPress={() => handleChangePlayerIds(modalCompetiorIds as string[])}
-          />
+          {data && (
+            <>
+              <TPSelection
+                data={data.map((item: any) => {
+                  return {
+                    id: item.id,
+                    value: item.id,
+                    label: (
+                      <PlayerItem
+                        style={styles.playerItem}
+                        name={item.name}
+                        image={item.image}
+                      />
+                    ),
+                  };
+                })}
+                value={modalCompetiorIds}
+                column
+                gap={8}
+                multiple={numberPlayers !== 1}
+                onChange={
+                  numberPlayers !== 1
+                    ? handleSelectPlayers
+                    : handleSelectSinglePlayer
+                }
+                maxSelected={numberPlayers}
+              />
+              <TPButton
+                title="Thêm"
+                size="large"
+                onPress={() =>
+                  handleChangePlayerIds(modalCompetiorIds as string[])
+                }
+              />
+            </>
+          )}
         </KeyboardAvoidingView>
       </>
     );
@@ -252,15 +267,17 @@ export const TPPlayersInvitator = ({
           <TPText variant="body14">{numberPlayers}</TPText>
         </TPRow>
         {competitorIds.map((id) => {
-          const player = players.find((el) => el.id === id);
-          return (
-            <PlayerItem
-              style={styles.selectedPlayerItem}
-              name={player?.name || ""}
-              image={player?.image || ""}
-              key={`player-${id}`}
-            />
-          );
+          if (usersData) {
+            const player = usersData.users.find((el: any) => el.id === id);
+            return (
+              <PlayerItem
+                style={styles.selectedPlayerItem}
+                name={player?.name || ""}
+                image={player?.image || ""}
+                key={`player-${id}`}
+              />
+            );
+          }
         })}
         <View style={styles.findPlayers}>
           {Platform.OS === "ios" && (

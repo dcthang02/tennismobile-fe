@@ -15,8 +15,9 @@ type TPSelectionProps = {
   column?: boolean;
   multiple?: boolean;
   value: TypeValue[];
-  onChange?: (id: number | string) => void;
+  onChange?: (value: number | string) => void;
   gap?: number;
+  maxSelected?: number;
 };
 
 export const TPSelection = ({
@@ -26,12 +27,29 @@ export const TPSelection = ({
   multiple = false,
   onChange,
   gap = 80,
+  maxSelected,
 }: TPSelectionProps) => {
   const _renderLabel = useCallback((label: string | ReactNode) => {
     if (typeof label === "string")
       return <TPText variant="body16">{label}</TPText>;
     return <>{label}</>;
   }, []);
+
+  const handlePress = useCallback(
+    (x: number | string) => {
+      if (maxSelected) {
+        const able = value.includes(x);
+        if (value.length < maxSelected) {
+          onChange && onChange(x);
+        } else if (able) {
+          onChange && onChange(x);
+        }
+      } else {
+        onChange && onChange(x);
+      }
+    },
+    [maxSelected, value, onChange]
+  );
 
   return (
     <FlatList
@@ -42,7 +60,7 @@ export const TPSelection = ({
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       renderItem={({ item }) => (
-        <Pressable onPress={onChange ? () => onChange(item.id) : () => {}}>
+        <Pressable onPress={() => handlePress(item.value)}>
           <TPRow style={{ alignItems: "center", gap: 10 }}>
             <TPRadio
               active={
