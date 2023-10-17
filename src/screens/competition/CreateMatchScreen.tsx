@@ -16,6 +16,8 @@ const CreateMatchScreen = () => {
   const [isLocationPending, setIsLocationPending] = useState(false);
   const [invitedPlayerIds, setInvitedPlayerIds] = useState<string[]>([]);
   const [date, setDate] = useState(new Date());
+  const [fromDatePending, setFromDatePending] = useState(new Date());
+  const [toDatePending, setToDatePending] = useState(new Date());
   const [stadiumId, setStadiumId] = useState("");
   const [notice, setNotice] = useState("");
 
@@ -43,6 +45,10 @@ const CreateMatchScreen = () => {
         <TPPlayersInvitator onChangePlayers={setInvitedPlayerIds} />
         <TPMatchDateTime
           date={date}
+          fromDatePending={fromDatePending}
+          toDatePending={toDatePending}
+          setFromDatePending={setFromDatePending}
+          setToDatePending={setToDatePending}
           onChange={setDate}
           isPending={isTimePending}
           onChangePendingStatus={setIsTimePending}

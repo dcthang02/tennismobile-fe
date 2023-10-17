@@ -13,6 +13,7 @@ type TPDatePickerProps = {
   color?: string;
   date: Date;
   onChange: (x: Date) => void;
+  editable?: boolean;
 };
 
 const formatDate = (date: Date) => {
@@ -33,6 +34,7 @@ export const TPDatePicker = ({
   color,
   date,
   onChange,
+  editable = true,
 }: TPDatePickerProps) => {
   const [show, setShow] = useState(false);
 
@@ -50,7 +52,7 @@ export const TPDatePicker = ({
   );
 
   return (
-    <Pressable onPress={() => setShow(true)}>
+    <Pressable onPress={() => editable && setShow(true)}>
       <TPTextInput
         label={label || "Ngày tháng năm sinh"}
         inputType="text"
