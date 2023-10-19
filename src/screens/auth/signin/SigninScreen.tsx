@@ -32,9 +32,11 @@ const SigninScreen = ({ navigation }: SigninProps) => {
   useEffect(() => {
     if (preToken && phoneRef.current) {
       const phone = convertPhoneNumber(phoneRef.current["value"]);
+      console.log("preToken", preToken);
+      console.log(phone);
       signInWithPhoneNumber(phone);
     }
-  }, [preToken]);
+  }, [preToken, phoneRef.current]);
 
   const handleClickButton = useCallback(async () => {
     if (phoneRef.current) {
@@ -43,7 +45,6 @@ const SigninScreen = ({ navigation }: SigninProps) => {
       } else {
         if (phoneRef.current["value"]) {
           const phone = convertPhoneNumber(phoneRef.current["value"]);
-          console.log(phone);
           try {
             const signData = await signinByPhone({
               variables: {

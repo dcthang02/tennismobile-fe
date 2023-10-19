@@ -8,6 +8,7 @@ import TPButton from "@/components/Molecules/TPButton";
 import TPModal from "@/components/Molecules/TPModal";
 import TPSearchBar from "@/components/Molecules/TPSearchBar";
 import TPSelection from "@/components/Molecules/TPSelection";
+import TPTextInput from "@/components/Molecules/TPTextInput";
 import { COLORS } from "@/constant/colors";
 import useGetStadiums from "@/hooks/useGetStadiums";
 import useModal from "@/hooks/useModal";
@@ -140,6 +141,19 @@ export const TPMatchLocationPicker = ({
     );
   }, [data, modalLocations, handleSelectLocation]);
 
+  const _renderPendind = useCallback(() => {
+    return (
+      <TPWrapper gap={8}>
+        <TPTextInput inputType="text" label="Nhập tên sân tạm thời" />
+        <TPTextInput inputType="text" label="Địa chỉ" />
+        <TPText variant="small" color={COLORS.charcoal[600]}>
+          Bạn có thể chỉnh sửa lại địa điểm chính thức sau khi xác nhận cụ thể
+          với mọi người
+        </TPText>
+      </TPWrapper>
+    );
+  }, []);
+
   return (
     <TPWrapper gap={4}>
       <TPModal
@@ -163,12 +177,21 @@ export const TPMatchLocationPicker = ({
       <TPCard style={styles.card}>
         <Pressable
           style={styles.pressable}
-          onPress={() => handleToggleModal(true)}
+          onPress={() => !isPending && handleToggleModal(true)}
         >
           <TPRow style={styles.row}>
-            <TPIcon name="map-marker" size="small" />
+            <TPIcon
+              name="map-marker"
+              size="small"
+              color={isPending ? COLORS.charcoal[400] : COLORS.charcoal[800]}
+            />
             <View style={styles.viewText}>
-              <TPText variant="body14">Điạ điểm</TPText>
+              <TPText
+                variant="body14"
+                color={isPending ? COLORS.charcoal[400] : COLORS.charcoal[800]}
+              >
+                Điạ điểm
+              </TPText>
               {selectedLocations.length !== 0 && (
                 <TPText variant="body14-semibold" color={COLORS.blue[600]}>
                   {
@@ -187,6 +210,7 @@ export const TPMatchLocationPicker = ({
         <TPText variant="body14">Chưa rõ thời gian</TPText>
         <TPSwitch value={isPending} onChange={onChangePendingStatus} />
       </TPRow>
+      {isPending && _renderPendind()}
     </TPWrapper>
   );
 };

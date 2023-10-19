@@ -40,9 +40,11 @@ const SignupScreen = ({ navigation }: SignupProps) => {
   useEffect(() => {
     if (preToken && phoneRef.current) {
       const phone = convertPhoneNumber(phoneRef.current["value"]);
+      console.log("preToken", preToken);
+      console.log(phone);
       signInWithPhoneNumber(phone);
     }
-  }, [preToken]);
+  }, [preToken, phoneRef.current]);
 
   const handleClickButton = useCallback(async () => {
     if (phoneRef.current) {
@@ -59,7 +61,7 @@ const SignupScreen = ({ navigation }: SignupProps) => {
             });
             setPreToken(signData.data.signupByPhone.token);
           } catch (error) {
-            Alert.alert("Lỗi đăng ký");
+            Alert.alert("Lỗi đăng ký", error.message);
           }
         }
       }
