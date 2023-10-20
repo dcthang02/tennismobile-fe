@@ -32,6 +32,8 @@ const SignupScreen = ({ navigation }: SignupProps) => {
 
   const { signupByPhone } = useAuthentication();
 
+  const [loading, setLoading] = useState(false);
+
   async function signInWithPhoneNumber(phoneNumber: string) {
     const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
     setConfirm(confirmation);
@@ -53,6 +55,7 @@ const SignupScreen = ({ navigation }: SignupProps) => {
       } else {
         if (phoneRef.current["value"]) {
           const phone = convertPhoneNumber(phoneRef.current["value"]);
+          setLoading(true);
           try {
             const signData = await signupByPhone({
               variables: {
@@ -62,6 +65,7 @@ const SignupScreen = ({ navigation }: SignupProps) => {
             setPreToken(signData.data.signupByPhone.token);
           } catch (error) {
             Alert.alert("Lỗi đăng ký", error.message);
+            setLoading(false);
           }
         }
       }
@@ -120,6 +124,7 @@ const SignupScreen = ({ navigation }: SignupProps) => {
             title="Tiếp theo"
             size="large"
             onPress={() => handleClickButton()}
+            loading={loading}
           />
         </TPWrapper>
       </TPWrapper>

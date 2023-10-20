@@ -1,4 +1,10 @@
-import React, { useCallback, useContext, useEffect, useRef } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { Alert, View } from "react-native";
 
 import TPBackground from "@/components/Atom/TPBackgroud";
@@ -24,6 +30,8 @@ const SigninScreen = ({ navigation }: SigninProps) => {
 
   const { signinByPhone } = useAuthentication();
 
+  const [loading, setLoading] = useState(false);
+
   async function signInWithPhoneNumber(phoneNumber: string) {
     const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
     setConfirm(confirmation);
@@ -45,6 +53,7 @@ const SigninScreen = ({ navigation }: SigninProps) => {
       } else {
         if (phoneRef.current["value"]) {
           const phone = convertPhoneNumber(phoneRef.current["value"]);
+          setLoading(true);
           try {
             const signData = await signinByPhone({
               variables: {
@@ -53,8 +62,8 @@ const SigninScreen = ({ navigation }: SigninProps) => {
             });
             setPreToken(signData.data.signinByPhone.token);
           } catch (error) {
-            console.log(error);
-            Alert.alert("Lỗi đăng nhập");
+            Alert.alert("Lỗi đăng nhập", error.message);
+            setLoading(false);
           }
         }
       }
@@ -62,7 +71,7 @@ const SigninScreen = ({ navigation }: SigninProps) => {
   }, [phoneRef.current, signInWithPhoneNumber]);
 
   return (
-    <TPBackground>
+    <TPBackground scroll>
       <TPWrapper paddingTop={70} paddingHorizontal={16}>
         <TPWrapper marginBottom={10}>
           <TPText variant="heading4">Vui lòng nhập số điện thoại</TPText>
@@ -109,6 +118,7 @@ const SigninScreen = ({ navigation }: SigninProps) => {
             title="Tiếp theo"
             size="large"
             onPress={() => handleClickButton()}
+            loading={loading}
           />
         </TPWrapper>
       </TPWrapper>

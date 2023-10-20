@@ -1,7 +1,7 @@
-import React, { ReactNode, useMemo } from "react";
+import React, { ReactNode, useCallback, useMemo } from "react";
 import TPText from "@/components/Atom/TPText";
 import TPRow from "@/components/Atom/TPRow";
-import { Button, TouchableOpacity, Text, Pressable } from "react-native";
+import { Text, ActivityIndicator } from "react-native";
 import { ButtonStyled } from "./style";
 import { COLORS } from "@/constant/colors";
 
@@ -16,6 +16,7 @@ type ButtonProps = {
   startIcon?: ReactNode;
   endIcon?: ReactNode;
   textSize?: "button" | "small";
+  loading?: boolean;
 };
 
 export const TPButton = ({
@@ -29,27 +30,25 @@ export const TPButton = ({
   startIcon,
   endIcon,
   textSize = "button",
+  loading = false,
 }: ButtonProps) => {
   const bgColor = useMemo(() => {
     if (buttonType === "text") return "transparent";
     return backgroundColor;
   }, [buttonType, backgroundColor]);
 
-  return (
-    <ButtonStyled
-      backgroundColor={bgColor}
-      size={size}
-      onPress={onPress}
-      outline={buttonType === "outline"}
-      color={color}
-    >
-      <TPRow
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 10,
-        }}
-      >
+  const handlePress = useCallback(() => {
+    if (!loading) {
+      onPress && onPress();
+    }
+  }, [loading, onPress]);
+
+  const _renderTitle = useCallback(() => {
+    if (loading) {
+      return <ActivityIndicator color={color} />;
+    }
+    return (
+      <>
         {startIcon || null}
         {title && (
           <Text style={{ textAlign: "center" }}>
@@ -62,6 +61,27 @@ export const TPButton = ({
           </Text>
         )}
         {endIcon || null}
+      </>
+    );
+  }, [loading, color]);
+
+  return (
+    <ButtonStyled
+      backgroundColor={bgColor}
+      size={size}
+      onPress={handlePress}
+      outline={buttonType === "outline"}
+      color={color}
+    >
+      <TPRow
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 10,
+          height: "100%",
+        }}
+      >
+        {_renderTitle()}
       </TPRow>
     </ButtonStyled>
   );

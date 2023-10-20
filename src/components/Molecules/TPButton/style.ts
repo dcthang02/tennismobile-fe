@@ -7,16 +7,30 @@ export const ButtonStyled = styled.Pressable<{
 }>`
   background-color: ${(props: any) => props.backgroundColor};
   border-radius: 50px;
+  height: ${(props: any) => {
+    switch (props.size) {
+      case "large":
+        return "48px";
+      case "default":
+        return "40px";
+      case "small":
+        return "24px";
+      case "tiny":
+        return "20px";
+      default:
+        break;
+    }
+  }};
   padding: ${(props: any) => {
     switch (props.size) {
       case "large":
-        return "8px 16px";
+        return "0 16px";
       case "default":
-        return "8px 12px";
+        return "0 12px";
       case "small":
-        return "2px 8px";
+        return "0 8px";
       case "tiny":
-        return "0px";
+        return "0";
       default:
         break;
     }
