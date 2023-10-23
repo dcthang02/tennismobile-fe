@@ -8,10 +8,13 @@ import TPMatchLocationPicker from "@/components/Organisms/TPMatchLocationPicker"
 import TPMatchNoticeInput from "@/components/Organisms/TPMatchNoticeInput";
 import TPPlayersInvitator from "@/components/Organisms/TPPlayersInvitator";
 import { COLORS } from "@/constant/colors";
+import useCreateMatch from "@/hooks/useCreateMatch";
+import useNavigation from "@/hooks/useNavigation";
+import { CreateMatchProps } from "@/utils/createProps";
 import React, { createRef, useCallback, useEffect, useState } from "react";
-import { StyleSheet, TextInput, View } from "react-native";
+import { Alert, StyleSheet, TextInput, View } from "react-native";
 
-const CreateMatchScreen = () => {
+const CreateMatchScreen = ({ navigation }: CreateMatchProps) => {
   const [isTimePending, setIsTimePending] = useState(false);
   const [isLocationPending, setIsLocationPending] = useState(false);
   const [invitedPlayerIds, setInvitedPlayerIds] = useState<string[]>([]);
@@ -21,12 +24,31 @@ const CreateMatchScreen = () => {
   const [stadiumId, setStadiumId] = useState("");
   const [notice, setNotice] = useState("");
 
-  const handleSubmitCreate = useCallback(() => {
+  const { createMatch } = useCreateMatch();
+
+  const handleSubmitCreate = useCallback(async () => {
     console.log("players", invitedPlayerIds);
     console.log("date", date);
     console.log("stadium", stadiumId);
     console.log("notice", notice);
-  }, [invitedPlayerIds, date, stadiumId]);
+
+    try {
+      await createMatch({
+        variables: {
+          createMatchInput: {
+            date: isTimePending ? null : date.toISOString(),
+            maxPlayers: 4,
+            note: notice || "",
+            invitedPlayerIds: invitedPlayerIds,
+            stadiumId: isLocationPending ? null : stadiumId,
+          },
+        },
+      });
+      navigation.navigate("CreateMatchSuccess");
+    } catch (error) {
+      Alert.alert("Lỗi tạo trận đấu", "Có một vài lỗi xảy ra");
+    }
+  }, [invitedPlayerIds, date, stadiumId, notice]);
 
   return (
     <TPBackground scroll>
